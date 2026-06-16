@@ -5,10 +5,12 @@ import { motion } from "framer-motion";
 
 import { useLanguage } from "@/components/LanguageProvider";
 import { fadeUp, staggerContainer, viewport } from "@/components/motion";
+import Lightbox from "@/components/ui/Lightbox";
 import SectionHeader from "@/components/ui/SectionHeader";
 
-/* Structural step data — number, icon, screenshot. Index-coupled to
-   t.how.steps for the translatable title/body/alt. */
+/* Structural step data — number, icon, screenshot (+ natural dims for the
+   lightbox). Index-coupled to t.how.steps for title/body/alt. `filter`
+   lifts step 1's dark modal screenshot to match steps 2–3's visual weight. */
 const STEP_META = [
   {
     number: "01",
@@ -20,6 +22,9 @@ const STEP_META = [
       </>
     ),
     src: "/screenshots/Coach-Invite-Client.png",
+    width: 1918,
+    height: 905,
+    filter: "brightness(1.15) contrast(0.95)",
   },
   {
     number: "02",
@@ -31,6 +36,9 @@ const STEP_META = [
       </>
     ),
     src: "/screenshots/Client-Plans-Tab.png",
+    width: 1914,
+    height: 908,
+    filter: undefined,
   },
   {
     number: "03",
@@ -41,6 +49,9 @@ const STEP_META = [
       </>
     ),
     src: "/screenshots/Coach-Analytics-Tab2.png",
+    width: 1902,
+    height: 908,
+    filter: undefined,
   },
 ];
 
@@ -122,15 +133,27 @@ export default function HowItWorks() {
                 {t.how.steps[i].body}
               </p>
               <div className="mt-auto pt-6">
-                <div className="relative aspect-[2/1] overflow-hidden rounded-xl border border-primary/8">
+                <motion.div
+                  whileHover={{ scale: 1.03 }}
+                  transition={{ duration: 0.25, ease: "easeOut" }}
+                >
+                <Lightbox
+                  src={step.src}
+                  alt={t.how.steps[i].alt}
+                  width={step.width}
+                  height={step.height}
+                  className="relative aspect-[2/1] w-full rounded-xl border border-primary/8"
+                >
                   <Image
                     src={step.src}
                     alt={t.how.steps[i].alt}
                     fill
                     sizes="(min-width: 1248px) 368px, (min-width: 768px) 30vw, calc(100vw - 96px)"
                     className="object-cover object-top"
+                    style={step.filter ? { filter: step.filter } : undefined}
                   />
-                </div>
+                </Lightbox>
+                </motion.div>
               </div>
             </motion.div>
           ))}

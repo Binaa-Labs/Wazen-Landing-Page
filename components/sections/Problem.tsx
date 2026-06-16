@@ -62,6 +62,7 @@ function ComparisonCard({
   const isError = tone === "error";
   return (
     <motion.div
+      key={heading}
       variants={listStagger(delay)}
       initial="hidden"
       whileInView="visible"
@@ -125,7 +126,10 @@ export default function Problem() {
           title={t.problem.h2}
           description={t.problem.description}
         />
-        <div className="mt-14 grid gap-6 md:grid-cols-2">
+        <div
+          key={t.problem.oldWayHeading + t.problem.wazenWayHeading}
+          className="mt-14 grid gap-6 md:grid-cols-2"
+        >
           <ComparisonCard
             heading={t.problem.oldWayHeading}
             items={t.problem.oldWay}

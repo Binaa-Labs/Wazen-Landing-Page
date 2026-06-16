@@ -7,6 +7,7 @@ import { AnimatePresence, motion } from "framer-motion";
 import { useLanguage } from "@/components/LanguageProvider";
 import { fadeUp, viewport } from "@/components/motion";
 import BrowserFrame from "@/components/ui/BrowserFrame";
+import Lightbox from "@/components/ui/Lightbox";
 import SectionHeader from "@/components/ui/SectionHeader";
 
 /* Structural tab data — icons, chrome URL, screenshot sources/dimensions.
@@ -87,6 +88,7 @@ function TwoWayArrow() {
 export default function Features() {
   const { t, lang } = useLanguage();
   const [activeId, setActiveId] = useState(TAB_META[0].id);
+  const [zoom, setZoom] = useState(false);
   const tabRefs = useRef<(HTMLButtonElement | null)[]>([]);
 
   const found = TAB_META.findIndex((tab) => tab.id === activeId);
@@ -173,9 +175,9 @@ export default function Features() {
                 role="tabpanel"
                 id={`panel-${meta.id}`}
                 aria-labelledby={`tab-${meta.id}`}
-                initial={{ opacity: 0, x: enterX }}
-                animate={{ opacity: 1, x: 0 }}
-                exit={{ opacity: 0, x: -enterX }}
+                initial={{ opacity: 0, x: enterX, scale: 0.97 }}
+                animate={{ opacity: 1, x: 0, scale: 1 }}
+                exit={{ opacity: 0, x: -enterX, scale: 0.97 }}
                 transition={{ duration: 0.3, ease: "easeOut" }}
               >
                 <div className="mx-auto max-w-xl text-center">
@@ -184,21 +186,41 @@ export default function Features() {
                 </div>
 
                 <div className="relative mt-8">
-                  <BrowserFrame url={meta.url}>
-                    <div className="relative aspect-[21/10]">
-                      <Image
+                  <motion.div
+                    whileHover={{ scale: 1.03, y: -4 }}
+                    transition={{ duration: 0.25, ease: "easeOut" }}
+                    className="w-full"
+                  >
+                    <BrowserFrame url={meta.url}>
+                      <Lightbox
                         src={meta.primarySrc}
                         alt={text.primaryAlt}
-                        fill
-                        sizes="(min-width: 1024px) 896px, calc(100vw - 48px)"
-                        className="object-cover object-top"
-                      />
-                    </div>
-                  </BrowserFrame>
+                        width={1905}
+                        height={910}
+                        open={zoom}
+                        onOpenChange={setZoom}
+                        className="relative aspect-[21/10] w-full"
+                      >
+                        <Image
+                          src={meta.primarySrc}
+                          alt={text.primaryAlt}
+                          fill
+                          sizes="(min-width: 1024px) 896px, calc(100vw - 48px)"
+                          className="object-cover object-top"
+                        />
+                      </Lightbox>
+                    </BrowserFrame>
+                  </motion.div>
 
-                  {/* PiP secondary screenshot overhangs the frame by 40px;
-                      the caption below clears it via sm:mt-16 */}
-                  <div className="absolute -bottom-10 end-4 hidden w-[38%] max-w-xs overflow-hidden rounded-xl border border-primary/10 bg-surface p-1.5 shadow-lg sm:block">
+                  {/* PiP secondary overhangs the frame by 40px; the caption
+                      below clears it via sm:mt-16. Clicking it opens the
+                      primary's lightbox (one per tab). */}
+                  <button
+                    type="button"
+                    onClick={() => setZoom(true)}
+                    aria-label={`Expand image: ${text.primaryAlt}`}
+                    className="group absolute -bottom-10 end-4 hidden w-[38%] max-w-xs cursor-pointer overflow-hidden rounded-xl border border-primary/10 bg-surface p-1.5 shadow-lg sm:block"
+                  >
                     <Image
                       src={meta.secondary.src}
                       alt={text.secondaryAlt}
@@ -206,7 +228,11 @@ export default function Features() {
                       height={meta.secondary.height}
                       className="h-auto w-full rounded-lg"
                     />
-                  </div>
+                    <span
+                      aria-hidden
+                      className="pointer-events-none absolute inset-0 rounded-xl ring-2 ring-inset ring-primary/0 transition group-hover:ring-primary/40"
+                    />
+                  </button>
                 </div>
 
                 <p className="mt-6 text-center text-caption text-ink/55 sm:mt-16">
@@ -229,26 +255,52 @@ export default function Features() {
               <p className="mb-2 text-caption font-medium text-ink/70">
                 {t.features.coachLabel}
               </p>
-              <Image
+              <motion.div
+                whileHover={{ scale: 1.03 }}
+                transition={{ duration: 0.25, ease: "easeOut" }}
+              >
+              <Lightbox
                 src="/screenshots/Coach-Dashboard.png"
                 alt={t.features.coachLabel}
                 width={1905}
                 height={910}
-                className="h-auto w-full rounded-lg"
-              />
+                className="w-full rounded-lg"
+              >
+                <Image
+                  src="/screenshots/Coach-Dashboard.png"
+                  alt={t.features.coachLabel}
+                  width={1905}
+                  height={910}
+                  className="h-auto w-full rounded-lg"
+                />
+              </Lightbox>
+              </motion.div>
             </div>
             <TwoWayArrow />
             <div className="rounded-card border border-primary/10 bg-surface p-3 shadow-sm">
               <p className="mb-2 text-caption font-medium text-ink/70">
                 {t.features.clientLabel}
               </p>
-              <Image
+              <motion.div
+                whileHover={{ scale: 1.03 }}
+                transition={{ duration: 0.25, ease: "easeOut" }}
+              >
+              <Lightbox
                 src="/screenshots/Client-Dashboard-Tab.png"
                 alt={t.features.clientLabel}
                 width={1905}
                 height={910}
-                className="h-auto w-full rounded-lg"
-              />
+                className="w-full rounded-lg"
+              >
+                <Image
+                  src="/screenshots/Client-Dashboard-Tab.png"
+                  alt={t.features.clientLabel}
+                  width={1905}
+                  height={910}
+                  className="h-auto w-full rounded-lg"
+                />
+              </Lightbox>
+              </motion.div>
             </div>
           </div>
           <p className="mt-5 text-center text-caption text-ink/55">
