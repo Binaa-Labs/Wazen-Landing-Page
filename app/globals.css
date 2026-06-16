@@ -1,26 +1,143 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
+/* Class-based dark mode: `dark:` utilities follow the html.dark toggle */
+@custom-variant dark (&:where(.dark, .dark *));
+
+/* `static` forces every token to be emitted as a :root custom property even
+   before any utility uses it — Framer Motion reads some (e.g. --shadow-lg)
+   straight from JS via var(). */
+@theme static {
+  /* ── Brand colors (exact HSL — do not adjust) ─────────────────────── */
+  --color-primary: hsl(186, 21%, 26%); /* Deep Teal — CTAs, nav, key UI */
+  --color-primary-hover: hsl(186, 21%, 20%); /* Primary hover state */
+  --color-primary-light: hsl(186, 21%, 93%); /* Teal Mist — Pricing section bg */
+  --color-primary-dark: hsl(186, 21%, 14%); /* Dark sections background */
+  --color-primary-darker: hsl(186, 21%, 10%); /* Footer background */
+
+  --color-secondary: hsl(99, 22%, 72%); /* Sage — accents, underlines */
+  --color-secondary-dark: hsl(99, 20%, 42%); /* Sage Dark — success text */
+  --color-secondary-light: hsl(99, 22%, 92%); /* Sage Mist — badges */
+
+  --color-accent: hsl(201, 20%, 23%); /* Steel Blue — dark surface cards */
+
+  --color-ink: hsl(0, 0%, 5%); /* Near-black text */
+  --color-bg: hsl(0, 0%, 95%); /* Page background */
+  --color-surface: hsl(0, 0%, 100%); /* Card surfaces */
+
+  --color-error: hsl(0, 75%, 45%); /* Problem states */
+  --color-error-bg: hsla(0, 75%, 45%, 0.05);
+  --color-error-border: hsla(0, 75%, 45%, 0.15);
+  --color-success: hsl(99, 20%, 42%);
+  --color-success-bg: hsla(99, 20%, 42%, 0.06);
+  --color-success-border: hsla(99, 20%, 42%, 0.2);
+
+  /* ── Shadows ──────────────────────────────────────────────────────── */
+  --shadow-sm: 0 1px 3px hsla(186, 21%, 10%, 0.06);
+  --shadow-md: 0 4px 16px hsla(186, 21%, 10%, 0.08);
+  --shadow-lg: 0 16px 48px hsla(186, 21%, 10%, 0.12);
+  --shadow-xl: 0 32px 64px hsla(186, 21%, 10%, 0.16);
+
+  /* ── Radius ───────────────────────────────────────────────────────── */
+  --radius-card: 20px;
+  --radius-pill: 100px;
+  --radius-badge: 6px;
+
+  /* ── Type scale ───────────────────────────────────────────────────── */
+  --text-display: clamp(2.6rem, 5.5vw, 4.4rem);
+  --text-display--font-weight: 700;
+  --text-display--letter-spacing: -0.03em;
+  --text-display--line-height: 1.1;
+
+  --text-h2: clamp(1.9rem, 3.5vw, 2.8rem);
+  --text-h2--font-weight: 700;
+  --text-h2--letter-spacing: -0.02em;
+  --text-h2--line-height: 1.15;
+
+  --text-h3: clamp(1.2rem, 2vw, 1.5rem);
+  --text-h3--font-weight: 600;
+  --text-h3--letter-spacing: -0.01em;
+  --text-h3--line-height: 1.3;
+
+  --text-eyebrow: 0.75rem;
+  --text-eyebrow--font-weight: 500;
+  --text-eyebrow--letter-spacing: 0.08em;
+
+  --text-body-lg: 1.1rem;
+  --text-body-lg--line-height: 1.7;
+
+  --text-body: 0.95rem;
+  --text-body--line-height: 1.6;
+
+  --text-caption: 0.8rem;
+
+  /* ── Layout & spacing ─────────────────────────────────────────────── */
+  --container-content: 1200px;
+  --spacing-section: 120px;
+  --spacing-section-mobile: 80px;
+  --spacing-card: 32px;
+  --spacing-card-mobile: 20px;
 }
 
+/* Fonts alias the next/font variables wired up in app/layout.tsx (build
+   step 3); the named families are fallbacks until then. */
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --font-display: var(--font-outfit), "Outfit", sans-serif;
+  --font-body: var(--font-inter), "Inter", sans-serif;
+  --font-arabic: var(--font-tajawal), "Tajawal", sans-serif;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+/* Dark mode — .dark is set on <html> by the nav toggle (build step 18).
+   Brand colors stay as-is; only neutrals and tinted backgrounds flip. */
+html.dark {
+  color-scheme: dark;
+  --color-bg: hsl(200, 14%, 8%);
+  --color-surface: hsl(200, 12%, 13%);
+  --color-ink: hsl(0, 0%, 96%);
+  --color-primary: hsl(186, 28%, 58%);
+  --color-secondary: hsl(99, 22%, 72%);
+  --color-primary-light: hsl(186, 21%, 11%);
+  --color-primary-dark: hsl(200, 18%, 16%);
+  --color-primary-darker: hsl(186, 21%, 12%);
+  --color-secondary-light: hsl(99, 22%, 10%);
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    color-scheme: light;
   }
-}
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  body {
+    background-color: var(--color-bg);
+    color: var(--color-ink);
+    font-family: var(--font-body);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    font-family: var(--font-display);
+  }
+
+  /* Arabic typography takes over when the language toggle sets dir="rtl" */
+  [dir="rtl"] body {
+    font-family: var(--font-arabic);
+  }
+
+  [dir="rtl"] h1,
+  [dir="rtl"] h2,
+  [dir="rtl"] h3,
+  [dir="rtl"] h4 {
+    font-family: var(--font-arabic);
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--color-primary);
+    outline-offset: 2px;
+  }
 }
