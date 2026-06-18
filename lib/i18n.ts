@@ -13,7 +13,7 @@ const en = {
     pricing: "Pricing",
     faq: "FAQ",
     startFree: "Start free",
-    poweredBy: "Powered by Binaa Lab",
+    poweredBy: "Powered by Binaa Labs",
     switchToAr: "Switch to Arabic",
     switchToEn: "Switch to English",
     toDark: "Switch to dark mode",
@@ -41,7 +41,7 @@ const en = {
       "Built for UAE, GCC & MENA",
       "Arabic & English — full RTL support",
       "Free for your first 5 clients",
-      "Powered by Binaa Lab",
+      "Powered by Binaa Labs",
     ],
   },
   problem: {
@@ -222,7 +222,7 @@ const en = {
     founderEyebrow: "Why we built this",
     founderQuote:
       "“We built Wazen because coaching shouldn’t mean living in WhatsApp threads and spreadsheets. Every coach deserves one calm, organized place to manage clients, deliver plans, and actually see progress — so the focus stays on coaching, not admin.”",
-    founderName: "Naser Shadid · Founder, Wazen (by Binaa Lab)",
+    founderName: "Naser Shadid · Founder, Wazen (by Binaa Labs)",
     profileAlt:
       "A coach's public profile in the Wazen client app, showing active clients, programs delivered, compliance rate, and years of experience",
   },
@@ -252,7 +252,7 @@ const en = {
       },
       {
         q: "Is my clients' data safe and private?",
-        a: "Yes. All data is encrypted in transit and at rest. Your clients' health, progress, and personal information is never shared with third parties. As the coach, you own and control your client data. Wazen is built by Binaa Lab — a UAE-based software studio.",
+        a: "Yes. All data is encrypted in transit and at rest. Your clients' health, progress, and personal information is never shared with third parties. As the coach, you own and control your client data. Wazen is built by Binaa Labs — a UAE-based software studio.",
       },
       {
         q: "Can I cancel anytime? Is there a contract?",
@@ -287,7 +287,7 @@ const en = {
   },
   footer: {
     links: ["Terms of Service", "Privacy Policy", "Contact Support"],
-    copyright: "© 2026 Wazen by Binaa Lab. All rights reserved.",
+    copyright: "© 2026 Wazen by Binaa Labs. All rights reserved.",
   },
 };
 
@@ -300,7 +300,7 @@ const ar: Dictionary = {
     pricing: "الأسعار",
     faq: "الأسئلة الشائعة",
     startFree: "ابدأ مجانًا",
-    poweredBy: "مدعوم من Binaa Lab",
+    poweredBy: "مدعوم من Binaa Labs",
     switchToAr: "التبديل إلى العربية",
     switchToEn: "التبديل إلى الإنجليزية",
     toDark: "التبديل إلى الوضع الداكن",
@@ -503,7 +503,7 @@ const ar: Dictionary = {
     founderEyebrow: "لماذا بنينا هذا",
     founderQuote:
       "«بنينا وازن لأن التدريب لا يجب أن يعني العيش وسط محادثات واتساب وجداول البيانات. كل مدرب يستحق مكانًا واحدًا هادئًا ومنظّمًا لإدارة العملاء وتقديم الخطط ورؤية التقدّم فعلًا — ليبقى التركيز على التدريب، لا على الأعمال الإدارية.»",
-    founderName: "ناصر شديد · المؤسس، وازن (من Binaa Lab)",
+    founderName: "ناصر شديد · المؤسس، وازن (من Binaa Labs)",
     profileAlt:
       "الملف العام لمدرب في تطبيق وازن، يعرض العملاء النشطين والبرامج المُقدّمة ونسبة الالتزام وسنوات الخبرة",
   },
@@ -533,7 +533,7 @@ const ar: Dictionary = {
       },
       {
         q: "هل بيانات عملائي آمنة وخاصة؟",
-        a: "نعم. كل البيانات مشفّرة أثناء النقل والتخزين. ولا تُشارَك معلومات عملائك الصحية وتقدّمهم وبياناتهم الشخصية مع أي طرف ثالث. وبصفتك المدرب، فأنت تملك بيانات عملائك وتتحكّم بها. وازن من تطوير Binaa Lab — استوديو برمجيات مقرّه الإمارات.",
+        a: "نعم. كل البيانات مشفّرة أثناء النقل والتخزين. ولا تُشارَك معلومات عملائك الصحية وتقدّمهم وبياناتهم الشخصية مع أي طرف ثالث. وبصفتك المدرب، فأنت تملك بيانات عملائك وتتحكّم بها. وازن من تطوير Binaa Labs — استوديو برمجيات مقرّه الإمارات.",
       },
       {
         q: "هل يمكنني الإلغاء في أي وقت؟ وهل هناك عقد؟",
@@ -568,7 +568,7 @@ const ar: Dictionary = {
   },
   footer: {
     links: ["شروط الخدمة", "سياسة الخصوصية", "تواصل مع الدعم"],
-    copyright: "© 2026 وازن من Binaa Lab. جميع الحقوق محفوظة.",
+    copyright: "© 2026 وازن من Binaa Labs. جميع الحقوق محفوظة.",
   },
 };
 
