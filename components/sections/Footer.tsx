@@ -2,9 +2,8 @@
 
 import { useLanguage } from "@/components/LanguageProvider";
 
-/* TODO: link targets inferred — confirm before launch. Labels are
-   index-coupled to t.footer.links. */
-const linkHrefs = ["/terms", "/privacy", "mailto:support@wazen.com"];
+/* Labels are index-coupled to t.footer.links. */
+const linkHrefs = ["/terms", "/privacy", "mailto:admin@binaalabs.com"];
 
 export default function Footer() {
   const { t } = useLanguage();
