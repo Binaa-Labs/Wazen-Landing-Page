@@ -56,16 +56,17 @@ function FaqAccordion({ items }: { items: readonly FaqItem[] }) {
                 </svg>
               </button>
             </h3>
-            <div
+            <motion.div
               id={`faq-panel-${i}`}
               role="region"
               aria-labelledby={`faq-question-${i}`}
-              className={`overflow-hidden transition-[max-height,opacity] duration-[280ms] ease-in-out ${
-                open ? "max-h-[500px] opacity-100" : "max-h-0 opacity-0"
-              }`}
+              initial={false}
+              animate={{ height: open ? "auto" : 0, opacity: open ? 1 : 0 }}
+              transition={{ duration: 0.28, ease: "easeInOut" }}
+              className="overflow-hidden"
             >
               <p className="pb-5 text-body text-ink/65">{faq.a}</p>
-            </div>
+            </motion.div>
           </motion.div>
         );
       })}
@@ -77,7 +78,10 @@ export default function FAQ() {
   const { t, lang } = useLanguage();
 
   return (
-    <section id="faq" className="bg-bg px-6 py-section-mobile md:py-section">
+    <section
+      id="faq"
+      className="bg-bg px-6 py-section-compact-mobile md:py-section-compact"
+    >
       <div className="mx-auto max-w-content">
         <SectionHeader eyebrow={t.faq.eyebrow} title={t.faq.h2} />
         <FaqAccordion key={lang} items={t.faq.items} />

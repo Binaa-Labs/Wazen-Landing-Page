@@ -196,15 +196,15 @@ const en = {
       },
     ],
     stripHeadline:
-      "Most coaches pay $400+/month across separate tools. Wazen replaces all of them.",
+      "Instead of juggling messages, spreadsheets, forms, and trackers, Wazen brings the coaching workflow into one system.",
     tools: [
       "WhatsApp (free but chaos)",
       "Spreadsheets",
       "Form tools",
       "Progress trackers",
     ],
-    stripOld: "$400+/mo",
-    stripNew: "Wazen from $49/mo",
+    stripOld: "Scattered tools",
+    stripNew: "Wazen starts free",
   },
   why: {
     eyebrow: "Why Wazen",
@@ -216,15 +216,11 @@ const en = {
       "Scattered tools replaced — WhatsApp, spreadsheets, PDFs, forms, notes, reminders",
       "A coach dashboard and a client app, working as one connected system",
     ],
-    bilingualBadge: "العربية & English — full right-to-left support",
-    profileCaption:
-      "Coaches build a public profile clients can view — with active clients, programs delivered, compliance rate, and experience.",
+    bilingualBadge: "Arabic & English — full right-to-left support",
     founderEyebrow: "Why we built this",
     founderQuote:
       "“We built Wazen because coaching shouldn’t mean living in WhatsApp threads and spreadsheets. Every coach deserves one calm, organized place to manage clients, deliver plans, and actually see progress — so the focus stays on coaching, not admin.”",
     founderName: "Naser Shadid · Founder, Wazen (by Binaa Labs)",
-    profileAlt:
-      "A coach's public profile in the Wazen client app, showing active clients, programs delivered, compliance rate, and years of experience",
   },
   faq: {
     eyebrow: "FAQ",
@@ -324,7 +320,7 @@ const ar: Dictionary = {
       "مصمّم للإمارات والخليج والشرق الأوسط",
       "العربية والإنجليزية — دعم كامل للكتابة من اليمين لليسار",
       "مجاني لأول 5 عملاء",
-      "مدعوم من Binaa Lab",
+      "مدعوم من Binaa Labs",
     ],
   },
   problem: {
@@ -477,15 +473,15 @@ const ar: Dictionary = {
       },
     ],
     stripHeadline:
-      "يدفع معظم المدربين أكثر من 400$ شهريًا على أدوات متفرّقة. ووازن يغنيك عنها جميعًا.",
+      "بدل التنقل بين الرسائل والجداول والنماذج ومتتبعات التقدم، يجمع وازن سير عمل التدريب في نظام واحد.",
     tools: [
       "واتساب (مجاني لكنه فوضى)",
       "جداول البيانات",
       "أدوات النماذج",
       "متتبّعات التقدّم",
     ],
-    stripOld: "+400$/شهر",
-    stripNew: "وازن يبدأ من 49$/شهر",
+    stripOld: "أدوات متفرقة",
+    stripNew: "وازن يبدأ مجانًا",
   },
   why: {
     eyebrow: "لماذا وازن",
@@ -498,14 +494,10 @@ const ar: Dictionary = {
       "لوحة للمدرب وتطبيق للعميل، يعملان كنظام واحد متّصل",
     ],
     bilingualBadge: "العربية والإنجليزية — دعم كامل للكتابة من اليمين لليسار",
-    profileCaption:
-      "يبني المدربون ملفًا عامًا يطّلع عليه العملاء — مع العملاء النشطين والبرامج المُقدّمة ونسبة الالتزام وسنوات الخبرة.",
     founderEyebrow: "لماذا بنينا هذا",
     founderQuote:
       "«بنينا وازن لأن التدريب لا يجب أن يعني العيش وسط محادثات واتساب وجداول البيانات. كل مدرب يستحق مكانًا واحدًا هادئًا ومنظّمًا لإدارة العملاء وتقديم الخطط ورؤية التقدّم فعلًا — ليبقى التركيز على التدريب، لا على الأعمال الإدارية.»",
     founderName: "ناصر شديد · المؤسس، وازن (من Binaa Labs)",
-    profileAlt:
-      "الملف العام لمدرب في تطبيق وازن، يعرض العملاء النشطين والبرامج المُقدّمة ونسبة الالتزام وسنوات الخبرة",
   },
   faq: {
     eyebrow: "الأسئلة الشائعة",

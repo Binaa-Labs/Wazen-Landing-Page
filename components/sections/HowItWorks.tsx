@@ -61,7 +61,7 @@ export default function HowItWorks() {
   return (
     <section
       id="how-it-works"
-      className="bg-bg px-6 py-section-mobile md:py-section"
+      className="bg-bg px-6 py-section-compact-mobile md:py-section-compact"
     >
       <div className="mx-auto max-w-content">
         <SectionHeader

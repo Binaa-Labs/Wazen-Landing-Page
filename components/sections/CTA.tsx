@@ -7,10 +7,7 @@ import { fadeUp, viewport } from "@/components/motion";
 import Badge from "@/components/ui/Badge";
 import Button from "@/components/ui/Button";
 import GhostWordmark from "@/components/ui/GhostWordmark";
-
-const SIGNUP_URL = "https://app.wazen.com/signup";
-/* TODO: inferred from the signup URL pattern — confirm before launch */
-const LOGIN_URL = "https://app.wazen.com/login";
+import { APP_URLS } from "@/lib/links";
 
 /* Shared fadeUp timing plus a 150ms trail so the card lands after the
    left column */
@@ -44,7 +41,7 @@ export default function CTA() {
   const { t } = useLanguage();
 
   return (
-    <section className="relative overflow-hidden bg-primary-dark px-6 py-section-mobile md:py-section">
+    <section className="relative overflow-hidden bg-primary-dark px-6 py-section-compact-mobile md:py-section-compact">
       <GhostWordmark />
       <div className="relative z-[1] mx-auto grid max-w-content items-center gap-12 lg:grid-cols-2">
         <motion.div
@@ -97,13 +94,13 @@ export default function CTA() {
               </li>
             ))}
           </ul>
-          <Button href={SIGNUP_URL} className="mt-7 w-full">
+          <Button href={APP_URLS.signup} className="mt-7 w-full">
             {t.cta.ctaLabel}
           </Button>
           <p className="mt-4 text-center text-caption text-ink/55">
             {t.cta.loginPrompt}{" "}
             <a
-              href={LOGIN_URL}
+              href={APP_URLS.login}
               className="font-medium text-primary hover:underline dark:text-ink"
             >
               {t.cta.loginLink}

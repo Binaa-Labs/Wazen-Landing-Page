@@ -1,15 +1,12 @@
 "use client";
 
 import { useRef } from "react";
-import Image from "next/image";
 import { motion, useInView } from "framer-motion";
 
 import { useLanguage } from "@/components/LanguageProvider";
 import { useCountUp } from "@/components/useCountUp";
 import { fadeUp, staggerContainer, viewport } from "@/components/motion";
 import Badge from "@/components/ui/Badge";
-import BrowserFrame from "@/components/ui/BrowserFrame";
-import Lightbox from "@/components/ui/Lightbox";
 import SectionHeader from "@/components/ui/SectionHeader";
 
 /* Figures are index-coupled to t.why.statLabels. The two numeric stats count
@@ -48,7 +45,10 @@ export default function WhyWazen() {
   const statsInView = useInView(statsRef, { once: true, margin: "-80px" });
 
   return (
-    <section id="why-wazen" className="bg-bg px-6 py-section-mobile md:py-section">
+    <section
+      id="why-wazen"
+      className="bg-bg px-6 py-section-compact-mobile md:py-section-compact"
+    >
       <div className="mx-auto max-w-content">
         <SectionHeader
           eyebrow={t.why.eyebrow}
@@ -98,41 +98,6 @@ export default function WhyWazen() {
           <Badge variant="pill" tone="sage" className="px-5 py-2">
             {t.why.bilingualBadge}
           </Badge>
-        </motion.div>
-
-        <motion.div
-          variants={fadeUp}
-          initial="hidden"
-          whileInView="visible"
-          viewport={viewport}
-          className="mx-auto mt-16 max-w-3xl"
-        >
-          <motion.div
-            whileHover={{ scale: 1.03, y: -4 }}
-            transition={{ duration: 0.25, ease: "easeOut" }}
-            className="w-full"
-          >
-            <BrowserFrame url="app.wazen.com/coach-profile">
-              <Lightbox
-                src="/screenshots/Client-Coach-Profile-View.png"
-                alt={t.why.profileAlt}
-                width={1902}
-                height={910}
-                className="w-full"
-              >
-                <Image
-                  src="/screenshots/Client-Coach-Profile-View.png"
-                  alt={t.why.profileAlt}
-                  width={1902}
-                  height={910}
-                  className="h-auto w-full"
-                />
-              </Lightbox>
-            </BrowserFrame>
-          </motion.div>
-          <p className="mt-4 text-center text-caption text-ink/55">
-            {t.why.profileCaption}
-          </p>
         </motion.div>
 
         <motion.div

@@ -8,8 +8,7 @@ import { fadeUp, staggerContainer, viewport } from "@/components/motion";
 import Badge from "@/components/ui/Badge";
 import Button from "@/components/ui/Button";
 import SectionHeader from "@/components/ui/SectionHeader";
-
-const SIGNUP_URL = "https://app.wazen.com/signup";
+import { APP_URLS } from "@/lib/links";
 
 type Period = "monthly" | "yearly";
 
@@ -119,7 +118,7 @@ export default function Pricing() {
   return (
     <section
       id="pricing"
-      className="bg-bg px-6 py-section-mobile md:py-section"
+      className="bg-bg px-6 py-section-compact-mobile md:py-section-compact"
     >
       <div className="mx-auto max-w-content">
         <SectionHeader
@@ -238,7 +237,7 @@ export default function Pricing() {
 
                 <div className="mt-auto pt-7">
                   <Button
-                    href={SIGNUP_URL}
+                    href={APP_URLS.signup}
                     variant={plan.ctaVariant}
                     className="w-full"
                   >

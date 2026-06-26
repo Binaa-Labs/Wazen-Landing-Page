@@ -5,8 +5,7 @@ import { AnimatePresence, motion } from "framer-motion";
 
 import { useLanguage } from "@/components/LanguageProvider";
 import Button from "@/components/ui/Button";
-
-const SIGNUP_URL = "https://app.wazen.com/signup";
+import { APP_URLS } from "@/lib/links";
 
 const linkHrefs = ["#features", "#how-it-works", "#pricing", "#faq"] as const;
 
@@ -179,7 +178,7 @@ export default function Nav() {
             >
               {theme === "light" ? <MoonIcon /> : <SunIcon />}
             </button>
-            <Button href={SIGNUP_URL} size="sm">
+            <Button href={APP_URLS.signup} size="sm">
               {t.nav.startFree}
             </Button>
           </div>
@@ -236,7 +235,7 @@ export default function Nav() {
                 >
                   {theme === "light" ? <MoonIcon /> : <SunIcon />}
                 </button>
-                <Button href={SIGNUP_URL} size="sm" className="flex-1">
+                <Button href={APP_URLS.signup} size="sm" className="flex-1">
                   {t.nav.startFree}
                 </Button>
               </div>

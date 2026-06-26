@@ -4,6 +4,11 @@ import LegalPageLayout, { LegalSection } from "@/components/LegalPageLayout";
 
 export const metadata: Metadata = {
   title: "Privacy Policy — Wazen",
+  description:
+    "How Wazen collects, uses, stores, and protects coach and client data.",
+  alternates: {
+    canonical: "https://wazen.fit/privacy",
+  },
 };
 
 const email = (

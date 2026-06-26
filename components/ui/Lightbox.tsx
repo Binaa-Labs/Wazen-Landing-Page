@@ -19,7 +19,7 @@ type LightboxProps = {
   height: number;
   /** Classes for the in-place trigger (e.g. the aspect box / image wrapper) */
   className?: string;
-  /** Controlled open — lets Features' PiP open the primary's lightbox */
+  /** Controlled open — lets a parent component manage lightbox state */
   open?: boolean;
   onOpenChange?: (open: boolean) => void;
   children: React.ReactNode;
@@ -28,6 +28,14 @@ type LightboxProps = {
 /* No-op subscribe: getSnapshot returns true on the client, false on the
    server — a set-state-free way to know the portal target exists. */
 const emptySubscribe = () => () => {};
+const focusableSelector = [
+  "a[href]",
+  "button:not([disabled])",
+  "textarea:not([disabled])",
+  "input:not([disabled])",
+  "select:not([disabled])",
+  '[tabindex]:not([tabindex="-1"])',
+].join(",");
 
 function CloseIcon() {
   return (
@@ -73,6 +81,7 @@ export default function Lightbox({
 
   const triggerRef = useRef<HTMLButtonElement>(null);
   const closeRef = useRef<HTMLButtonElement>(null);
+  const dialogRef = useRef<HTMLDivElement>(null);
 
   const setOpen = useCallback((v: boolean) => {
     setInternalOpen(v);
@@ -80,12 +89,54 @@ export default function Lightbox({
   }, []);
   const close = useCallback(() => setOpen(false), [setOpen]);
 
-  // Escape to close + scroll lock + focus management while open.
+  // Escape/Tab handling + scroll lock + focus management while open.
   useEffect(() => {
     if (!open) return;
     const trigger = triggerRef.current;
+    const dialog = dialogRef.current;
+    const siblingState = new Map<
+      Element,
+      { ariaHidden: string | null; inert: boolean }
+    >();
+
+    if (dialog) {
+      Array.from(document.body.children).forEach((child) => {
+        if (child === dialog) return;
+        const el = child as HTMLElement;
+        siblingState.set(el, {
+          ariaHidden: el.getAttribute("aria-hidden"),
+          inert: el.inert,
+        });
+        el.setAttribute("aria-hidden", "true");
+        el.inert = true;
+      });
+    }
+
     const onKey = (e: KeyboardEvent) => {
-      if (e.key === "Escape") close();
+      if (e.key === "Escape") {
+        close();
+        return;
+      }
+      if (e.key !== "Tab") return;
+
+      const focusables = Array.from(
+        dialog?.querySelectorAll<HTMLElement>(focusableSelector) ?? [],
+      ).filter((el) => el.offsetParent !== null);
+      if (focusables.length === 0) {
+        e.preventDefault();
+        closeRef.current?.focus();
+        return;
+      }
+
+      const first = focusables[0];
+      const last = focusables[focusables.length - 1];
+      if (e.shiftKey && document.activeElement === first) {
+        e.preventDefault();
+        last.focus();
+      } else if (!e.shiftKey && document.activeElement === last) {
+        e.preventDefault();
+        first.focus();
+      }
     };
     document.addEventListener("keydown", onKey);
     const prevOverflow = document.body.style.overflow;
@@ -94,6 +145,14 @@ export default function Lightbox({
     return () => {
       document.removeEventListener("keydown", onKey);
       document.body.style.overflow = prevOverflow;
+      siblingState.forEach((state, el) => {
+        if (state.ariaHidden === null) {
+          el.removeAttribute("aria-hidden");
+        } else {
+          el.setAttribute("aria-hidden", state.ariaHidden);
+        }
+        (el as HTMLElement).inert = state.inert;
+      });
       trigger?.focus(); // restore focus to the screenshot that opened it
     };
   }, [open, close]);
@@ -106,7 +165,7 @@ export default function Lightbox({
         layoutId={layoutId}
         onClick={() => setOpen(true)}
         aria-label={`Expand image: ${alt}`}
-        className={`relative block cursor-pointer overflow-hidden ${
+        className={`block cursor-pointer overflow-hidden ${
           className ?? ""
         }`}
       >
@@ -118,6 +177,7 @@ export default function Lightbox({
           <AnimatePresence>
             {open && (
               <motion.div
+                ref={dialogRef}
                 role="dialog"
                 aria-modal="true"
                 aria-label={alt}

@@ -72,8 +72,10 @@
 
   /* ── Layout & spacing ─────────────────────────────────────────────── */
   --container-content: 1200px;
-  --spacing-section: 120px;
-  --spacing-section-mobile: 80px;
+  --spacing-section: 96px;
+  --spacing-section-mobile: 64px;
+  --spacing-section-compact: 72px;
+  --spacing-section-compact-mobile: 48px;
   --spacing-card: 32px;
   --spacing-card-mobile: 20px;
 }
@@ -90,14 +92,14 @@
    Brand colors stay as-is; only neutrals and tinted backgrounds flip. */
 html.dark {
   color-scheme: dark;
-  --color-bg: hsl(200, 14%, 8%);
+  --color-bg: hsl(186, 24%, 7%);
   --color-surface: hsl(200, 12%, 13%);
   --color-ink: hsl(0, 0%, 96%);
   --color-primary: hsl(186, 28%, 58%);
   --color-secondary: hsl(99, 22%, 72%);
   --color-primary-light: hsl(186, 21%, 11%);
-  --color-primary-dark: hsl(200, 18%, 16%);
-  --color-primary-darker: hsl(186, 21%, 12%);
+  --color-primary-dark: hsl(186, 22%, 12%);
+  --color-primary-darker: hsl(186, 24%, 8%);
   --color-secondary-light: hsl(99, 22%, 10%);
 }
 

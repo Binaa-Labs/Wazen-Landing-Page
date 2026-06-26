@@ -28,10 +28,6 @@ function getSnapshot(): Locale {
   return localStorage.getItem("wazen-lang") === "ar" ? "ar" : "en";
 }
 
-function getServerSnapshot(): Locale {
-  return "en";
-}
-
 function persistLang(lang: Locale) {
   localStorage.setItem("wazen-lang", lang);
   /* Mirror onto <html> imperatively. On first load the init script in
@@ -52,8 +48,18 @@ type LanguageContextValue = {
 
 const LanguageContext = createContext<LanguageContextValue | null>(null);
 
-export function LanguageProvider({ children }: { children: ReactNode }) {
-  const lang = useSyncExternalStore(subscribe, getSnapshot, getServerSnapshot);
+export function LanguageProvider({
+  children,
+  initialLang = "en",
+}: {
+  children: ReactNode;
+  initialLang?: Locale;
+}) {
+  const lang = useSyncExternalStore(
+    subscribe,
+    getSnapshot,
+    () => initialLang,
+  );
 
   const value: LanguageContextValue = {
     lang,

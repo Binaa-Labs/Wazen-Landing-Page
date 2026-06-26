@@ -23,7 +23,7 @@ const TAB_META = [
         <path d="M16 4.6a3.5 3.5 0 0 1 0 5.8M17.5 14.7c2.1.6 3.5 2.2 3.5 4.8" />
       </>
     ),
-    url: "app.wazen.com/clients",
+    url: "wazen.fit/clients",
     primarySrc: "/screenshots/Coach-Client_Tab.png",
     secondary: { src: "/screenshots/Coach-Client-VIEW.png", width: 1907, height: 910 },
   },
@@ -36,7 +36,7 @@ const TAB_META = [
         <path d="m9 13.5 2 2 4-4.5" />
       </>
     ),
-    url: "app.wazen.com/dashboard",
+    url: "wazen.fit/dashboard",
     primarySrc: "/screenshots/Coach-Dashboard.png",
     secondary: { src: "/screenshots/Coach-Client-VIEW-Check-ins.png", width: 1897, height: 907 },
   },
@@ -48,7 +48,7 @@ const TAB_META = [
         <path d="M15.5 7H21v5.5" />
       </>
     ),
-    url: "app.wazen.com/progress",
+    url: "wazen.fit/progress",
     primarySrc: "/screenshots/Client-Progress-Tab.png",
     secondary: { src: "/screenshots/Coach-Analytics-Tab1.png", width: 1906, height: 909 },
   },
@@ -62,7 +62,7 @@ const TAB_META = [
         <rect x="13.5" y="13.5" width="7" height="7" rx="1.5" />
       </>
     ),
-    url: "app.wazen.com/templates",
+    url: "wazen.fit/templates",
     primarySrc: "/screenshots/Coach-Template-Tab.png",
     secondary: { src: "/screenshots/Coach-Client-VIEW-Workout.png", width: 1902, height: 908 },
   },
@@ -88,7 +88,6 @@ function TwoWayArrow() {
 export default function Features() {
   const { t, lang } = useLanguage();
   const [activeId, setActiveId] = useState(TAB_META[0].id);
-  const [zoom, setZoom] = useState(false);
   const tabRefs = useRef<(HTMLButtonElement | null)[]>([]);
 
   const found = TAB_META.findIndex((tab) => tab.id === activeId);
@@ -110,7 +109,10 @@ export default function Features() {
   };
 
   return (
-    <section id="features" className="bg-bg px-6 py-section-mobile md:py-section">
+    <section
+      id="features"
+      className="bg-bg px-6 py-section-compact-mobile md:py-section-compact"
+    >
       <div className="mx-auto max-w-content">
         <SectionHeader
           eyebrow={t.features.eyebrow}
@@ -197,8 +199,6 @@ export default function Features() {
                         alt={text.primaryAlt}
                         width={1905}
                         height={910}
-                        open={zoom}
-                        onOpenChange={setZoom}
                         className="relative aspect-[21/10] w-full"
                       >
                         <Image
@@ -213,12 +213,12 @@ export default function Features() {
                   </motion.div>
 
                   {/* PiP secondary overhangs the frame by 40px; the caption
-                      below clears it via sm:mt-16. Clicking it opens the
-                      primary's lightbox (one per tab). */}
-                  <button
-                    type="button"
-                    onClick={() => setZoom(true)}
-                    aria-label={`Expand image: ${text.primaryAlt}`}
+                      below clears it via sm:mt-16. */}
+                  <Lightbox
+                    src={meta.secondary.src}
+                    alt={text.secondaryAlt}
+                    width={meta.secondary.width}
+                    height={meta.secondary.height}
                     className="group absolute -bottom-10 end-4 hidden w-[38%] max-w-xs cursor-pointer overflow-hidden rounded-xl border border-primary/10 bg-surface p-1.5 shadow-lg sm:block"
                   >
                     <Image
@@ -232,7 +232,7 @@ export default function Features() {
                       aria-hidden
                       className="pointer-events-none absolute inset-0 rounded-xl ring-2 ring-inset ring-primary/0 transition group-hover:ring-primary/40"
                     />
-                  </button>
+                  </Lightbox>
                 </div>
 
                 <p className="mt-6 text-center text-caption text-ink/55 sm:mt-16">

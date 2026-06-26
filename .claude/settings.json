@@ -3,7 +3,7 @@
     "allow": [
       "PowerShell(npm run build)",
       "PowerShell($css = Get-Content \".next\\\\static\\\\chunks\\\\0hw3hliw1nbwi.css\" -Raw; $start = $css.IndexOf\\(\":root\"\\); $css.Substring\\($start, 2200\\))",
-      "PowerShell($html = Get-Content \".next\\\\server\\\\app\\\\index.html\" -Raw; foreach \\($needle in 'property=\"og:site_name\" content=\"Wazen\"', 'name=\"twitter:card\" content=\"summary_large_image\"', 'rel=\"canonical\" href=\"https://wazen.com\"', 'hreflang=\"ar\"', '__variable_', 'name=\"keywords\"'\\) { \"{0,-55} {1}\" -f $needle, $html.Contains\\($needle\\) }; \\([regex]::Matches\\($html, '__variable_\\\\w+'\\)\\).Value | Select-Object -Unique)",
+      "PowerShell($html = Get-Content \".next\\\\server\\\\app\\\\index.html\" -Raw; foreach \\($needle in 'property=\"og:site_name\" content=\"Wazen\"', 'name=\"twitter:card\" content=\"summary_large_image\"', 'rel=\"canonical\" href=\"https://wazen.fit\"', 'hreflang=\"ar\"', '__variable_', 'name=\"keywords\"'\\) { \"{0,-55} {1}\" -f $needle, $html.Contains\\($needle\\) }; \\([regex]::Matches\\($html, '__variable_\\\\w+'\\)\\).Value | Select-Object -Unique)",
       "PowerShell($html = Get-Content \".next\\\\server\\\\app\\\\index.html\" -Raw -Encoding UTF8; \"Contains وازن: $\\($html.Contains\\('وازن'\\)\\)\")",
       "PowerShell(Add-Type -AssemblyName System.Drawing; $img = [System.Drawing.Image]::FromFile\\(\"$PWD\\\\public\\\\screenshots\\\\Coach-Dashboard.png\"\\); \"Coach-Dashboard.png: $\\($img.Width\\) x $\\($img.Height\\)\"; $img.Dispose\\(\\))",
       "PowerShell($html = Get-Content \".next\\\\server\\\\app\\\\index.html\" -Raw -Encoding UTF8; foreach \\($needle in 'id=\"problem\"', 'The scattered-tools problem', 'it&#x27;s your tools', 'The Old Way \\(Scattered Tools\\)', 'The Wazen Way \\(One System\\)', 'Living in your DMs', 'Progress you can actually see', 'full-time admin'\\) { \"{0,-40} {1}\" -f $needle, $html.Contains\\($needle\\) }; \"Ghost wordmark count: $\\(\\([regex]::Matches\\($html, 'وازن'\\)\\).Count\\)\")",
@@ -32,10 +32,26 @@
       "PowerShell($html = Get-Content \".next\\\\server\\\\app\\\\index.html\" -Raw -Encoding UTF8; foreach \\($needle in '<footer', 'Terms of Service', 'Privacy Policy', 'Contact Support', '© 2026 Wazen by Binaa Labs. All rights reserved.', 'aria-label=\"Footer\"', 'mailto:support@wazen.com'\\) { \"{0,-52} {1}\" -f $needle, $html.Contains\\($needle\\) }; \"--- negative checks ---\"; \"h-screen present: $\\($html.Contains\\('h-screen'\\)\\)\"; \"landmark order ok: $\\(\\($html.IndexOf\\('<nav'\\) -lt $html.IndexOf\\('<main'\\)\\) -and \\($html.IndexOf\\('<main'\\) -lt $html.IndexOf\\('<footer'\\)\\)\\)\")",
       "PowerShell($html = Get-Content \".next\\\\server\\\\app\\\\index.html\" -Raw -Encoding UTF8; \"--- EN defaults present \\(server renders en\\) ---\"; foreach \\($needle in 'Run your coaching practice from', 'The problem isn&#x27;t your coaching', 'One platform. Every tool', 'Start free. Grow on your terms.', 'Most popular', 'Questions coaches ask before switching', 'Bring your coaching into one organized place', 'Terms of Service', '© 2026 Wazen by Binaa Labs'\\) { \"{0,-45} {1}\" -f $needle, $html.Contains\\($needle\\) }; \"--- bilingual hero line still present \\(design element\\) ---\"; \"Arabic identity line: $\\($html.Contains\\('أدِر عملك مع عملائك من مكان واحد، منظّم وسلس'\\)\\)\"; \"--- $39 still absent ---\"; \"`$39 present: $\\($html.Contains\\('$39'\\)\\)\")",
       "PowerShell($html = Get-Content \".next\\\\server\\\\app\\\\index.html\" -Raw -Encoding UTF8; \"wazen-theme in script:    $\\($html.Contains\\('wazen-theme'\\)\\)\"; \"wazen-lang in script:     $\\($html.Contains\\('wazen-lang'\\)\\)\"; \"prefers-color-scheme:     $\\($html.Contains\\('prefers-color-scheme: dark'\\)\\)\"; \"classList.add\\(dark\\):      $\\($html.Contains\\('classList.add\\(`\"dark`\"\\)'\\)\\)\"; \"dir=rtl set in script:    $\\($html.Contains\\('setAttribute\\(`\"dir`\",`\"rtl`\"\\)'\\)\\)\"; $idx = $html.IndexOf\\('<body'\\); $bodyOpen = $html.Substring\\($idx, 220\\); \"--- body start ---\"; $bodyOpen)",
-      "PowerShell($html = Get-Content \".next\\\\server\\\\app\\\\index.html\" -Raw -Encoding UTF8; foreach \\($needle in 'Coach-Dashboard', 'Coach-Client_Tab', 'Coach-Invite-Client', 'Client-Coach-Profile-View', 'Client-Dashboard-Tab', 'aria-label=\"Expand image', 'cursor-zoom-in', 'Built around how coaches', 'Every client, fully organized'\\) { \"{0,-35} {1}\" -f $needle, $html.Contains\\($needle\\) }; \"lightbox trigger buttons: $\\(\\([regex]::Matches\\($html, 'Expand image:'\\)\\).Count\\)\")"
+      "PowerShell($html = Get-Content \".next\\\\server\\\\app\\\\index.html\" -Raw -Encoding UTF8; foreach \\($needle in 'Coach-Dashboard', 'Coach-Client_Tab', 'Coach-Invite-Client', 'Client-Coach-Profile-View', 'Client-Dashboard-Tab', 'aria-label=\"Expand image', 'cursor-zoom-in', 'Built around how coaches', 'Every client, fully organized'\\) { \"{0,-35} {1}\" -f $needle, $html.Contains\\($needle\\) }; \"lightbox trigger buttons: $\\(\\([regex]::Matches\\($html, 'Expand image:'\\)\\).Count\\)\")",
+      "Bash(npx next *)",
+      "Read(//tmp/tmp.xxYS5e9kEQ/**)",
+      "Bash(npm install *)",
+      "Bash(node -e \"console.log\\(JSON.stringify\\(require\\('./package.json'\\).scripts\\)\\)\")",
+      "Bash(rm -rf /tmp/tmp.xxYS5e9kEQ 2>/dev/null; echo \"cleaned\")",
+      "Read(//c/Users/naser/Desktop/**)",
+      "Bash(gh repo *)",
+      "Bash(node -e \"const p=require\\('./package.json'\\);console.log\\('next',p.dependencies.next,'react',p.dependencies.react\\);\")",
+      "Bash(pkill -f \"next start\")",
+      "Bash(mv assets/og /tmp/og-backup)",
+      "Bash(cd \"c:/Users/naser/Desktop/Binaa-labs-landing\" && pkill -f \"next start\" 2>/dev/null; mv /tmp/og-backup2 assets/og && echo \"restored assets/og\" && ls assets/og && echo \"--- OG PNG generated at build? ---\" && ls -la .next/server/app/opengraph-image* 2>/dev/null | head; rm -f /tmp/binaa*.log /tmp/probe.mjs 2>/dev/null; echo done)",
+      "PowerShell(npm run build 2>&1)",
+      "PowerShell(npm run lint 2>&1)",
+      "Bash(echo \"exit: $?\")"
     ],
     "additionalDirectories": [
-      "c:\\Users\\naser\\Desktop\\wazen-landing\\public\\screenshots"
+      "c:\\Users\\naser\\Desktop\\wazen-landing\\public\\screenshots",
+      "\\tmp",
+      "c:\\Users\\naser\\Desktop\\Binaa-labs-landing\\components"
     ]
   }
 }

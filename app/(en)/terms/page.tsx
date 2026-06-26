@@ -4,6 +4,11 @@ import LegalPageLayout, { LegalSection } from "@/components/LegalPageLayout";
 
 export const metadata: Metadata = {
   title: "Terms of Service — Wazen",
+  description:
+    "Terms governing access to and use of the Wazen coaching platform.",
+  alternates: {
+    canonical: "https://wazen.fit/terms",
+  },
 };
 
 const email = (

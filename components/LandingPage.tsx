@@ -12,7 +12,7 @@ import Problem from "@/components/sections/Problem";
 import TrustBar from "@/components/sections/TrustBar";
 import WhyWazen from "@/components/sections/WhyWazen";
 
-export default function Home() {
+export default function LandingPage() {
   return (
     <MotionConfig reducedMotion="user">
       <Nav />

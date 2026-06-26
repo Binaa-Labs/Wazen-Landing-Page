@@ -10,12 +10,7 @@ import Badge from "@/components/ui/Badge";
 import BrowserFrame from "@/components/ui/BrowserFrame";
 import Button from "@/components/ui/Button";
 import Lightbox from "@/components/ui/Lightbox";
-
-const SIGNUP_URL = "https://app.wazen.com/signup";
-
-/* Fixed bilingual identity element — shown only under the English headline,
-   since in Arabic mode the H1 itself is already Arabic. Not an i18n string. */
-const BILINGUAL_LINE = "أدِر عملك مع عملائك من مكان واحد، منظّم وسلس";
+import { APP_URLS } from "@/lib/links";
 
 function WavyUnderline() {
   return (
@@ -37,7 +32,7 @@ function WavyUnderline() {
 }
 
 export default function Hero() {
-  const { t, lang } = useLanguage();
+  const { t } = useLanguage();
 
   /* Parallax: the framed screenshot drifts at ~80% of scroll speed as the
      section scrolls through the viewport. */
@@ -74,17 +69,6 @@ export default function Hero() {
             </span>
           </motion.h1>
 
-          {lang === "en" && (
-            <motion.p
-              variants={fadeUp}
-              dir="rtl"
-              lang="ar"
-              className="font-arabic text-[clamp(1.43rem,3vw,2.42rem)] font-medium text-primary opacity-65"
-            >
-              {BILINGUAL_LINE}
-            </motion.p>
-          )}
-
           <motion.p
             variants={fadeUp}
             className="mx-auto max-w-2xl text-body-lg text-ink/60"
@@ -96,7 +80,7 @@ export default function Hero() {
             variants={fadeUp}
             className="flex flex-wrap items-center justify-center gap-4"
           >
-            <Button href={SIGNUP_URL}>{t.hero.ctaPrimary}</Button>
+            <Button href={APP_URLS.signup}>{t.hero.ctaPrimary}</Button>
             <Button variant="secondary" href="#features">
               {t.hero.ctaSecondary}
             </Button>
@@ -134,7 +118,7 @@ export default function Hero() {
               transition={{ duration: 0.25, ease: "easeOut" }}
               className="w-full"
             >
-              <BrowserFrame url="app.wazen.com/dashboard">
+              <BrowserFrame url="wazen.fit/dashboard">
                 <Lightbox
                   src="/screenshots/Coach-Dashboard.png"
                   alt={t.hero.dashboardAlt}
