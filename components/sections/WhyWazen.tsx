@@ -1,48 +1,20 @@
 "use client";
 
-import { useRef } from "react";
-import { motion, useInView } from "framer-motion";
+import { motion } from "framer-motion";
 
 import { useLanguage } from "@/components/LanguageProvider";
-import { useCountUp } from "@/components/useCountUp";
 import { fadeUp, staggerContainer, viewport } from "@/components/motion";
 import Badge from "@/components/ui/Badge";
 import SectionHeader from "@/components/ui/SectionHeader";
 
-/* Figures are index-coupled to t.why.statLabels. The two numeric stats count
-   up on scroll-into-view; "2-in-1" just fades in. */
-type Stat =
-  | { id: string; counter: true; to: number; suffix: string }
-  | { id: string; counter: false; display: string };
-
-const STATS: Stat[] = [
-  { id: "free", counter: true, to: 5, suffix: "" },
-  { id: "tools", counter: true, to: 6, suffix: "+" },
-  { id: "two-in-one", counter: false, display: "2-in-1" },
-];
-
-function CounterFigure({
-  to,
-  suffix,
-  active,
-}: {
-  to: number;
-  suffix: string;
-  active: boolean;
-}) {
-  const value = useCountUp(to, active);
-  return (
-    <>
-      {value}
-      {suffix}
-    </>
-  );
-}
+/* Pass A note: the animated count-up stats were removed — they dressed
+   product facts ("5 free clients", "6+ tools") in the visual language of
+   scale metrics. Plain value-prop pillars instead; the coach-profile proof
+   screenshot takes the visual slot in Pass C, and useCountUp stays available
+   for future real metrics. */
 
 export default function WhyWazen() {
   const { t } = useLanguage();
-  const statsRef = useRef<HTMLDivElement>(null);
-  const statsInView = useInView(statsRef, { once: true, margin: "-80px" });
 
   return (
     <section
@@ -57,32 +29,24 @@ export default function WhyWazen() {
         />
 
         <motion.div
-          ref={statsRef}
           variants={staggerContainer}
           initial="hidden"
           whileInView="visible"
           viewport={viewport}
           className="mx-auto mt-14 grid max-w-4xl divide-y divide-ink/8 md:grid-cols-3 md:divide-x md:divide-y-0"
         >
-          {STATS.map((stat, i) => (
+          {/* Index keys: translated-string keys remount these on language
+              switch and they'd mount hidden inside the already-revealed
+              parent (see Problem.tsx note). */}
+          {t.why.pillars.map((pillar, i) => (
             <motion.div
-              key={stat.id}
+              key={i}
               variants={fadeUp}
               className="px-8 py-6 text-center"
             >
-              <p className="font-display text-[clamp(2.4rem,4.5vw,3.8rem)] font-extrabold leading-none text-primary">
-                {stat.counter ? (
-                  <CounterFigure
-                    to={stat.to}
-                    suffix={stat.suffix}
-                    active={statsInView}
-                  />
-                ) : (
-                  stat.display
-                )}
-              </p>
-              <p className="mx-auto mt-2 max-w-xs text-body text-ink/60">
-                {t.why.statLabels[i]}
+              <h3 className="text-h3 text-primary">{pillar.title}</h3>
+              <p className="mx-auto mt-2.5 max-w-xs text-body text-ink/60">
+                {pillar.body}
               </p>
             </motion.div>
           ))}

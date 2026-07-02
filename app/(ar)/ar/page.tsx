@@ -8,6 +8,15 @@ export const metadata: Metadata = {
   title: "وازن — أدِر عملك التدريبي من مكان واحد منظّم",
   description:
     "وازن يجمع عملاءك وخططك ومتابعاتك وتقدّمهم ورسائلك في نظام واحد، مصمّم للمدربين في الإمارات والخليج والشرق الأوسط. مجاني لأول 5 عملاء.",
+  keywords: [
+    "منصة تدريب",
+    "تطبيق مدرب",
+    "إدارة العملاء",
+    "مدرب لياقة",
+    "مدرب الإمارات",
+    "coaching platform",
+    "coach app UAE",
+  ],
   alternates: {
     canonical: "https://wazen.fit/ar",
     languages: {
@@ -27,7 +36,7 @@ export const metadata: Metadata = {
         url: "/opengraph-image",
         width: 1200,
         height: 630,
-        alt: "Wazen coaching platform preview",
+        alt: "معاينة منصة وازن للتدريب",
       },
     ],
     locale: "ar_AE",

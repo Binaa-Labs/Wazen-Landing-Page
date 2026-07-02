@@ -5,6 +5,7 @@ import { AnimatePresence, motion } from "framer-motion";
 
 import { useLanguage } from "@/components/LanguageProvider";
 import Button from "@/components/ui/Button";
+import Logo from "@/components/ui/Logo";
 import { APP_URLS } from "@/lib/links";
 
 const linkHrefs = ["#features", "#how-it-works", "#pricing", "#faq"] as const;
@@ -133,18 +134,8 @@ export default function Nav() {
             scrolled ? "bg-bg/70 shadow-sm backdrop-blur-[20px]" : "bg-bg"
           }`}
         >
-          <a href="#top" className="flex flex-col gap-0.5">
-            <span className="font-display text-lg font-bold leading-none text-ink">
-              Wazen
-            </span>
-            <span className="flex items-baseline gap-1.5">
-              <span className="font-arabic text-[0.7rem] font-bold leading-none text-primary">
-                وازن
-              </span>
-              <span className="text-[10px] leading-none text-ink/50">
-                {t.nav.poweredBy}
-              </span>
-            </span>
+          <a href="#top">
+            <Logo />
           </a>
 
           <div className="hidden items-center gap-5 md:flex">

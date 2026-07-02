@@ -10,6 +10,8 @@ import Badge from "@/components/ui/Badge";
 import BrowserFrame from "@/components/ui/BrowserFrame";
 import Button from "@/components/ui/Button";
 import Lightbox from "@/components/ui/Lightbox";
+import PhoneFrame from "@/components/ui/PhoneFrame";
+import PhoneSkeleton from "@/components/ui/PhoneSkeleton";
 import { APP_URLS } from "@/lib/links";
 
 function WavyUnderline() {
@@ -31,6 +33,68 @@ function WavyUnderline() {
   );
 }
 
+function CheckDot() {
+  return (
+    <span className="flex size-5 shrink-0 items-center justify-center rounded-full bg-secondary-light text-secondary-dark">
+      <svg
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        strokeWidth="3"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        className="size-3"
+        aria-hidden
+      >
+        <path d="m5 13 4 4L19 7" />
+      </svg>
+    </span>
+  );
+}
+
+function TrendDot() {
+  return (
+    <span className="flex size-5 shrink-0 items-center justify-center rounded-full bg-primary-light text-primary">
+      <svg
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        strokeWidth="2.4"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        className="size-3"
+        aria-hidden
+      >
+        <path d="m3 16.5 5.5-5.5 4 4L21 7" />
+      </svg>
+    </span>
+  );
+}
+
+/* Floating annotation chips: translatable HTML (not baked into the
+   screenshot), so they work in both locales and stay legible at any
+   screenshot render size. */
+function AnnotationChip({
+  children,
+  className,
+  delay,
+}: {
+  children: React.ReactNode;
+  className: string;
+  delay: number;
+}) {
+  return (
+    <motion.div
+      initial={{ opacity: 0, y: 12 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1], delay }}
+      className={`absolute z-[2] flex items-center gap-2 rounded-pill border border-primary/10 bg-surface py-1.5 ps-1.5 pe-3.5 text-caption font-medium text-ink/80 shadow-md ${className}`}
+    >
+      {children}
+    </motion.div>
+  );
+}
+
 export default function Hero() {
   const { t } = useLanguage();
 
@@ -44,13 +108,13 @@ export default function Hero() {
   const parallaxY = useTransform(scrollYProgress, [0, 1], [0, -60]);
 
   return (
-    <section className="bg-bg px-6 pt-36 pb-section-mobile md:pt-44 md:pb-section">
+    <section className="bg-bg px-6 pt-28 pb-section-mobile md:pt-36 md:pb-section">
       <div className="mx-auto max-w-[1120px] text-center">
         <motion.div
           variants={staggerContainer}
           initial="hidden"
           animate="visible"
-          className="flex flex-col items-center gap-6"
+          className="flex flex-col items-center gap-5"
         >
           <motion.div variants={fadeUp}>
             <Badge variant="pill" tone="sage" dot>
@@ -101,7 +165,10 @@ export default function Hero() {
           </motion.div>
         </motion.div>
 
-        <div ref={frameRef} className="relative mt-16 perspective-[1200px]">
+        {/* Composite: coach dashboard in a browser frame + the client app in
+            an overlapping phone frame — the coach↔client pairing in one
+            glance. Phone content is a skeleton until Pass C captures land. */}
+        <div ref={frameRef} className="relative mt-12 perspective-[1200px]">
           {/* Ambient teal glow behind the frame */}
           <div
             aria-hidden
@@ -112,6 +179,7 @@ export default function Hero() {
             initial={{ opacity: 0, rotateX: 8, scale: 0.96 }}
             animate={{ opacity: 1, rotateX: 0, scale: 1 }}
             transition={{ duration: 0.9, ease: [0.16, 1, 0.3, 1], delay: 0.3 }}
+            className="relative"
           >
             <motion.div
               whileHover={{ scale: 1.03, y: -4 }}
@@ -131,11 +199,40 @@ export default function Hero() {
                     alt={t.hero.dashboardAlt}
                     width={1905}
                     height={910}
-                    priority
-                    className="h-auto w-full"
+                    preload
+                    className="h-auto w-full dark:opacity-90"
                   />
                 </Lightbox>
               </BrowserFrame>
+            </motion.div>
+
+            {/* Chips anchor to screenshot CONTENT, so they use physical
+                left/top: the capture is LTR in both locales (Pass C swaps in
+                mirrored AR captures — revisit anchors then). On mobile the
+                check chip floats centered above the frame so it never covers
+                the traffic lights or sidebar. */}
+            <AnnotationChip
+              delay={0.9}
+              className="max-sm:-top-4 max-sm:left-1/2 max-sm:-translate-x-1/2 sm:left-[26%] sm:top-[46%]"
+            >
+              <CheckDot />
+              {t.hero.chips[0]}
+            </AnnotationChip>
+
+            <motion.div
+              initial={{ opacity: 0, y: 24 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1], delay: 0.7 }}
+              className="absolute -bottom-8 end-3 z-[2] w-[26%] min-w-[104px] max-w-[170px] sm:end-8"
+            >
+              {/* Weight chip rides with the phone frame, both directions */}
+              <AnnotationChip delay={1.1} className="-top-5 end-0 hidden sm:flex">
+                <TrendDot />
+                {t.hero.chips[1]}
+              </AnnotationChip>
+              <PhoneFrame>
+                <PhoneSkeleton screen="today" />
+              </PhoneFrame>
             </motion.div>
           </motion.div>
         </div>

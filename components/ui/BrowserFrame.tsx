@@ -12,7 +12,7 @@ export default function BrowserFrame({
   return (
     <div
       className={[
-        "overflow-hidden rounded-2xl border border-primary/10 bg-surface shadow-xl",
+        "overflow-hidden rounded-2xl border border-primary/10 bg-surface shadow-xl dark:border-white/10 dark:shadow-lg",
         className,
       ]
         .filter(Boolean)

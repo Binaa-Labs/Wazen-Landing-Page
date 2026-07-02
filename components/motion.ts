@@ -25,4 +25,15 @@ export const staggerContainer: Variants = {
   visible: { transition: { staggerChildren: 0.08 } },
 };
 
+/* For photography (Pass C): photos scale in slowly instead of sliding, so
+   imagery reads differently from UI frames and cards. */
+export const scaleIn: Variants = {
+  hidden: { opacity: 0, scale: 1.04 },
+  visible: {
+    opacity: 1,
+    scale: 1,
+    transition: { duration: 0.7, ease: [0.16, 1, 0.3, 1] },
+  },
+};
+
 export const viewport = { once: true, margin: "-80px" } as const;

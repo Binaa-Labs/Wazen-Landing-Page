@@ -46,7 +46,8 @@ export function buildJsonLd(locale: Locale) {
     "@id": `${SITE_URL}/#software`,
     name: "Wazen",
     applicationCategory: "BusinessApplication",
-    operatingSystem: "Web, iOS, Android",
+    /* The client app is a PWA — no native iOS/Android builds yet (D8). */
+    operatingSystem: "Web (PWA) — works on iOS & Android",
     url: pageUrl,
     inLanguage,
     description: DESCRIPTION[locale],

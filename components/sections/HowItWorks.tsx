@@ -149,7 +149,7 @@ export default function HowItWorks() {
                     alt={t.how.steps[i].alt}
                     fill
                     sizes="(min-width: 1248px) 368px, (min-width: 768px) 30vw, calc(100vw - 96px)"
-                    className="object-cover object-top"
+                    className="object-cover object-top dark:opacity-90"
                     style={step.filter ? { filter: step.filter } : undefined}
                   />
                 </Lightbox>

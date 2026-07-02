@@ -62,7 +62,6 @@ function ComparisonCard({
   const isError = tone === "error";
   return (
     <motion.div
-      key={heading}
       variants={listStagger(delay)}
       initial="hidden"
       whileInView="visible"
@@ -82,13 +81,13 @@ function ComparisonCard({
         />
         <h3 className="text-h3 text-white">{heading}</h3>
       </motion.div>
+      {/* Index keys, deliberately: keying motion elements by translated
+          strings remounts them on language switch, and children that remount
+          inside an already-revealed `once` parent mount at "hidden" and never
+          receive the variant propagation again — they stay invisible. */}
       <ul className="mt-6 flex flex-col gap-5">
-        {items.map((item) => (
-          <motion.li
-            key={item.title}
-            variants={fadeUp}
-            className="flex gap-3.5"
-          >
+        {items.map((item, i) => (
+          <motion.li key={i} variants={fadeUp} className="flex gap-3.5">
             <span
               className={`mt-0.5 flex size-6 shrink-0 items-center justify-center rounded-full ${
                 isError
@@ -126,10 +125,7 @@ export default function Problem() {
           title={t.problem.h2}
           description={t.problem.description}
         />
-        <div
-          key={t.problem.oldWayHeading + t.problem.wazenWayHeading}
-          className="mt-14 grid gap-6 md:grid-cols-2"
-        >
+        <div className="mt-14 grid gap-6 md:grid-cols-2">
           <ComparisonCard
             heading={t.problem.oldWayHeading}
             items={t.problem.oldWay}

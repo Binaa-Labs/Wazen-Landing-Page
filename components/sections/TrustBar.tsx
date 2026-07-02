@@ -6,30 +6,29 @@ import { motion } from "framer-motion";
 import { useLanguage } from "@/components/LanguageProvider";
 import { fade, viewport } from "@/components/motion";
 
-/* Icons are index-coupled to t.trustBar.items */
+/* Icons are index-coupled to t.trustBar.items:
+   founding coaches / Arabic & English / free tier / fast setup */
 const icons = [
+  (
+    <>
+      <circle cx="9" cy="7.5" r="3.5" />
+      <path d="M3 19.5c0-3 2.7-5 6-5s6 2 6 5" />
+      <path d="M16 4.6a3.5 3.5 0 0 1 0 5.8M17.5 14.7c2.1.6 3.5 2.2 3.5 4.8" />
+    </>
+  ),
   (
     <>
       <circle cx="12" cy="12" r="9" />
       <path d="M3 12h18M12 3a13.5 13.5 0 0 1 0 18M12 3a13.5 13.5 0 0 0 0 18" />
     </>
   ),
-  <path
-    key="chat"
-    d="M21 11.5c0 3.6-4 6.5-9 6.5-1.1 0-2.1-.13-3.1-.38L4.5 19.5l1.4-3.1C4.7 15.2 3 13.5 3 11.5 3 7.9 7 5 12 5s9 2.9 9 6.5Z"
-  />,
   (
     <>
       <circle cx="12" cy="12" r="9" />
       <path d="m8.5 12.5 2.5 2.5 4.5-5.5" />
     </>
   ),
-  (
-    <>
-      <path d="M6 21V5a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v16M3 21h18" />
-      <path d="M10 7h1m3 0h1m-5 4h1m3 0h1m-5 4h1m3 0h1" />
-    </>
-  ),
+  <path key="zap" d="M13 3 5 13.5h6L11 21l8-10.5h-6L13 3Z" />,
 ];
 
 export default function TrustBar() {

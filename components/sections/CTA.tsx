@@ -7,7 +7,42 @@ import { fadeUp, viewport } from "@/components/motion";
 import Badge from "@/components/ui/Badge";
 import Button from "@/components/ui/Button";
 import GhostWordmark from "@/components/ui/GhostWordmark";
+import PhoneFrame from "@/components/ui/PhoneFrame";
+import PhoneSkeleton from "@/components/ui/PhoneSkeleton";
 import { APP_URLS } from "@/lib/links";
+
+/* Abstract dashboard corner (stat tiles + review queue) paired with the
+   client-app phone — a small product composite in place of the old
+   feature-list card. Decorative; Pass C may swap in a real capture crop. */
+function MiniDashboard() {
+  return (
+    <div
+      aria-hidden
+      className="overflow-hidden rounded-xl border border-ink/8 bg-bg p-3.5 pe-[30%]"
+    >
+      <div className="flex gap-2">
+        {[0, 1].map((i) => (
+          <div key={i} className="flex-1 rounded-lg bg-surface p-2.5 shadow-sm">
+            <div className="h-1.5 w-8 rounded-pill bg-ink/10" />
+            <div className="mt-2 h-2.5 w-12 rounded-pill bg-primary/25" />
+          </div>
+        ))}
+      </div>
+      <div className="mt-2.5 flex flex-col gap-2">
+        {[0, 1, 2].map((i) => (
+          <div
+            key={i}
+            className="flex items-center gap-2 rounded-lg bg-surface p-2 shadow-sm"
+          >
+            <div className="size-5 shrink-0 rounded-full bg-primary/20" />
+            <div className="h-1.5 w-1/2 rounded-pill bg-ink/10" />
+            <div className="ms-auto h-4 w-10 rounded-pill bg-secondary-light" />
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+}
 
 /* Shared fadeUp timing plus a 150ms trail so the card lands after the
    left column */
@@ -77,24 +112,21 @@ export default function CTA() {
           initial="hidden"
           whileInView="visible"
           viewport={viewport}
-          className="rounded-card bg-surface p-9 shadow-xl"
+          className="rounded-card bg-surface p-7 shadow-xl sm:p-9"
         >
           <h3 className="text-h3 text-primary dark:text-ink">
             {t.cta.cardTitle}
           </h3>
           <p className="mt-2 text-caption text-ink/55">{t.cta.cardSub}</p>
-          <ul className="mt-6 flex flex-col gap-3">
-            {t.cta.cardFeatures.map((feature) => (
-              <li
-                key={feature}
-                className="flex items-start gap-2.5 text-body text-ink/75"
-              >
-                <CheckIcon className="mt-0.5 size-4 shrink-0 text-secondary-dark" />
-                {feature}
-              </li>
-            ))}
-          </ul>
-          <Button href={APP_URLS.signup} className="mt-7 w-full">
+          <div className="relative mt-6 pb-7">
+            <MiniDashboard />
+            <div className="absolute -bottom-4 end-3 w-[26%] min-w-[88px] max-w-[120px]">
+              <PhoneFrame>
+                <PhoneSkeleton screen="checkin" />
+              </PhoneFrame>
+            </div>
+          </div>
+          <Button href={APP_URLS.signup} className="mt-5 w-full">
             {t.cta.ctaLabel}
           </Button>
           <p className="mt-4 text-center text-caption text-ink/55">

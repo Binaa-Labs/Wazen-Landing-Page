@@ -1,5 +1,6 @@
 import { MotionConfig } from "framer-motion";
 
+import ClientApp from "@/components/sections/ClientApp";
 import CTA from "@/components/sections/CTA";
 import FAQ from "@/components/sections/FAQ";
 import Features from "@/components/sections/Features";
@@ -22,6 +23,7 @@ export default function LandingPage() {
         <Problem />
         <Features />
         <HowItWorks />
+        <ClientApp />
         <Pricing />
         <WhyWazen />
         <FAQ />
