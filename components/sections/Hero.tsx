@@ -13,6 +13,7 @@ import Lightbox from "@/components/ui/Lightbox";
 import PhoneFrame from "@/components/ui/PhoneFrame";
 import PhoneSkeleton from "@/components/ui/PhoneSkeleton";
 import { APP_URLS } from "@/lib/links";
+import { getShot } from "@/lib/screenshots";
 
 function WavyUnderline() {
   return (
@@ -96,7 +97,8 @@ function AnnotationChip({
 }
 
 export default function Hero() {
-  const { t } = useLanguage();
+  const { t, lang } = useLanguage();
+  const dash = getShot("coachDashboard", lang);
 
   /* Parallax: the framed screenshot drifts at ~80% of scroll speed as the
      section scrolls through the viewport. */
@@ -188,17 +190,17 @@ export default function Hero() {
             >
               <BrowserFrame url="wazen.fit/dashboard">
                 <Lightbox
-                  src="/screenshots/Coach-Dashboard.png"
+                  src={dash.src}
                   alt={t.hero.dashboardAlt}
-                  width={1905}
-                  height={910}
+                  width={dash.width}
+                  height={dash.height}
                   className="w-full"
                 >
                   <Image
-                    src="/screenshots/Coach-Dashboard.png"
+                    src={dash.src}
                     alt={t.hero.dashboardAlt}
-                    width={1905}
-                    height={910}
+                    width={dash.width}
+                    height={dash.height}
                     preload
                     className="h-auto w-full dark:opacity-90"
                   />

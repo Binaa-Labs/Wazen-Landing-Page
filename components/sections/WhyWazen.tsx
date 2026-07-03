@@ -1,11 +1,16 @@
 "use client";
 
+import Image from "next/image";
 import { motion } from "framer-motion";
 
 import { useLanguage } from "@/components/LanguageProvider";
 import { fadeUp, staggerContainer, viewport } from "@/components/motion";
 import Badge from "@/components/ui/Badge";
+import BrowserFrame from "@/components/ui/BrowserFrame";
+import Lightbox from "@/components/ui/Lightbox";
+import PhotoPlaceholder from "@/components/ui/PhotoPlaceholder";
 import SectionHeader from "@/components/ui/SectionHeader";
+import { getShot } from "@/lib/screenshots";
 
 /* Pass A note: the animated count-up stats were removed — they dressed
    product facts ("5 free clients", "6+ tools") in the visual language of
@@ -14,7 +19,8 @@ import SectionHeader from "@/components/ui/SectionHeader";
    for future real metrics. */
 
 export default function WhyWazen() {
-  const { t } = useLanguage();
+  const { t, lang } = useLanguage();
+  const profile = getShot("coachProfile", lang);
 
   return (
     <section
@@ -62,6 +68,49 @@ export default function WhyWazen() {
           <Badge variant="pill" tone="sage" className="px-5 py-2">
             {t.why.bilingualBadge}
           </Badge>
+        </motion.div>
+
+        {/* Coach-profile proof point (P0-4 step 2; capture re-shot in Pass B)
+            paired with the regional photo slot (F-7 or F-10, owner's pick). */}
+        <motion.div
+          variants={fadeUp}
+          initial="hidden"
+          whileInView="visible"
+          viewport={viewport}
+          className="mx-auto mt-14 grid max-w-4xl items-stretch gap-6 lg:grid-cols-[1.6fr_1fr]"
+        >
+          <div className="flex flex-col">
+            <motion.div
+              whileHover={{ scale: 1.02 }}
+              transition={{ duration: 0.25, ease: "easeOut" }}
+            >
+              <BrowserFrame url="wazen.fit/coach/nadia">
+                <Lightbox
+                  src={profile.src}
+                  alt={t.why.profileAlt}
+                  width={profile.width}
+                  height={profile.height}
+                  className="relative aspect-[16/10] w-full"
+                >
+                  <Image
+                    src={profile.src}
+                    alt={t.why.profileAlt}
+                    fill
+                    sizes="(min-width: 1024px) 560px, calc(100vw - 48px)"
+                    className="object-cover object-top dark:opacity-90"
+                  />
+                </Lightbox>
+              </BrowserFrame>
+            </motion.div>
+            <p className="mt-4 text-center text-caption text-ink/55">
+              {t.why.profileCaption}
+            </p>
+          </div>
+          <PhotoPlaceholder
+            label="F-7 / F-10"
+            hint="Regional shot — owner's pick"
+            className="min-h-[280px] max-lg:aspect-[3/2]"
+          />
         </motion.div>
 
         <motion.div

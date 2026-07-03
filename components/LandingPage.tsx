@@ -10,6 +10,7 @@ import HowItWorks from "@/components/sections/HowItWorks";
 import Nav from "@/components/sections/Nav";
 import Pricing from "@/components/sections/Pricing";
 import Problem from "@/components/sections/Problem";
+import Segments from "@/components/sections/Segments";
 import TrustBar from "@/components/sections/TrustBar";
 import WhyWazen from "@/components/sections/WhyWazen";
 
@@ -23,6 +24,7 @@ export default function LandingPage() {
         <Problem />
         <Features />
         <HowItWorks />
+        <Segments />
         <ClientApp />
         <Pricing />
         <WhyWazen />

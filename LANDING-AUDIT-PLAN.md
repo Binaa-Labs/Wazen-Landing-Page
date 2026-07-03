@@ -1,6 +1,7 @@
-# Wazen Landing Page — Audit Report & 3-Pass Implementation Plan (v3 · APPROVED)
+# Wazen Landing Page — Audit Report & Implementation Plan (v4)
 
-> Audit-only pass — no code changes made in the audit. This document is the single source of truth for the landing page revamp. Status: **approved**; Pass A cleared to run under manual edit approval.
+> This document is the single source of truth for the landing page revamp.
+> Status: **Pass A ✅ done · Pass A.1 ✅ done · Pass B 🔄 in progress (owner assets, captures tomorrow) · Pass C.1 🔄 running now (structure + placeholders) · Pass C.2 ⏳ tomorrow (pure asset swap).** All work on `feat/landing-revamp`.
 
 ---
 
@@ -25,6 +26,7 @@ Method: full source audit (11 sections, EN+AR i18n, SEO/JSON-LD, all 20 screensh
 | D7 | **Hard rule: no women in any photography.** §7 regenerated male-only; F-7 concept replaced |
 | D8 | Client app is a PWA (native later): phone frames stay (honest visual); no app-store badges → "Installs like an app — no App Store needed" chip; reword all "mobile app" copy EN+AR |
 | D9 | Phone captures: Chrome DevTools emulation 390×844 @ DPR 3, same demo-data session, EN + AR sets (added to §8) |
+| D10 | AED add-on bundle prices: $12→AED 45, $20→AED 75, $18→AED 65 (owner-rounded from peg math 44/73/66); per-currency `addOn` strings in the dictionary |
 
 ---
 
@@ -140,7 +142,10 @@ Type key: **[a]** product visual (device frame) · **[b]** photography (§7) · 
 
 ---
 
-## §7 · Image sourcing list — male-only (pending owner vetting)
+## §7 · Image sourcing list — male-only (BRIEFS VALID · CANDIDATE LINKS VOID)
+
+> **Status update:** owner reviewed and rejected most stock candidates below. The **briefs remain the spec** for each slot; the candidate URLs are void — do not source from them. Owner will source alternatives after seeing the Pass C.1 placeholder layout (every placeholder is labeled with its F-number for mapping).
+> **Required set:** F-2, F-3, F-5, F-6, one of F-7/F-10, F-9 · **Optional:** F-4, F-8 · **Owner-provided:** F-11 (portrait) · **Spare, not placed:** F-1.
 
 **Global rules (apply to every pick):** no women visible anywhere in frame, including background — verify visually before download (candidates matched by description; some descriptions don't mention background people). Unsplash/Pexels licenses: free commercial use, no attribution. Avoid visible third-party logos. Tone: muted/desaturated so teal `#3D8C84` / sage `#7BA898` chips and UI sit on top; no neon gym lighting.
 
@@ -224,29 +229,29 @@ Type key: **[a]** product visual (device frame) · **[b]** photography (§7) · 
 
 ---
 
-## 3-Pass implementation plan
+## Implementation plan & status
 
-### Pass A — code-only, runs now, no assets needed
-1. `lib/links.ts`: placeholder + `// TODO: confirm before launch` (D1)
-2. Binaa Labs consolidation: nav subtitle out, TrustBar item out, FAQ Q6 rephrase (D2/P0-6)
-3. Hero layout tightening (frame top visible on 13" laptop)
-4. PhoneFrame component + branded skeleton client-app UI (teal/sage) — placed in hero composite, features PiPs, sync panel, client-app showcase, CTA composite
-5. Proof band rewrite (replaces TrustBar content) (P0-4 step 1)
-6. Features: 5th "Messaging" tab shell with skeleton visual (D4/P1-1)
-7. Pricing: manual USD/AED toggle, AED 180/365/1,800/3,635, defaults per locale, savings strings per currency (D6/P1-11)
-8. CTA microcopy standardized under all CTAs: "Free for 5 clients · No credit card"
-9. Dark-mode screenshot softening CSS (P1-10)
-10. PWA copy corrections EN+AR + JSON-LD operatingSystem + showcase chip (D8/P1-12)
-11. Remove trivia counters, reframe WhyWazen copy (P1-6)
-12. P2 sweep: P2-3 (single Logo component in nav/footer — interim "W" content, final-SVG swap point, favicon TODO noted in-file), P2-4 (motion variety hooks), P2-5 (support@wazen.fit), P2-6 (icon chips), P2-8 (AR keywords/alt), P2-9 (wordmark opacity). Excluded: P2-1 (→C), P2-2 (→launch), P2-7 (closed).
+### Pass A — code-only foundation ✅ DONE (committed `14c6c2c`)
+All 12 items shipped: links.ts launch TODO, Binaa Labs consolidation (footer + FAQ Q6 only), hero tightening + composite (PhoneFrame skeletons + annotation chips), proof band, 5th Messaging tab shell, USD/AED toggle with locale defaults, CTA microcopy, dark-mode softening, PWA copy corrections EN+AR, WhyWazen pillars (counters removed), Logo component, P2 sweep. Verified EN+AR × light+dark × 1440/375; `priority`→`preload` migration for Next 16.
 
-> Note: AGENTS.md requires reading `node_modules/next/dist/docs/` before writing code (Next 16 breaking changes).
+### Pass A.1 — defect fixes ✅ DONE
+Seven review defects fixed. **Documented learning (do not regress):** motion elements inside a `whileInView`/`once` parent must never be keyed by translated strings — on language switch they remount into an already-revealed parent, mount at `hidden`, and stay invisible. This single root cause produced both the "maroon bar" (the Problem section's error-tinted Old Way card rendering empty) and the invisible WhyWazen pillars. Fix: stable index/structural keys, with in-code comments at both sites (`Problem.tsx`, `WhyWazen.tsx`). Also: content-anchored hero chips (physical coords while captures are LTR), densified messaging skeleton, flowing-dots sync connector (reduced-motion fallback), un-chat-like "today" skeleton, value-strip icon chips (P2-6), AED add-on prices (D10).
 
-### Pass B — owner's manual work, parallel
-Demo-data seeding + full re-capture session per §8 (desktop + phone, EN + AR) · photo sourcing from §7 after list approval · founder portrait.
+### Pass B — owner assets 🔄 IN PROGRESS
+- Demo-data seeding + full re-capture session per §8 (desktop + phone, EN + AR): **tomorrow**
+- Photo sourcing: **re-sourcing after C.1 placeholder preview** (original candidates rejected — see §7 note); required set F-2, F-3, F-5, F-6, one of F-7/F-10, F-9
+- Founder portrait (F-11): **pending**
 
-### Pass C — asset integration
-Swap skeletons/dirty captures for clean ones (locale-aware screenshot map) · build sections 8 (segments band) and 9 (client-app showcase) with approved photos/captures · place F-2/F-7-or-F-10/F-9/F-11 photos · coach-profile proof point in WhyWazen · clean invite-modal crop + remove brightness filter · OG image composite EN+AR (P1-9) · prune superseded PNGs (P2-1).
+### Pass C.1 — structural build with placeholders 🔄 NOW (no new assets)
+1. Locale-aware screenshot map `lib/screenshots.ts` — all screenshot references go through `{ en, ar }` entries (ar falls back to en until AR captures exist). C.2 becomes filename/map edits only.
+2. NEW Section 8 · Segments band "For every kind of coach" (position per §6): fitness / nutrition / health-practitioner cards, icons + EN+AR copy (health card names nutrition, supplement & medication plans), photo placeholder per card.
+3. Reusable `PhotoPlaceholder` component — branded panel, F-number label, true final aspect ratio. Placed: F-2 (Problem side, desktop only), F-3/F-5/F-6 (segments), F-7-or-F-10 (WhyWazen), F-9 (CTA backdrop at the real 10–15% opacity). F-4/F-8 slots skipped (optional).
+4. WhyWazen: coach-profile proof point slot using current `Client-Coach-Profile-View.png` for layout (re-captured in B).
+5. OG image composite EN+AR (P1-9): headline + browser frame + phone frame on brand background; AR route with Arabic headline + localized alt.
+6. No PNG pruning; phone skeletons untouched.
+
+### Pass C.2 — pure asset swap ⏳ TOMORROW
+Clean captures replace current PNGs (map edits in `lib/screenshots.ts`, incl. AR paths) · phone captures replace skeletons · approved photos replace `PhotoPlaceholder` blocks (match by F-number) · founder portrait replaces initials avatar · clean invite-modal crop + remove brightness filter · then prune superseded PNGs (P2-1).
 
 ---
 
@@ -264,13 +269,17 @@ Swap skeletons/dirty captures for clean ones (locale-aware screenshot map) · bu
 
 **Pass A:** `npm run dev` → EN+AR × light+dark × 375/768/1440px. Checks: hero frame top above fold on 13"; PhoneFrame skeletons render everywhere placed; currency toggle flips all 3 tiers + savings strings, defaults AED on /ar & USD on /en; grep EN+AR i18n for "mobile app"/"App Store"/"تطبيق الجوال" → only the new PWA wording remains; "Powered by Binaa Labs" only in footer; 5th tab navigates with RTL slide direction correct.
 
-**Pass C:** no QA data visible at lightbox zoom on any screenshot; /ar serves AR captures; placed photos contain no women (manual visual check, D7); OG preview shows product composite; no 404s for pruned PNGs (grep references).
+**Pass C.1:** build clean; segments band renders 3 cards with F-labeled placeholders, correct RTL; every placeholder labeled with its F-number; OG composite renders EN+AR; screenshots of each new/changed section reviewed before commit.
+
+**Pass C.2:** no QA data visible at lightbox zoom on any screenshot; /ar serves AR captures; placed photos contain no women (manual visual check, D7); OG preview shows real captures; no 404s for pruned PNGs (grep references).
 
 ---
 
 ## Open items (owner)
 
-- [ ] Vet §7 photo candidates visually (background women check per D7) — before Pass B sourcing
-- [ ] Decide F-7 vs F-10 as primary regional shot — before Pass C
+- [x] ~~Vet §7 photo candidates~~ — vetted and mostly rejected; briefs stand, links void (see §7 note)
+- [ ] Source replacement photos against §7 briefs after C.1 placeholder preview (required: F-2, F-3, F-5, F-6, F-7/F-10 pick, F-9)
+- [ ] Decide F-7 vs F-10 as primary regional shot — before C.2
+- [ ] Re-capture session per §8 (desktop + phone, EN + AR) — tomorrow
 - [ ] Founder portrait shoot (F-11)
 - [ ] Final Wazen logo SVG delivery (light + dark colorways minimum; monochrome footer variant ideal)

@@ -7,11 +7,18 @@ import { useLanguage } from "@/components/LanguageProvider";
 import { fadeUp, staggerContainer, viewport } from "@/components/motion";
 import Lightbox from "@/components/ui/Lightbox";
 import SectionHeader from "@/components/ui/SectionHeader";
+import { getShot, type ShotName } from "@/lib/screenshots";
 
-/* Structural step data — number, icon, screenshot (+ natural dims for the
-   lightbox). Index-coupled to t.how.steps for title/body/alt. `filter`
-   lifts step 1's dark modal screenshot to match steps 2–3's visual weight. */
-const STEP_META = [
+/* Structural step data — number, icon, screenshot (by locale-aware map name,
+   see lib/screenshots.ts). Index-coupled to t.how.steps for title/body/alt.
+   `filter` lifts step 1's dark modal screenshot to match steps 2–3's visual
+   weight (drop in Pass C.2 once the clean re-capture lands). */
+const STEP_META: {
+  number: string;
+  icon: React.ReactNode;
+  shotName: ShotName;
+  filter?: string;
+}[] = [
   {
     number: "01",
     icon: (
@@ -21,9 +28,7 @@ const STEP_META = [
         <path d="M19 8v6M16 11h6" />
       </>
     ),
-    src: "/screenshots/Coach-Invite-Client.png",
-    width: 1918,
-    height: 905,
+    shotName: "coachInvite",
     filter: "brightness(1.15) contrast(0.95)",
   },
   {
@@ -35,10 +40,7 @@ const STEP_META = [
         <path d="M9 12h6M9 16h4" />
       </>
     ),
-    src: "/screenshots/Client-Plans-Tab.png",
-    width: 1914,
-    height: 908,
-    filter: undefined,
+    shotName: "clientPlans",
   },
   {
     number: "03",
@@ -48,15 +50,12 @@ const STEP_META = [
         <path d="m7 14 4-4 3 3 5-6" />
       </>
     ),
-    src: "/screenshots/Coach-Analytics-Tab2.png",
-    width: 1902,
-    height: 908,
-    filter: undefined,
+    shotName: "coachAnalytics",
   },
 ];
 
 export default function HowItWorks() {
-  const { t } = useLanguage();
+  const { t, lang } = useLanguage();
 
   return (
     <section
@@ -97,7 +96,9 @@ export default function HowItWorks() {
             <path d="m9 6 6 6-6 6" />
           </svg>
 
-          {STEP_META.map((step, i) => (
+          {STEP_META.map((step, i) => {
+            const s = getShot(step.shotName, lang);
+            return (
             <motion.div
               key={step.number}
               variants={fadeUp}
@@ -138,14 +139,14 @@ export default function HowItWorks() {
                   transition={{ duration: 0.25, ease: "easeOut" }}
                 >
                 <Lightbox
-                  src={step.src}
+                  src={s.src}
                   alt={t.how.steps[i].alt}
-                  width={step.width}
-                  height={step.height}
+                  width={s.width}
+                  height={s.height}
                   className="relative aspect-[2/1] w-full rounded-xl border border-primary/8"
                 >
                   <Image
-                    src={step.src}
+                    src={s.src}
                     alt={t.how.steps[i].alt}
                     fill
                     sizes="(min-width: 1248px) 368px, (min-width: 768px) 30vw, calc(100vw - 96px)"
@@ -156,7 +157,8 @@ export default function HowItWorks() {
                 </motion.div>
               </div>
             </motion.div>
-          ))}
+            );
+          })}
         </motion.div>
       </div>
     </section>

@@ -11,17 +11,18 @@ import Lightbox from "@/components/ui/Lightbox";
 import PhoneFrame from "@/components/ui/PhoneFrame";
 import PhoneSkeleton, { type PhoneScreen } from "@/components/ui/PhoneSkeleton";
 import SectionHeader from "@/components/ui/SectionHeader";
+import { getShot, type ShotName } from "@/lib/screenshots";
 
-/* Structural tab data — icons, chrome URL, screenshot source, and the
-   client-side phone screen shown as the PiP overlay. Index-coupled to
-   t.features.tabs for the translatable label/headline/body/caption/alt text.
-   Messaging has no usable capture yet (Pass B re-captures) — it renders a
-   desktop skeleton instead of a screenshot. */
+/* Structural tab data — icons, chrome URL, screenshot (by locale-aware map
+   name, see lib/screenshots.ts), and the client-side phone screen shown as
+   the PiP overlay. Index-coupled to t.features.tabs for the translatable
+   label/headline/body/caption/alt text. Messaging has no usable capture yet
+   (Pass B re-captures) — it renders a desktop skeleton instead. */
 const TAB_META: {
   id: string;
   icon: React.ReactNode;
   url: string;
-  primarySrc?: string;
+  shotName?: ShotName;
   phoneScreen: PhoneScreen;
 }[] = [
   {
@@ -34,7 +35,7 @@ const TAB_META: {
       </>
     ),
     url: "wazen.fit/clients",
-    primarySrc: "/screenshots/Coach-Client_Tab.png",
+    shotName: "coachClients",
     phoneScreen: "today",
   },
   {
@@ -47,7 +48,7 @@ const TAB_META: {
       </>
     ),
     url: "wazen.fit/dashboard",
-    primarySrc: "/screenshots/Coach-Dashboard.png",
+    shotName: "coachDashboard",
     phoneScreen: "checkin",
   },
   {
@@ -59,7 +60,7 @@ const TAB_META: {
       </>
     ),
     url: "wazen.fit/progress",
-    primarySrc: "/screenshots/Client-Progress-Tab.png",
+    shotName: "clientProgress",
     phoneScreen: "progress",
   },
   {
@@ -73,7 +74,7 @@ const TAB_META: {
       </>
     ),
     url: "wazen.fit/templates",
-    primarySrc: "/screenshots/Coach-Template-Tab.png",
+    shotName: "coachTemplates",
     phoneScreen: "plans",
   },
   {
@@ -215,6 +216,8 @@ export default function Features() {
   const activeIndex = found === -1 ? 0 : found;
   const meta = TAB_META[activeIndex];
   const text = t.features.tabs[activeIndex];
+  const primary = meta.shotName ? getShot(meta.shotName, lang) : null;
+  const coachDash = getShot("coachDashboard", lang);
 
   /* Slide follows reading direction: LTR enters from the right, RTL from
      the left. */
@@ -315,16 +318,16 @@ export default function Features() {
                     className="w-full"
                   >
                     <BrowserFrame url={meta.url}>
-                      {meta.primarySrc ? (
+                      {primary ? (
                         <Lightbox
-                          src={meta.primarySrc}
+                          src={primary.src}
                           alt={text.primaryAlt}
-                          width={1905}
-                          height={910}
+                          width={primary.width}
+                          height={primary.height}
                           className="relative aspect-[21/10] w-full"
                         >
                           <Image
-                            src={meta.primarySrc}
+                            src={primary.src}
                             alt={text.primaryAlt}
                             fill
                             sizes="(min-width: 1024px) 896px, calc(100vw - 48px)"
@@ -372,17 +375,17 @@ export default function Features() {
                 transition={{ duration: 0.25, ease: "easeOut" }}
               >
               <Lightbox
-                src="/screenshots/Coach-Dashboard.png"
+                src={coachDash.src}
                 alt={t.features.coachLabel}
-                width={1905}
-                height={910}
+                width={coachDash.width}
+                height={coachDash.height}
                 className="w-full rounded-lg"
               >
                 <Image
-                  src="/screenshots/Coach-Dashboard.png"
+                  src={coachDash.src}
                   alt={t.features.coachLabel}
-                  width={1905}
-                  height={910}
+                  width={coachDash.width}
+                  height={coachDash.height}
                   className="h-auto w-full rounded-lg dark:opacity-90"
                 />
               </Lightbox>

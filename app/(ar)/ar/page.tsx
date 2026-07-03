@@ -31,14 +31,8 @@ export const metadata: Metadata = {
       "مجاني لأول 5 عملاء. منصة واحدة للخطط والمتابعات والتقدّم والمراسلة.",
     url: "https://wazen.fit/ar",
     siteName: "Wazen",
-    images: [
-      {
-        url: "/opengraph-image",
-        width: 1200,
-        height: 630,
-        alt: "معاينة منصة وازن للتدريب",
-      },
-    ],
+    /* og:image is injected by app/(ar)/ar/opengraph-image.tsx (file
+       convention) — segment OG routes get hashed URLs, so never hardcode. */
     locale: "ar_AE",
     alternateLocale: "en_US",
     type: "website",
@@ -48,7 +42,7 @@ export const metadata: Metadata = {
     title: "وازن — منصة تدريب للمدربين في الإمارات والخليج",
     description:
       "مجاني لأول 5 عملاء. الخطط والمتابعات والتقدّم والمراسلة في مكان واحد.",
-    images: ["/twitter-image"],
+    /* twitter:image injected by app/(ar)/ar/twitter-image.tsx */
   },
 };
 

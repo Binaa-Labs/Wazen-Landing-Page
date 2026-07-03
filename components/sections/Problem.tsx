@@ -5,6 +5,7 @@ import { motion, type Variants } from "framer-motion";
 import { useLanguage } from "@/components/LanguageProvider";
 import { fadeUp, viewport } from "@/components/motion";
 import GhostWordmark from "@/components/ui/GhostWordmark";
+import PhotoPlaceholder from "@/components/ui/PhotoPlaceholder";
 import SectionHeader from "@/components/ui/SectionHeader";
 
 /* Spec: 60ms item stagger; the right card trails the left by 100ms */
@@ -125,7 +126,23 @@ export default function Problem() {
           title={t.problem.h2}
           description={t.problem.description}
         />
-        <div className="mt-14 grid gap-6 md:grid-cols-2">
+        {/* F-2 photo column is desktop-only (lg+); on smaller widths the two
+            comparison cards keep their original 2-col/stacked layout. */}
+        <div className="mt-14 grid gap-6 md:grid-cols-2 lg:grid-cols-[minmax(0,0.55fr)_1fr_1fr]">
+          <motion.div
+            variants={fadeUp}
+            initial="hidden"
+            whileInView="visible"
+            viewport={viewport}
+            className="hidden lg:block"
+          >
+            <PhotoPlaceholder
+              label="F-2"
+              hint="Overwhelmed coach — dark treated"
+              tone="dark"
+              className="h-full min-h-[320px]"
+            />
+          </motion.div>
           <ComparisonCard
             heading={t.problem.oldWayHeading}
             items={t.problem.oldWay}

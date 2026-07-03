@@ -116,6 +116,26 @@ const en = {
     connectedCaption:
       "A coach dashboard and a client app — working as one connected system",
   },
+  segments: {
+    eyebrow: "Who it's for",
+    h2: "For every kind of coach",
+    description:
+      "Fitness, nutrition, or clinical practice — if you manage clients, plans, and check-ins, Wazen fits how you work.",
+    cards: [
+      {
+        title: "Fitness coaches",
+        body: "Program workouts, track adherence, and keep every client's training on schedule.",
+      },
+      {
+        title: "Nutrition coaches",
+        body: "Set macro targets and meal plans — and see exactly how clients follow them.",
+      },
+      {
+        title: "Health practitioners",
+        body: "Manage nutrition, supplement, and medication plans with structured check-ins.",
+      },
+    ],
+  },
   clientApp: {
     eyebrow: "The client app",
     h2: "Your clients get a real app — included",
@@ -248,6 +268,10 @@ const en = {
       },
     ],
     bilingualBadge: "Arabic & English — full right-to-left support",
+    profileCaption:
+      "Coaches build a public profile clients can see — active clients, programs delivered, compliance rate, and experience.",
+    profileAlt:
+      "A coach's public profile in Wazen showing active clients, programs delivered, compliance rate, and years of experience",
     founderEyebrow: "Why we built this",
     founderQuote:
       "“We built Wazen because coaching shouldn’t mean living in WhatsApp threads and spreadsheets. Every coach deserves one calm, organized place to manage clients, deliver plans, and actually see progress — so the focus stays on coaching, not admin.”",
@@ -420,6 +444,26 @@ const ar: Dictionary = {
     clientLabel: "تطبيق العميل",
     connectedCaption: "لوحة تحكم للمدرب وتطبيق للعميل — يعملان كنظام واحد متّصل",
   },
+  segments: {
+    eyebrow: "لمن صُمّم وازن",
+    h2: "لكل أنواع المدربين",
+    description:
+      "لياقة أو تغذية أو ممارسة صحية — إذا كنت تدير عملاء وخططًا ومتابعات، فوازن مصمّم لطريقة عملك.",
+    cards: [
+      {
+        title: "مدربو اللياقة",
+        body: "أنشئ خطط التمارين، وتابع الالتزام، وحافظ على انتظام تدريب كل عميل.",
+      },
+      {
+        title: "مدربو التغذية",
+        body: "حدّد أهداف السعرات والخطط الغذائية — واعرف بدقة كيف يلتزم بها عملاؤك.",
+      },
+      {
+        title: "الممارسون الصحيون",
+        body: "أدِر خطط التغذية والمكملات والأدوية مع متابعات منظّمة.",
+      },
+    ],
+  },
   clientApp: {
     eyebrow: "تطبيق العميل",
     h2: "عملاؤك يحصلون على تطبيق حقيقي — مشمول في باقتك",
@@ -551,6 +595,10 @@ const ar: Dictionary = {
       },
     ],
     bilingualBadge: "العربية والإنجليزية — دعم كامل للكتابة من اليمين لليسار",
+    profileCaption:
+      "يبني المدربون ملفًا عامًا يراه العملاء — العملاء النشطون، والبرامج المقدَّمة، ونسبة الالتزام، وسنوات الخبرة.",
+    profileAlt:
+      "الملف العام للمدرب في وازن يعرض العملاء النشطين والبرامج المقدَّمة ونسبة الالتزام وسنوات الخبرة",
     founderEyebrow: "لماذا بنينا هذا",
     founderQuote:
       "«بنينا وازن لأن التدريب لا يجب أن يعني العيش وسط محادثات واتساب وجداول البيانات. كل مدرب يستحق مكانًا واحدًا هادئًا ومنظّمًا لإدارة العملاء وتقديم الخطط ورؤية التقدّم فعلًا — ليبقى التركيز على التدريب، لا على الأعمال الإدارية.»",

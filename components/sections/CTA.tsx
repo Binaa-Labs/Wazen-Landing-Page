@@ -77,6 +77,24 @@ export default function CTA() {
 
   return (
     <section className="relative overflow-hidden bg-primary-dark px-6 py-section-compact-mobile md:py-section-compact">
+      {/* F-9 backdrop slot at the real 10–15% treatment (12%) so the effect
+          can be judged now; Pass C.2 swaps the gradient/texture layer for the
+          sourced photo at the same opacity. The corner tag is the only
+          full-opacity part, for slot identification. */}
+      <div
+        aria-hidden
+        className="absolute inset-0 z-0 opacity-[0.12]"
+        style={{
+          backgroundImage:
+            "linear-gradient(120deg, hsl(99,22%,72%) 0%, transparent 45%, hsl(186,28%,58%) 100%), repeating-linear-gradient(45deg, rgba(255,255,255,0.5) 0 1px, transparent 1px 16px)",
+        }}
+      />
+      <span
+        aria-hidden
+        className="absolute end-4 top-4 z-[2] rounded-pill bg-white/15 px-3 py-1 text-caption font-semibold text-white/80"
+      >
+        F-9 · backdrop
+      </span>
       <GhostWordmark />
       <div className="relative z-[1] mx-auto grid max-w-content items-center gap-12 lg:grid-cols-2">
         <motion.div
