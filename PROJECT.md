@@ -15,7 +15,7 @@
 - **Business model:** SaaS subscription. Free forever for the first 5 active clients (no trial timer, no credit card), then Professional ($49/mo) and Premium ($99/mo) tiers with client-capacity add-ons.
 - **Parent company:** **Binaa Labs** is the display name; **Binaa Lab** is the legal name and appears **only** in the Terms/Privacy legal pages. On the landing page, Binaa Labs appears in exactly two places (footer copyright + FAQ Q6) — see D2.
 
-**This repo is the marketing landing page (wazen.fit) only** — not the app. The app lives elsewhere and its public URL is unknown until launch (see `lib/links.ts` and the launch checklist).
+**This repo is the marketing landing page (wazen.fit) only** — not the app. The app lives at **app.wazen.fit** (signup/login URLs in `lib/links.ts`; live click-test pending on the launch checklist).
 
 ---
 
@@ -30,8 +30,8 @@ Single-source-of-truth files — change these, not call sites:
 | File | Owns |
 |---|---|
 | `lib/i18n.ts` | Every user-facing string, EN + AR. `type Dictionary = typeof en` forces the AR object to match shape at compile time. Structural arrays (icons, hrefs, screenshots) in components are index-coupled to dictionary arrays — keep orders aligned. |
-| `lib/links.ts` | App signup/login URLs. **Placeholder until launch** — `app.wazen.com` does not resolve yet; the file carries a loud TODO. |
-| `lib/screenshots.ts` | Locale-aware screenshot map: every entry is `{ en: {src,width,height}, ar: {…} }` with true per-locale dimensions (EN desktop 2560×1600, AR desktop 3840×2400, mobile 1170×2532 per D9). Captures live in the delivered tree `public/Wazen-Screenshots/{Coach\|Client} Dashboard/{Desktop\|Mobile}/{en\|ar}/<Name>.png` (D11) — all path knowledge stays in this file. |
+| `lib/links.ts` | App signup/login URLs — set to `https://app.wazen.fit/signup` + `/login` (D1). Live click-test still on the launch checklist. |
+| `lib/screenshots.ts` | Locale-aware screenshot map: every entry is `{ en: {src,width,height}, ar: {…} }` with true per-locale dimensions (EN desktop 2560×1600, AR desktop 3840×2400, mobile 1170×2532 per D9). Captures live in the delivered tree `public/Wazen-Screenshots/{Coach\|Client} Dashboard/{Desktop\|Mobile}/{en\|ar}/<Name>.png` (D13) — all path knowledge stays in this file. |
 | `components/ui/Logo.tsx` | The brand mark in nav + footer. Interim "W" tile; the final logo SVG (in production) lands as a one-file swap. Favicon/app-icon swap is a TODO noted in-file. |
 | `lib/og.tsx` | Shared OG/social card builder consumed by the EN and AR `opengraph-image.tsx` routes. |
 
@@ -63,7 +63,7 @@ Single-source-of-truth files — change these, not call sites:
 
 | # | Decision | Rationale |
 |---|---|---|
-| D1 | App URL = placeholder + loud TODO in `lib/links.ts`; real URL at launch | The app's public domain is unknown until launch; verified that `app.wazen.com` doesn't resolve. One-line swap when known. |
+| D1 | App URLs live in `lib/links.ts` (single source of truth). **Set (July 2026): `https://app.wazen.fit/signup` + `/login`** — placeholder era over; remaining launch step is the live click-test | The originally assumed domain didn't resolve, so CTAs shipped against a placeholder until the real subdomain was confirmed. |
 | D2 | Binaa Labs on the landing page: **footer copyright + FAQ Q6 only** | Studio credit repeated across the chrome read as "agency site" — the strongest wrong signal the audit found. Legal pages keep Binaa Lab (legal name). |
 | D3 | Two new sections: segments band + client-app showcase | Answer "who is this for" and "clients get a real app" visually — Everfit-pattern persona segmentation + phone-screen row. |
 | D4 | Messaging = 5th Features tab | Messaging was claimed everywhere and shown nowhere; a tab keeps the section architecture instead of adding a new section. |
@@ -73,8 +73,10 @@ Single-source-of-truth files — change these, not call sites:
 | D8 | Client app is a **PWA** — no app-store badges; copy says "works on any phone, nothing to download"; JSON-LD `operatingSystem: "Web (PWA)…"` | Native apps come later; the page must not overclaim. The "Installs like an app — no App Store needed" chip is the honest framing. |
 | D9 | Phone captures via Chrome DevTools emulation, **390×844 @ DPR 3**, EN + AR | Authentic for a PWA — DevTools capture *is* the real client experience. |
 | D10 | AED add-on bundle prices: $12→AED 45, $20→AED 75, $18→AED 65 | Owner-rounded from peg math (44/73/66) to cleaner price points. |
-| D11 *(draft wording — owner to confirm)* | Screenshot assets keep the delivered folder tree `public/Wazen-Screenshots/{Coach\|Client} Dashboard/{Desktop\|Mobile}/{en\|ar}/<Name>.png`; no flat renaming | Matches the owner's capture workflow, so re-capture sessions drop straight in; all path knowledge is centralized in `lib/screenshots.ts` anyway; spaces in paths are URL-encoded automatically by next/image. One parity fix applied: `Desktop/en/Check_In_Tabs.png` → `Check_In_Tab.png`. |
-| D12 *(draft wording — owner to confirm)* | Messaging feature tab uses the real Coach `Messages_Tab` capture (9th map entry, beyond the approved 8-entry C.2a mapping); the desktop chat skeleton is retired | The capture exists and is clean; keeping a fake skeleton next to real captures everywhere else would contradict the pass's purpose. Easy to revert to a skeleton if rejected. |
+| D11 | Pass B demo data via backend seed script (`SEED_DEMO=true`, wazen-backend); featured client Omar Saleh (عمر صالح); EN/AR datasets via `SEED_LOCALE=ar`, one at a time — captures per locale require re-seeding | Repeatable verified data (compliance 55–100%, 8-msg featured thread, QA scans); AR variant makes AR screenshots fully Arabic. |
+| D12 | Wazen app i18n hardening (~175 strings keyed, RTL bidi fixes, AR plural sets, locale formatters, Latin digits) as Pass B prerequisite. Branches: wazen-frontend `feat/i18n-hardening`, wazen-backend `feat/demo-seed-ar`. See wazen-frontend `docs/I18N-HARDENING-CHANGELOG.md` | AR captures would have leaked English UI otherwise. |
+| D13 | Screenshot naming: keep the delivered tree `public/Wazen-Screenshots/{Coach\|Client} Dashboard/{Desktop\|Mobile}/{en\|ar}/<Name>.png`; all path knowledge in `lib/screenshots.ts` | Re-captures drop in without rename churn. |
+| D14 | Messaging tab uses the real Coach Messages capture (supersedes the D4 skeleton note) | Capture now exists; fake next to real reads wrong. |
 
 **Standing constraints:**
 - **No fabricated testimonials or social proof.** Pre-launch startup: the proof band uses honest claims ("Built with founding coaches…"), the coach-profile screenshot is the product-proof visual, and testimonial slots stay empty until real pilot coaches exist. Review-platform badges are a post-launch item.
@@ -92,7 +94,7 @@ Single-source-of-truth files — change these, not call sites:
 2. **Zero social proof** — and the trust bar spent the proof slot on self-claims including "Powered by Binaa Labs."
 3. **Invisible category signal** — desktop admin screenshots shrunk to illegibility; the client app never shown as a phone.
 4. **QA test data in shipped screenshots** — `terminated.client@example.com`, 0% compliance, "USED BY 0", a `localhost:5173` badge — all zoomable via lightbox.
-5. **Dead conversion URLs** — every CTA pointed at a domain that doesn't resolve (→ D1, launch checklist).
+5. **Dead conversion URLs** — every CTA pointed at a domain that doesn't resolve (→ D1; resolved July 2026: `app.wazen.fit`).
 
 Benchmarks: Everfit (hero product UI + proof band + persona segmentation + phone rows), Trainerize (CTA friction microcopy), PTDistinction (desktop+phone hero pairing).
 
@@ -106,7 +108,7 @@ Type key: **[a]** product visual (device frame) · **[b]** photography · **[c]*
 | 2 | Hero | browser frame: coach dashboard [a] + overlapping phone frame [a] + annotation chips [c] | ✅ real captures |
 | 3 | Proof band | honest text proof + bilingual badge; pilot coach headshots later [b] | ✅ |
 | 4 | Problem | comparison cards + side photo slot [b: F-2, desktop only] | ✅ placeholder → C.2b photo |
-| 5 | Features — 5 tabs | per-tab story screenshot [a] + client-side phone PiP [a], incl. real Messaging captures (D12) | ✅ real captures |
+| 5 | Features — 5 tabs | per-tab story screenshot [a] + client-side phone PiP [a], incl. real Messaging captures (D14) | ✅ real captures |
 | 6 | Coach ↔ Client sync | desktop frame + phone frame + animated flowing-dots connector [a+c] | ✅ real captures |
 | 7 | How it works | 3 steps, each with screenshot [a]; clean invite modal, brightness hack removed | ✅ real captures |
 | 8 | Segments band | fitness / nutrition / health-practitioner cards + photo slots [b: F-3/F-5/F-6] | ✅ placeholders → C.2b photos |
@@ -122,7 +124,7 @@ Type key: **[a]** product visual (device frame) · **[b]** photography · **[c]*
 - **Pass A — foundation (code-only):** Binaa Labs consolidation; hero composite (tightened rhythm, PhoneFrame + branded skeleton screens, translatable annotation chips); proof band; 5th Messaging tab; USD/AED pricing toggle with per-locale defaults and per-currency savings; standardized CTA microcopy; PWA copy corrections EN+AR + JSON-LD; WhyWazen counters removed (they mimicked scale metrics); Logo component; dark-mode screenshot softening; AR SEO fixes; `links.ts` launch TODO.
 - **Pass A.1 — defect fixes:** the i18n remount root-cause fix (learning #1); content-anchored hero chips (physical coords while captures are LTR); densified messaging skeleton; flowing-dots sync connector with reduced-motion fallback; plan-like "today" skeleton; value-strip icon chips; AED add-on prices (D10).
 - **Pass C.1 — structure with placeholders:** `lib/screenshots.ts` locale map wired through every consumer; segments band built; `PhotoPlaceholder` component (branded, F-labeled, true final aspect) placed in all photo slots; coach-profile proof point in WhyWazen; OG composite cards EN+AR (learnings #2/#3).
-- **Pass C.2a — real capture swap:** all product screenshots replaced with the new Wazen capture set (curated demo data, new in-app logo, native AR captures — no more EN-on-/ar). 14 map entries (9 desktop + 5 client-mobile) with true per-locale dimensions; every `PhoneSkeleton` replaced by real PWA captures via the new `PhoneShot` component (hero, features PiPs ×5, sync panel, showcase ×3, CTA composite); messaging desktop tab got its real capture (D12); invite-modal brightness hack removed (new capture has a bright backdrop); all 20 old QA-data PNGs pruned from `public/screenshots/`; OG cards auto-picked-up the new dashboard captures. P0-3 (QA data) and P1-3 (EN screenshots on /ar) are closed.
+- **Pass C.2a — real capture swap:** all product screenshots replaced with the new Wazen capture set (curated demo data, new in-app logo, native AR captures — no more EN-on-/ar). 14 map entries (9 desktop + 5 client-mobile) with true per-locale dimensions; every `PhoneSkeleton` replaced by real PWA captures via the new `PhoneShot` component (hero, features PiPs ×5, sync panel, showcase ×3, CTA composite); messaging desktop tab got its real capture (D14); invite-modal brightness hack removed (new capture has a bright backdrop); all 20 old QA-data PNGs pruned from `public/screenshots/`; OG cards auto-picked-up the new dashboard captures. P0-3 (QA data) and P1-3 (EN screenshots on /ar) are closed. Demo data came from the D11 seed script after the D12 i18n-hardening prerequisite.
 
 ---
 
@@ -138,8 +140,9 @@ Type key: **[a]** product visual (device frame) · **[b]** photography · **[c]*
 - **Chrome hygiene:** tour banners dismissed, no localhost/debug overlays, production-looking URL, professional account name.
 - **Desktop captures:** ~1280–1440px viewport; per-feature story crops, not full pages.
 - **Phone captures (D9):** Chrome DevTools device emulation 390×844 @ DPR 3 — authentic for a PWA. Set: client Today, Plans, Check-in submit, Progress chart, Messages. Same demo session as desktop.
-- **Locales:** duplicate desktop + phone key sets in Arabic UI for /ar.
-- **File naming (D11):** drop files into the delivered tree — `public/Wazen-Screenshots/{Coach|Client} Dashboard/{Desktop|Mobile}/{en|ar}/<Name>.png`; `lib/screenshots.ts` maps them.
+- **Locales:** duplicate desktop + phone key sets in Arabic UI for /ar. **Seed order (D11): seed EN → EN shots → seed AR → AR shots — never mix locales in one seeded dataset.**
+- **Environment:** `VITE_SHOW_DEV_TOOLS` unset before capturing; Docker bakes `seed.ts` — rebuild the image before seeding.
+- **File naming (D13):** drop files into the delivered tree — `public/Wazen-Screenshots/{Coach|Client} Dashboard/{Desktop|Mobile}/{en|ar}/<Name>.png`; `lib/screenshots.ts` maps them.
 
 **Photography briefs** — owner sources against these; every placeholder on the page is labeled with its F-number. Global rules: no women anywhere in frame (D7), no visible third-party logos, muted/desaturated tones that let teal `#3D8C84` / sage `#7BA898` UI sit on top, no neon gym lighting. Free-license sources (Unsplash/Pexels licenses) or own shoots.
 
@@ -161,9 +164,9 @@ Sourced photos replace `PhotoPlaceholder` blocks (match by F-number, same aspect
 
 ### Launch checklist (separate from passes)
 
-- [ ] Real app URL into `lib/links.ts` (both signup + login)
-- [ ] BrowserFrame address-bar text matches the real app domain (Hero, Features, WhyWazen)
-- [ ] Click-test every CTA returns 200
+- [x] Real app URL into `lib/links.ts` (both signup + login) — `app.wazen.fit`, July 2026
+- [x] BrowserFrame address-bar text matches the real app domain (Hero, Features ×5 tabs, WhyWazen, OG card)
+- [ ] Click-test every CTA returns 200 (pending domain verified live)
 - [ ] Re-verify OG preview via WhatsApp (primary share channel for the audience)
 - [ ] Final logo SVG swapped into `components/ui/Logo.tsx` + favicon/app-icon (`app/icon.tsx`, `app/apple-icon.tsx`)
 - [ ] support@wazen.fit forwarding configured (footer contact)

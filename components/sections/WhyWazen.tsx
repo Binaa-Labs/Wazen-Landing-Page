@@ -84,7 +84,7 @@ export default function WhyWazen() {
               whileHover={{ scale: 1.02 }}
               transition={{ duration: 0.25, ease: "easeOut" }}
             >
-              <BrowserFrame url="wazen.fit/coach/nadia">
+              <BrowserFrame url="app.wazen.fit/coach/karim">
                 <Lightbox
                   src={profile.src}
                   alt={t.why.profileAlt}

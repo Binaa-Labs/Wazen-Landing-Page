@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { useRef, useState } from "react";
 import Image from "next/image";
@@ -32,7 +32,7 @@ const TAB_META: {
         <path d="M16 4.6a3.5 3.5 0 0 1 0 5.8M17.5 14.7c2.1.6 3.5 2.2 3.5 4.8" />
       </>
     ),
-    url: "wazen.fit/clients",
+    url: "app.wazen.fit/clients",
     shotName: "coachClients",
     phonePip: "clientMobileHome",
   },
@@ -45,7 +45,7 @@ const TAB_META: {
         <path d="m9 13.5 2 2 4-4.5" />
       </>
     ),
-    url: "wazen.fit/dashboard",
+    url: "app.wazen.fit/dashboard",
     shotName: "coachDashboard",
     phonePip: "clientMobileCheckin",
   },
@@ -57,7 +57,7 @@ const TAB_META: {
         <path d="M15.5 7H21v5.5" />
       </>
     ),
-    url: "wazen.fit/progress",
+    url: "app.wazen.fit/progress",
     shotName: "clientProgress",
     phonePip: "clientMobileProgress",
   },
@@ -71,7 +71,7 @@ const TAB_META: {
         <rect x="13.5" y="13.5" width="7" height="7" rx="1.5" />
       </>
     ),
-    url: "wazen.fit/templates",
+    url: "app.wazen.fit/templates",
     shotName: "coachTemplates",
     phonePip: "clientMobilePlans",
   },
@@ -80,7 +80,7 @@ const TAB_META: {
     icon: (
       <path d="M21 11.5c0 3.6-4 6.5-9 6.5-1.1 0-2.1-.13-3.1-.38L4.5 19.5l1.4-3.1C4.7 15.2 3 13.5 3 11.5 3 7.9 7 5 12 5s9 2.9 9 6.5Z" />
     ),
-    url: "wazen.fit/messages",
+    url: "app.wazen.fit/messages",
     /* C.2a addition beyond the approved 8-entry mapping: the new capture
        set includes Coach Messages_Tab, so the desktop chat skeleton is
        retired (flagged in the pass report). */
@@ -90,7 +90,7 @@ const TAB_META: {
 ];
 
 /* Animated connector between the coach dashboard and the client app:
-   arrowheads at both ends and dots flowing along the line — "data syncing"
+   arrowheads at both ends and dots flowing along the line — “data syncing”
    in both directions. Static dashed line under prefers-reduced-motion.
    Vertical (rotated) when the grid stacks on mobile. */
 function SyncConnector() {

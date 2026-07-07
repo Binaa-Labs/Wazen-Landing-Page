@@ -225,7 +225,7 @@ export async function buildOgImage(locale: Locale) {
                   fontFamily: "Arial, sans-serif",
                 }}
               >
-                wazen.fit/dashboard
+                app.wazen.fit/dashboard
               </div>
             </div>
             {/* eslint-disable-next-line @next/next/no-img-element */}

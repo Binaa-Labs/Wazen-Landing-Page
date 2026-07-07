@@ -187,7 +187,7 @@ export default function Hero() {
               transition={{ duration: 0.25, ease: "easeOut" }}
               className="w-full"
             >
-              <BrowserFrame url="wazen.fit/dashboard">
+              <BrowserFrame url="app.wazen.fit/dashboard">
                 <Lightbox
                   src={dash.src}
                   alt={t.hero.dashboardAlt}

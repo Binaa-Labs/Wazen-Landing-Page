@@ -3,7 +3,7 @@ import type { Locale } from "@/lib/i18n";
 /* Single source of truth for every product screenshot on the page,
    locale-aware. Pass C.2a: real Wazen captures, EN + AR, desktop + mobile.
 
-   Convention (D11): captures keep the owner's tree exactly as delivered —
+   Convention (D13): captures keep the owner's tree exactly as delivered —
    public/Wazen-Screenshots/{Coach|Client} Dashboard/{Desktop|Mobile}/{en|ar}/<Name>.png
    — and all path knowledge lives in this file. Re-capture sessions drop
    files into the same tree and this map just keeps working (or gets a
