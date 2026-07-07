@@ -10,8 +10,7 @@ import Badge from "@/components/ui/Badge";
 import BrowserFrame from "@/components/ui/BrowserFrame";
 import Button from "@/components/ui/Button";
 import Lightbox from "@/components/ui/Lightbox";
-import PhoneFrame from "@/components/ui/PhoneFrame";
-import PhoneSkeleton from "@/components/ui/PhoneSkeleton";
+import PhoneShot from "@/components/ui/PhoneShot";
 import { APP_URLS } from "@/lib/links";
 import { getShot } from "@/lib/screenshots";
 
@@ -169,7 +168,7 @@ export default function Hero() {
 
         {/* Composite: coach dashboard in a browser frame + the client app in
             an overlapping phone frame — the coach↔client pairing in one
-            glance. Phone content is a skeleton until Pass C captures land. */}
+            glance. Both are real locale-aware captures (Pass C.2a). */}
         <div ref={frameRef} className="relative mt-12 perspective-[1200px]">
           {/* Ambient teal glow behind the frame */}
           <div
@@ -232,9 +231,11 @@ export default function Hero() {
                 <TrendDot />
                 {t.hero.chips[1]}
               </AnnotationChip>
-              <PhoneFrame>
-                <PhoneSkeleton screen="today" />
-              </PhoneFrame>
+              <PhoneShot
+                name="clientMobileHome"
+                alt={t.features.clientLabel}
+                sizes="170px"
+              />
             </motion.div>
           </motion.div>
         </div>

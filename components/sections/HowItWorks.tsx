@@ -11,13 +11,13 @@ import { getShot, type ShotName } from "@/lib/screenshots";
 
 /* Structural step data — number, icon, screenshot (by locale-aware map name,
    see lib/screenshots.ts). Index-coupled to t.how.steps for title/body/alt.
-   `filter` lifts step 1's dark modal screenshot to match steps 2–3's visual
-   weight (drop in Pass C.2 once the clean re-capture lands). */
+   `center` centers the crop for captures whose subject is mid-frame (the
+   invite modal) instead of the default top-anchored story crop. */
 const STEP_META: {
   number: string;
   icon: React.ReactNode;
   shotName: ShotName;
-  filter?: string;
+  center?: boolean;
 }[] = [
   {
     number: "01",
@@ -29,7 +29,7 @@ const STEP_META: {
       </>
     ),
     shotName: "coachInvite",
-    filter: "brightness(1.15) contrast(0.95)",
+    center: true,
   },
   {
     number: "02",
@@ -150,8 +150,9 @@ export default function HowItWorks() {
                     alt={t.how.steps[i].alt}
                     fill
                     sizes="(min-width: 1248px) 368px, (min-width: 768px) 30vw, calc(100vw - 96px)"
-                    className="object-cover object-top dark:opacity-90"
-                    style={step.filter ? { filter: step.filter } : undefined}
+                    className={`object-cover dark:opacity-90 ${
+                      step.center ? "object-center" : "object-top"
+                    }`}
                   />
                 </Lightbox>
                 </motion.div>

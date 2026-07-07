@@ -1,7 +1,7 @@
 # Wazen Landing Page — Project Document
 
 > Single source of truth for this repo. A developer joining cold should get the full picture from this file: what Wazen is, what this repo is, every decision made and why, what's shipped, and what remains.
-> Current state: **Pass A ✅ · Pass A.1 ✅ · Pass C.1 ✅ (all committed on `feat/landing-revamp`) · Pass B 🔄 owner assets in production · Pass C.2 ⏳ asset swap, blocked on B.**
+> Current state: **Pass A ✅ · Pass A.1 ✅ · Pass C.1 ✅ · Pass C.2a ✅ (real captures live, EN+AR, desktop+mobile) · Pass C.2b ⏳ photos + founder portrait, blocked on owner sourcing (F-slots).** All on `feat/landing-revamp`.
 
 ---
 
@@ -31,7 +31,7 @@ Single-source-of-truth files — change these, not call sites:
 |---|---|
 | `lib/i18n.ts` | Every user-facing string, EN + AR. `type Dictionary = typeof en` forces the AR object to match shape at compile time. Structural arrays (icons, hrefs, screenshots) in components are index-coupled to dictionary arrays — keep orders aligned. |
 | `lib/links.ts` | App signup/login URLs. **Placeholder until launch** — `app.wazen.com` does not resolve yet; the file carries a loud TODO. |
-| `lib/screenshots.ts` | Locale-aware screenshot map `{ en, ar, width, height }`. AR paths fall back to EN until the AR capture set lands (Pass B). The Pass C.2 swap is edits to this file only. |
+| `lib/screenshots.ts` | Locale-aware screenshot map: every entry is `{ en: {src,width,height}, ar: {…} }` with true per-locale dimensions (EN desktop 2560×1600, AR desktop 3840×2400, mobile 1170×2532 per D9). Captures live in the delivered tree `public/Wazen-Screenshots/{Coach\|Client} Dashboard/{Desktop\|Mobile}/{en\|ar}/<Name>.png` (D11) — all path knowledge stays in this file. |
 | `components/ui/Logo.tsx` | The brand mark in nav + footer. Interim "W" tile; the final logo SVG (in production) lands as a one-file swap. Favicon/app-icon swap is a TODO noted in-file. |
 | `lib/og.tsx` | Shared OG/social card builder consumed by the EN and AR `opengraph-image.tsx` routes. |
 
@@ -73,6 +73,8 @@ Single-source-of-truth files — change these, not call sites:
 | D8 | Client app is a **PWA** — no app-store badges; copy says "works on any phone, nothing to download"; JSON-LD `operatingSystem: "Web (PWA)…"` | Native apps come later; the page must not overclaim. The "Installs like an app — no App Store needed" chip is the honest framing. |
 | D9 | Phone captures via Chrome DevTools emulation, **390×844 @ DPR 3**, EN + AR | Authentic for a PWA — DevTools capture *is* the real client experience. |
 | D10 | AED add-on bundle prices: $12→AED 45, $20→AED 75, $18→AED 65 | Owner-rounded from peg math (44/73/66) to cleaner price points. |
+| D11 *(draft wording — owner to confirm)* | Screenshot assets keep the delivered folder tree `public/Wazen-Screenshots/{Coach\|Client} Dashboard/{Desktop\|Mobile}/{en\|ar}/<Name>.png`; no flat renaming | Matches the owner's capture workflow, so re-capture sessions drop straight in; all path knowledge is centralized in `lib/screenshots.ts` anyway; spaces in paths are URL-encoded automatically by next/image. One parity fix applied: `Desktop/en/Check_In_Tabs.png` → `Check_In_Tab.png`. |
+| D12 *(draft wording — owner to confirm)* | Messaging feature tab uses the real Coach `Messages_Tab` capture (9th map entry, beyond the approved 8-entry C.2a mapping); the desktop chat skeleton is retired | The capture exists and is clean; keeping a fake skeleton next to real captures everywhere else would contradict the pass's purpose. Easy to revert to a skeleton if rejected. |
 
 **Standing constraints:**
 - **No fabricated testimonials or social proof.** Pre-launch startup: the proof band uses honest claims ("Built with founding coaches…"), the coach-profile screenshot is the product-proof visual, and testimonial slots stay empty until real pilot coaches exist. Review-platform badges are a post-launch item.
@@ -101,18 +103,18 @@ Type key: **[a]** product visual (device frame) · **[b]** photography · **[c]*
 | # | Section | Visuals | Status |
 |---|---|---|---|
 | 1 | Nav | logo mark [c] | ✅ |
-| 2 | Hero | browser frame: coach dashboard [a] + overlapping phone frame [a] + annotation chips [c] | ✅ skeleton phone → C.2 real capture |
+| 2 | Hero | browser frame: coach dashboard [a] + overlapping phone frame [a] + annotation chips [c] | ✅ real captures |
 | 3 | Proof band | honest text proof + bilingual badge; pilot coach headshots later [b] | ✅ |
-| 4 | Problem | comparison cards + side photo slot [b: F-2, desktop only] | ✅ placeholder → C.2 photo |
-| 5 | Features — 5 tabs | per-tab story screenshot [a] + client-side phone PiP [a]; Messaging tab renders skeletons | ✅ → C.2 re-captures |
-| 6 | Coach ↔ Client sync | desktop frame + phone frame + animated flowing-dots connector [a+c] | ✅ → C.2 real phone |
-| 7 | How it works | 3 steps, each with screenshot [a] | ✅ → C.2 clean re-captures (step 1 modal currently CSS-brightened) |
-| 8 | Segments band | fitness / nutrition / health-practitioner cards + photo slots [b: F-3/F-5/F-6] | ✅ placeholders → C.2 photos |
-| 9 | Client-app showcase | 3 phone frames [a] + "Installs like an app — no App Store needed" chip [c] | ✅ skeletons → C.2 captures |
+| 4 | Problem | comparison cards + side photo slot [b: F-2, desktop only] | ✅ placeholder → C.2b photo |
+| 5 | Features — 5 tabs | per-tab story screenshot [a] + client-side phone PiP [a], incl. real Messaging captures (D12) | ✅ real captures |
+| 6 | Coach ↔ Client sync | desktop frame + phone frame + animated flowing-dots connector [a+c] | ✅ real captures |
+| 7 | How it works | 3 steps, each with screenshot [a]; clean invite modal, brightness hack removed | ✅ real captures |
+| 8 | Segments band | fitness / nutrition / health-practitioner cards + photo slots [b: F-3/F-5/F-6] | ✅ placeholders → C.2b photos |
+| 9 | Client-app showcase | 3 phone frames [a] + "Installs like an app — no App Store needed" chip [c] | ✅ real captures |
 | 10 | Pricing | USD/AED + monthly/yearly toggles, tool icon chips [c] | ✅ |
-| 11 | Why Wazen | pillars; coach-profile proof screenshot [a]; regional photo slot [b: F-7/F-10]; founder quote (portrait pending [b: F-11]) | ✅ → C.2 portrait + photo |
+| 11 | Why Wazen | pillars; coach-profile proof screenshot [a]; regional photo slot [b: F-7/F-10]; founder quote (portrait pending [b: F-11]) | ✅ captures · C.2b photo + portrait |
 | 12 | FAQ | text accordion | ✅ |
-| 13 | CTA | mini dashboard+phone composite [a] + F-9 backdrop slot at 12% opacity [b] | ✅ → C.2 photo |
+| 13 | CTA | mini dashboard+phone composite [a] + F-9 backdrop slot at 12% opacity [b] | ✅ captures → C.2b photo |
 | 14 | Footer | logo mark, single Binaa Labs line, support@wazen.fit | ✅ |
 
 ### What shipped
@@ -120,22 +122,24 @@ Type key: **[a]** product visual (device frame) · **[b]** photography · **[c]*
 - **Pass A — foundation (code-only):** Binaa Labs consolidation; hero composite (tightened rhythm, PhoneFrame + branded skeleton screens, translatable annotation chips); proof band; 5th Messaging tab; USD/AED pricing toggle with per-locale defaults and per-currency savings; standardized CTA microcopy; PWA copy corrections EN+AR + JSON-LD; WhyWazen counters removed (they mimicked scale metrics); Logo component; dark-mode screenshot softening; AR SEO fixes; `links.ts` launch TODO.
 - **Pass A.1 — defect fixes:** the i18n remount root-cause fix (learning #1); content-anchored hero chips (physical coords while captures are LTR); densified messaging skeleton; flowing-dots sync connector with reduced-motion fallback; plan-like "today" skeleton; value-strip icon chips; AED add-on prices (D10).
 - **Pass C.1 — structure with placeholders:** `lib/screenshots.ts` locale map wired through every consumer; segments band built; `PhotoPlaceholder` component (branded, F-labeled, true final aspect) placed in all photo slots; coach-profile proof point in WhyWazen; OG composite cards EN+AR (learnings #2/#3).
+- **Pass C.2a — real capture swap:** all product screenshots replaced with the new Wazen capture set (curated demo data, new in-app logo, native AR captures — no more EN-on-/ar). 14 map entries (9 desktop + 5 client-mobile) with true per-locale dimensions; every `PhoneSkeleton` replaced by real PWA captures via the new `PhoneShot` component (hero, features PiPs ×5, sync panel, showcase ×3, CTA composite); messaging desktop tab got its real capture (D12); invite-modal brightness hack removed (new capture has a bright backdrop); all 20 old QA-data PNGs pruned from `public/screenshots/`; OG cards auto-picked-up the new dashboard captures. P0-3 (QA data) and P1-3 (EN screenshots on /ar) are closed.
 
 ---
 
 ## 6 · Remaining work
 
-### Pass B — owner asset production (in progress)
+### Pass B — owner asset production
 
-**Re-capture checklist** (the instruction sheet for the capture session):
+**Screenshot captures: ✅ delivered and shipped (C.2a).** Remaining: photo sourcing (F-slots below) and the founder portrait.
+
+**Re-capture checklist** — ✅ completed; kept as the reference sheet for any future re-capture session:
 
 - **Demo data:** 9–12 clients, realistic regional male+female client names are fine in UI lists (data, not photography); real-looking emails (karim.a@gmail.com — never `*.client@example.com`); compliance spread 55–100%, no 0% in visible rows; templates "Used by 3/5"; seeded 6–8-message coach↔client conversation (plan feedback, not lorem); healthy adherence trend (no collapse to zero); active nutrition/medication plans (no ended-plan empty states).
 - **Chrome hygiene:** tour banners dismissed, no localhost/debug overlays, production-looking URL, professional account name.
 - **Desktop captures:** ~1280–1440px viewport; per-feature story crops, not full pages.
 - **Phone captures (D9):** Chrome DevTools device emulation 390×844 @ DPR 3 — authentic for a PWA. Set: client Today, Plans, Check-in submit, Progress chart, Messages. Same demo session as desktop.
 - **Locales:** duplicate desktop + phone key sets in Arabic UI for /ar.
-- **File naming:** predictable mobile names, e.g. `Client-Dashboard-Mobile.png` / `Client-Dashboard-Mobile-AR.png`.
-- **Cleanup input for C.2:** list of superseded PNGs to prune.
+- **File naming (D11):** drop files into the delivered tree — `public/Wazen-Screenshots/{Coach|Client} Dashboard/{Desktop|Mobile}/{en|ar}/<Name>.png`; `lib/screenshots.ts` maps them.
 
 **Photography briefs** — owner sources against these; every placeholder on the page is labeled with its F-number. Global rules: no women anywhere in frame (D7), no visible third-party logos, muted/desaturated tones that let teal `#3D8C84` / sage `#7BA898` UI sit on top, no neon gym lighting. Free-license sources (Unsplash/Pexels licenses) or own shoots.
 
@@ -151,9 +155,9 @@ Type key: **[a]** product visual (device frame) · **[b]** photography · **[c]*
 | F-8 | optional | Man at kitchen counter or post-workout at home, morning light, phone in hand — "Sunday check-in" routine. |
 | F-11 | owner | Founder portrait: Naser Shadid; casual dark/teal top; soft natural side light; plain warm background or blurred gym; chest-up; croppable to ~200px circle; light + slightly moody variants for both themes. |
 
-### Pass C.2 — pure asset swap (blocked on B)
+### Pass C.2b — photo placement (blocked on owner sourcing)
 
-Clean captures replace current PNGs (edits in `lib/screenshots.ts`, including AR paths — drop the EN fallback) · phone captures replace `PhoneSkeleton` instances · sourced photos replace `PhotoPlaceholder` blocks (match by F-number, same aspect) · founder portrait replaces the "NS" initials avatar · clean invite-modal capture + remove the CSS brightness filter in `HowItWorks.tsx` · re-verify OG cards with real captures · prune superseded PNGs from `public/screenshots/` (they're publicly served) and grep for dangling references.
+Sourced photos replace `PhotoPlaceholder` blocks (match by F-number, same aspect; use the `scaleIn` motion variant) · founder portrait replaces the "NS" initials avatar in WhyWazen. *(C.2a — captures, phone frames, invite modal, OG, PNG pruning — shipped.)*
 
 ### Launch checklist (separate from passes)
 

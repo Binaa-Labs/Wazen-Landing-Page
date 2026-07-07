@@ -5,13 +5,16 @@ import { motion } from "framer-motion";
 import { useLanguage } from "@/components/LanguageProvider";
 import { fadeUp, staggerContainer, viewport } from "@/components/motion";
 import Badge from "@/components/ui/Badge";
-import PhoneFrame from "@/components/ui/PhoneFrame";
-import PhoneSkeleton, { type PhoneScreen } from "@/components/ui/PhoneSkeleton";
+import PhoneShot from "@/components/ui/PhoneShot";
 import SectionHeader from "@/components/ui/SectionHeader";
+import type { ShotName } from "@/lib/screenshots";
 
-/* Screens are index-coupled to t.clientApp.phones. Skeletons until the
-   Pass C PWA captures (EN + AR) land. */
-const PHONE_SCREENS: PhoneScreen[] = ["today", "checkin", "progress"];
+/* Real locale-aware PWA captures, index-coupled to t.clientApp.phones. */
+const PHONE_SHOTS: ShotName[] = [
+  "clientMobileHome",
+  "clientMobileCheckin",
+  "clientMobileProgress",
+];
 
 export default function ClientApp() {
   const { t } = useLanguage();
@@ -35,17 +38,19 @@ export default function ClientApp() {
           viewport={viewport}
           className="mx-auto mt-14 flex max-w-3xl items-end justify-center gap-5 sm:gap-8"
         >
-          {PHONE_SCREENS.map((screen, i) => (
+          {PHONE_SHOTS.map((name, i) => (
             <motion.div
-              key={screen}
+              key={name}
               variants={fadeUp}
               className={`w-full max-w-[190px] ${
                 i === 1 ? "sm:-translate-y-4" : ""
               } ${i === 2 ? "hidden sm:block" : ""}`}
             >
-              <PhoneFrame>
-                <PhoneSkeleton screen={screen} />
-              </PhoneFrame>
+              <PhoneShot
+                name={name}
+                alt={t.clientApp.phones[i]}
+                sizes="190px"
+              />
               <p className="mt-3 text-center text-caption font-medium text-ink/65">
                 {t.clientApp.phones[i]}
               </p>

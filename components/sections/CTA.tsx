@@ -7,8 +7,7 @@ import { fadeUp, viewport } from "@/components/motion";
 import Badge from "@/components/ui/Badge";
 import Button from "@/components/ui/Button";
 import GhostWordmark from "@/components/ui/GhostWordmark";
-import PhoneFrame from "@/components/ui/PhoneFrame";
-import PhoneSkeleton from "@/components/ui/PhoneSkeleton";
+import PhoneShot from "@/components/ui/PhoneShot";
 import { APP_URLS } from "@/lib/links";
 
 /* Abstract dashboard corner (stat tiles + review queue) paired with the
@@ -138,10 +137,9 @@ export default function CTA() {
           <p className="mt-2 text-caption text-ink/55">{t.cta.cardSub}</p>
           <div className="relative mt-6 pb-7">
             <MiniDashboard />
+            {/* Decorative within the aria-hidden composite — empty alt */}
             <div className="absolute -bottom-4 end-3 w-[26%] min-w-[88px] max-w-[120px]">
-              <PhoneFrame>
-                <PhoneSkeleton screen="checkin" />
-              </PhoneFrame>
+              <PhoneShot name="clientMobileCheckin" alt="" sizes="120px" />
             </div>
           </div>
           <Button href={APP_URLS.signup} className="mt-5 w-full">

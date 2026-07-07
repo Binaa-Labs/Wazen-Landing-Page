@@ -8,22 +8,20 @@ import { useLanguage } from "@/components/LanguageProvider";
 import { fadeUp, viewport } from "@/components/motion";
 import BrowserFrame from "@/components/ui/BrowserFrame";
 import Lightbox from "@/components/ui/Lightbox";
-import PhoneFrame from "@/components/ui/PhoneFrame";
-import PhoneSkeleton, { type PhoneScreen } from "@/components/ui/PhoneSkeleton";
+import PhoneShot from "@/components/ui/PhoneShot";
 import SectionHeader from "@/components/ui/SectionHeader";
 import { getShot, type ShotName } from "@/lib/screenshots";
 
-/* Structural tab data — icons, chrome URL, screenshot (by locale-aware map
-   name, see lib/screenshots.ts), and the client-side phone screen shown as
-   the PiP overlay. Index-coupled to t.features.tabs for the translatable
-   label/headline/body/caption/alt text. Messaging has no usable capture yet
-   (Pass B re-captures) — it renders a desktop skeleton instead. */
+/* Structural tab data — icons, chrome URL, and the locale-aware captures
+   (see lib/screenshots.ts): a desktop primary in the browser frame and the
+   matching client-side mobile capture as the phone PiP. Index-coupled to
+   t.features.tabs for the translatable label/headline/body/caption/alt. */
 const TAB_META: {
   id: string;
   icon: React.ReactNode;
   url: string;
-  shotName?: ShotName;
-  phoneScreen: PhoneScreen;
+  shotName: ShotName;
+  phonePip: ShotName;
 }[] = [
   {
     id: "clients",
@@ -36,7 +34,7 @@ const TAB_META: {
     ),
     url: "wazen.fit/clients",
     shotName: "coachClients",
-    phoneScreen: "today",
+    phonePip: "clientMobileHome",
   },
   {
     id: "check-ins",
@@ -49,7 +47,7 @@ const TAB_META: {
     ),
     url: "wazen.fit/dashboard",
     shotName: "coachDashboard",
-    phoneScreen: "checkin",
+    phonePip: "clientMobileCheckin",
   },
   {
     id: "progress",
@@ -61,7 +59,7 @@ const TAB_META: {
     ),
     url: "wazen.fit/progress",
     shotName: "clientProgress",
-    phoneScreen: "progress",
+    phonePip: "clientMobileProgress",
   },
   {
     id: "plans",
@@ -75,7 +73,7 @@ const TAB_META: {
     ),
     url: "wazen.fit/templates",
     shotName: "coachTemplates",
-    phoneScreen: "plans",
+    phonePip: "clientMobilePlans",
   },
   {
     id: "messaging",
@@ -83,75 +81,13 @@ const TAB_META: {
       <path d="M21 11.5c0 3.6-4 6.5-9 6.5-1.1 0-2.1-.13-3.1-.38L4.5 19.5l1.4-3.1C4.7 15.2 3 13.5 3 11.5 3 7.9 7 5 12 5s9 2.9 9 6.5Z" />
     ),
     url: "wazen.fit/messages",
-    phoneScreen: "chat",
+    /* C.2a addition beyond the approved 8-entry mapping: the new capture
+       set includes Coach Messages_Tab, so the desktop chat skeleton is
+       retired (flagged in the pass report). */
+    shotName: "coachMessages",
+    phonePip: "clientMobileMessages",
   },
 ];
-
-/* Placeholder for the messaging tab until a clean re-capture exists: an
-   abstract inbox + thread layout in brand tints. Decorative only. */
-function DesktopChatSkeleton() {
-  /* Alternating thread bubbles: [width class, incoming?] */
-  const bubbles: [string, boolean][] = [
-    ["w-1/2", true],
-    ["w-2/5", false],
-    ["w-3/5", true],
-    ["w-1/3", false],
-    ["w-2/5", true],
-    ["w-1/2", false],
-    ["w-2/5", true],
-  ];
-  return (
-    <div
-      aria-hidden
-      className="grid aspect-[21/10] w-full grid-cols-[1fr_2.2fr] bg-surface"
-    >
-      {/* Conversation list: filled — an active inbox, not an empty one */}
-      <div className="flex flex-col gap-1.5 overflow-hidden border-e border-ink/8 p-2.5">
-        <div className="h-6 shrink-0 rounded-lg border border-ink/10 bg-bg" />
-        {[1, 0.95, 0.9, 0.85, 0.8, 0.75, 0.7].map((o, i) => (
-          <div
-            key={i}
-            className={`flex shrink-0 items-center gap-2 rounded-lg p-1.5 ${
-              i === 0 ? "bg-primary-light" : ""
-            }`}
-            style={{ opacity: o }}
-          >
-            <div className="relative size-6 shrink-0 rounded-full bg-primary/25">
-              {i < 3 && (
-                <div className="absolute -end-0.5 -top-0.5 size-2 rounded-full bg-secondary-dark" />
-              )}
-            </div>
-            <div className="flex-1">
-              <div className="h-1.5 w-2/3 rounded-pill bg-ink/15" />
-              <div className="mt-1 h-1.5 w-full rounded-pill bg-ink/8" />
-            </div>
-          </div>
-        ))}
-      </div>
-      {/* Thread: a real back-and-forth */}
-      <div className="flex flex-col gap-1.5 overflow-hidden p-3">
-        <div className="flex shrink-0 items-center gap-2 border-b border-ink/8 pb-2">
-          <div className="size-6 rounded-full bg-primary/25" />
-          <div className="h-2 w-24 rounded-pill bg-ink/15" />
-        </div>
-        {bubbles.map(([w, incoming], i) => (
-          <div
-            key={i}
-            className={`h-6 shrink-0 rounded-xl ${w} ${
-              incoming
-                ? "self-start rounded-es-sm bg-ink/8"
-                : "self-end rounded-ee-sm bg-primary/75"
-            }`}
-          />
-        ))}
-        <div className="mt-auto flex shrink-0 items-center gap-2 pt-1">
-          <div className="h-7 flex-1 rounded-pill border border-ink/10 bg-bg" />
-          <div className="size-7 rounded-full bg-primary" />
-        </div>
-      </div>
-    </div>
-  );
-}
 
 /* Animated connector between the coach dashboard and the client app:
    arrowheads at both ends and dots flowing along the line — "data syncing"
@@ -216,7 +152,7 @@ export default function Features() {
   const activeIndex = found === -1 ? 0 : found;
   const meta = TAB_META[activeIndex];
   const text = t.features.tabs[activeIndex];
-  const primary = meta.shotName ? getShot(meta.shotName, lang) : null;
+  const primary = getShot(meta.shotName, lang);
   const coachDash = getShot("coachDashboard", lang);
 
   /* Slide follows reading direction: LTR enters from the right, RTL from
@@ -318,35 +254,33 @@ export default function Features() {
                     className="w-full"
                   >
                     <BrowserFrame url={meta.url}>
-                      {primary ? (
-                        <Lightbox
+                      <Lightbox
+                        src={primary.src}
+                        alt={text.primaryAlt}
+                        width={primary.width}
+                        height={primary.height}
+                        className="relative aspect-[21/10] w-full"
+                      >
+                        <Image
                           src={primary.src}
                           alt={text.primaryAlt}
-                          width={primary.width}
-                          height={primary.height}
-                          className="relative aspect-[21/10] w-full"
-                        >
-                          <Image
-                            src={primary.src}
-                            alt={text.primaryAlt}
-                            fill
-                            sizes="(min-width: 1024px) 896px, calc(100vw - 48px)"
-                            className="object-cover object-top dark:opacity-90"
-                          />
-                        </Lightbox>
-                      ) : (
-                        <DesktopChatSkeleton />
-                      )}
+                          fill
+                          sizes="(min-width: 1024px) 896px, calc(100vw - 48px)"
+                          className="object-cover object-top dark:opacity-90"
+                        />
+                      </Lightbox>
                     </BrowserFrame>
                   </motion.div>
 
                   {/* Client-app phone PiP overhangs the frame; the caption
-                      below clears it via sm:mt-20. Skeleton until Pass C
-                      captures land. */}
+                      below clears it via sm:mt-20. Real locale-aware capture
+                      matching the tab's story. */}
                   <div className="absolute -bottom-12 end-4 hidden w-[19%] min-w-[96px] max-w-[150px] sm:block">
-                    <PhoneFrame>
-                      <PhoneSkeleton screen={meta.phoneScreen} />
-                    </PhoneFrame>
+                    <PhoneShot
+                      name={meta.phonePip}
+                      alt={text.secondaryAlt}
+                      sizes="150px"
+                    />
                   </div>
                 </div>
 
@@ -394,9 +328,11 @@ export default function Features() {
             <SyncConnector />
             <div className="flex flex-col items-center gap-2 justify-self-center">
               <div className="w-36 md:w-40">
-                <PhoneFrame>
-                  <PhoneSkeleton screen="today" />
-                </PhoneFrame>
+                <PhoneShot
+                  name="clientMobileHome"
+                  alt={t.features.clientLabel}
+                  sizes="160px"
+                />
               </div>
               <p className="text-caption font-medium text-ink/70">
                 {t.features.clientLabel}

@@ -65,7 +65,7 @@ export async function buildOgImage(locale: Locale) {
   const t = COPY[locale];
   const isAr = locale === "ar";
 
-  const shotPath = SHOTS.coachDashboard[locale];
+  const shotPath = SHOTS.coachDashboard[locale].src;
   const png = await readFile(join(process.cwd(), "public", shotPath));
   const dashSrc = `data:image/png;base64,${png.toString("base64")}`;
 

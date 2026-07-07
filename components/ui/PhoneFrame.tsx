@@ -1,6 +1,5 @@
-/* Phone chrome for client-app visuals. Pass A ships branded skeleton screens
-   (PhoneSkeleton) inside it; Pass C swaps in real PWA captures taken via
-   Chrome DevTools device emulation (390×844 @ DPR 3), EN + AR sets. */
+/* Phone chrome for client-app visuals — since Pass C.2a the content is real
+   PWA captures (see PhoneShot); the frame itself stays purely presentational. */
 
 type PhoneFrameProps = {
   className?: string;
@@ -22,7 +21,9 @@ export default function PhoneFrame({ className, children }: PhoneFrameProps) {
         aria-hidden
         className="absolute left-1/2 top-1.5 z-[1] h-[5px] w-12 -translate-x-1/2 rounded-pill bg-accent/80"
       />
-      <div className="aspect-[9/19] w-full overflow-hidden">{children}</div>
+      <div className="relative aspect-[9/19] w-full overflow-hidden">
+        {children}
+      </div>
     </div>
   );
 }

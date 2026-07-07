@@ -1,41 +1,70 @@
 import type { Locale } from "@/lib/i18n";
 
 /* Single source of truth for every product screenshot on the page,
-   locale-aware. Arabic paths fall back to the English capture until the
-   Pass B AR set lands — the Pass C.2 swap is edits to THIS file only
-   (plus dropping the fallback), no component changes.
+   locale-aware. Pass C.2a: real Wazen captures, EN + AR, desktop + mobile.
 
-   Convention for tomorrow's captures (per §8 of LANDING-AUDIT-PLAN.md):
-   e.g. /screenshots/Coach-Dashboard.png + /screenshots/Coach-Dashboard-AR.png */
+   Convention (D11): captures keep the owner's tree exactly as delivered —
+   public/Wazen-Screenshots/{Coach|Client} Dashboard/{Desktop|Mobile}/{en|ar}/<Name>.png
+   — and all path knowledge lives in this file. Re-capture sessions drop
+   files into the same tree and this map just keeps working (or gets a
+   one-line path edit). Spaces in paths are URL-encoded by next/image.
 
-export type Screenshot = {
-  en: string;
-  ar: string;
-  width: number;
-  height: number;
-};
+   Dimensions are per locale: EN desktop captures are 2560×1600, AR desktop
+   are 3840×2400 (different capture DPR, same 16:10 ratio); client-desktop
+   EN captures vary. Mobile is 1170×2532 (390×844 @ DPR 3, per D9) in both
+   locales. */
 
-const shot = (
-  en: string,
-  width: number,
-  height: number,
-  ar: string = en, // fallback until AR captures exist
-): Screenshot => ({ en, ar, width, height });
+type Capture = { src: string; width: number; height: number };
+export type Screenshot = { en: Capture; ar: Capture };
+
+const BASE = "/Wazen-Screenshots";
+
+const cap = (src: string, width: number, height: number): Capture => ({
+  src,
+  width,
+  height,
+});
+
+/* Coach desktop: EN 2560×1600 · AR 3840×2400 */
+const coachDesk = (name: string): Screenshot => ({
+  en: cap(`${BASE}/Coach Dashboard/Desktop/en/${name}.png`, 2560, 1600),
+  ar: cap(`${BASE}/Coach Dashboard/Desktop/ar/${name}.png`, 3840, 2400),
+});
+
+/* Client mobile: 1170×2532 both locales */
+const clientMobile = (name: string): Screenshot => ({
+  en: cap(`${BASE}/Client Dashboard/Mobile/en/${name}.png`, 1170, 2532),
+  ar: cap(`${BASE}/Client Dashboard/Mobile/ar/${name}.png`, 1170, 2532),
+});
 
 export const SHOTS = {
-  coachDashboard: shot("/screenshots/Coach-Dashboard.png", 1905, 910),
-  coachClients: shot("/screenshots/Coach-Client_Tab.png", 1903, 908),
-  clientProgress: shot("/screenshots/Client-Progress-Tab.png", 1905, 910),
-  coachTemplates: shot("/screenshots/Coach-Template-Tab.png", 1918, 909),
-  coachInvite: shot("/screenshots/Coach-Invite-Client.png", 1918, 905),
-  clientPlans: shot("/screenshots/Client-Plans-Tab.png", 1914, 908),
-  coachAnalytics: shot("/screenshots/Coach-Analytics-Tab2.png", 1902, 908),
-  coachProfile: shot("/screenshots/Client-Coach-Profile-View.png", 1902, 910),
+  /* ── Desktop ─────────────────────────────────────────────────────── */
+  coachDashboard: coachDesk("Dashboard_Tab"),
+  coachClients: coachDesk("Clients_Tab"),
+  coachTemplates: coachDesk("Templates_Tab"),
+  coachInvite: coachDesk("Invite_Client"),
+  coachAnalytics: coachDesk("Analytics_Tab_1"),
+  coachProfile: coachDesk("Public_Profile_Tab"),
+  coachMessages: coachDesk("Messages_Tab"),
+  clientProgress: {
+    en: cap(`${BASE}/Client Dashboard/Desktop/en/Progress_Tab_1.png`, 1606, 1040),
+    ar: cap(`${BASE}/Client Dashboard/Desktop/ar/Progress_Tab_1.png`, 3840, 2400),
+  },
+  clientPlans: {
+    en: cap(`${BASE}/Client Dashboard/Desktop/en/Plans_Tab.png`, 3720, 2400),
+    ar: cap(`${BASE}/Client Dashboard/Desktop/ar/Plans_Tab.png`, 3840, 2400),
+  },
+
+  /* ── Client mobile (PWA, phone frames) ───────────────────────────── */
+  clientMobileHome: clientMobile("Home_Tab"),
+  clientMobileCheckin: clientMobile("Check_In_Tab"),
+  clientMobileProgress: clientMobile("Progress_Tab_1"),
+  clientMobilePlans: clientMobile("Plans_Tab"),
+  clientMobileMessages: clientMobile("Messages_Tab"),
 } satisfies Record<string, Screenshot>;
 
 export type ShotName = keyof typeof SHOTS;
 
-export function getShot(name: ShotName, locale: Locale) {
-  const s = SHOTS[name];
-  return { src: s[locale], width: s.width, height: s.height };
+export function getShot(name: ShotName, locale: Locale): Capture {
+  return SHOTS[name][locale];
 }
