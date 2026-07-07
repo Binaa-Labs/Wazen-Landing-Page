@@ -1,11 +1,11 @@
 "use client";
 
+import Image from "next/image";
 import { motion, type Variants } from "framer-motion";
 
 import { useLanguage } from "@/components/LanguageProvider";
-import { fadeUp, viewport } from "@/components/motion";
+import { fadeUp, scaleIn, viewport } from "@/components/motion";
 import GhostWordmark from "@/components/ui/GhostWordmark";
-import PhotoPlaceholder from "@/components/ui/PhotoPlaceholder";
 import SectionHeader from "@/components/ui/SectionHeader";
 
 /* Spec: 60ms item stagger; the right card trails the left by 100ms */
@@ -130,17 +130,18 @@ export default function Problem() {
             comparison cards keep their original 2-col/stacked layout. */}
         <div className="mt-14 grid gap-6 md:grid-cols-2 lg:grid-cols-[minmax(0,0.55fr)_1fr_1fr]">
           <motion.div
-            variants={fadeUp}
+            variants={scaleIn}
             initial="hidden"
             whileInView="visible"
             viewport={viewport}
-            className="hidden lg:block"
+            className="relative hidden min-h-[320px] overflow-hidden rounded-xl lg:block"
           >
-            <PhotoPlaceholder
-              label="F-2"
-              hint="Overwhelmed coach — dark treated"
-              tone="dark"
-              className="h-full min-h-[320px]"
+            <Image
+              src="/photos/f-2.webp"
+              alt={t.problem.photoAlt}
+              fill
+              sizes="256px"
+              className="object-cover"
             />
           </motion.div>
           <ComparisonCard

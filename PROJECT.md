@@ -1,7 +1,7 @@
 # Wazen Landing Page — Project Document
 
 > Single source of truth for this repo. A developer joining cold should get the full picture from this file: what Wazen is, what this repo is, every decision made and why, what's shipped, and what remains.
-> Current state: **Pass A ✅ · Pass A.1 ✅ · Pass C.1 ✅ · Pass C.2a ✅ (real captures live, EN+AR, desktop+mobile) · Pass C.2b ⏳ photos + founder portrait, blocked on owner sourcing (F-slots).** All on `feat/landing-revamp`.
+> Current state: **Pass A ✅ · Pass A.1 ✅ · Pass B ✅ (captures + photo set v1 delivered) · Pass C.1 ✅ · Pass C.2 ✅ (a: real captures · b: real photos, EN+AR, desktop+mobile).** All on `feat/landing-revamp`. Remaining: launch checklist + post-launch backlog; founder portrait (F-11) and optional F-4/F-8 still unsourced.
 
 ---
 
@@ -56,6 +56,7 @@ Single-source-of-truth files — change these, not call sites:
 2. **Satori (OG images) scrambles wrapped Arabic.** Word order *within* a line is correct, but line-wrapping reorders words across lines. Arabic copy in `lib/og.tsx` ships as **pre-broken lines** that never soft-wrap. Also: Satori rejects `undefined` style values (omit keys instead) and needs an Arabic font loaded explicitly (Tajawal TTF fetched at build with a soft fallback).
 3. **Segment-level OG image files get hashed URLs** (e.g. `/ar/opengraph-image-1kyplq`). Never hardcode OG image paths in metadata — rely on the file convention to inject `og:image`/`twitter:image` (see `app/(ar)/ar/opengraph-image.tsx` + `twitter-image.tsx`).
 4. **`globals.css` is edited by full rewrite, not string replacement** — targeted replaces have historically failed on this file. Prefer writing the whole file when touching tokens.
+5. **CSS `aspect-ratio` transfers `min-height` into a min-WIDTH.** `min-h-[280px]` + `max-lg:aspect-[3/2]` gave the WhyWazen photo slot a transferred 420px min-width on phones: the mobile layout viewport expanded to 420px, and Chrome's `srcset` selection inflated so **every** image on the page fetched its largest variant (`w=3840`) — which is also why huge AR captures rendered blank in slow conditions. Scope `min-h-*` to breakpoints where no `aspect-ratio` rule applies (fix: `lg:min-h-[280px]`, C.2b).
 
 ---
 
@@ -77,6 +78,7 @@ Single-source-of-truth files — change these, not call sites:
 | D12 | Wazen app i18n hardening (~175 strings keyed, RTL bidi fixes, AR plural sets, locale formatters, Latin digits) as Pass B prerequisite. Branches: wazen-frontend `feat/i18n-hardening`, wazen-backend `feat/demo-seed-ar`. See wazen-frontend `docs/I18N-HARDENING-CHANGELOG.md` | AR captures would have leaked English UI otherwise. |
 | D13 | Screenshot naming: keep the delivered tree `public/Wazen-Screenshots/{Coach\|Client} Dashboard/{Desktop\|Mobile}/{en\|ar}/<Name>.png`; all path knowledge in `lib/screenshots.ts` | Re-captures drop in without rename churn. |
 | D14 | Messaging tab uses the real Coach Messages capture (supersedes the D4 skeleton note) | Capture now exists; fake next to real reads wrong. |
+| D15 | Photo set v1 (F-2/3/5/6/7/9, Unsplash/Pexels free license) shipped as **TEMPORARY** — flagged for later refinement/own shoot. F-7 chosen over F-10 as the regional signal. F-5's partial second hand (nail polish at frame edge) is a D7 concern **accepted by owner** for v1; the crop trims most of it. F-6 carries a small background poster + laptop sticker — noted for the v2 swap. F-9 pre-darkened/desaturated in the export so the 12% CTA backdrop reads as texture, not subject. | Real photography now beats placeholders for launch; stock is good enough for v1 and gets replaced by Gulf-authentic shots post-launch. |
 
 **Standing constraints:**
 - **No fabricated testimonials or social proof.** Pre-launch startup: the proof band uses honest claims ("Built with founding coaches…"), the coach-profile screenshot is the product-proof visual, and testimonial slots stay empty until real pilot coaches exist. Review-platform badges are a post-launch item.
@@ -107,16 +109,16 @@ Type key: **[a]** product visual (device frame) · **[b]** photography · **[c]*
 | 1 | Nav | logo mark [c] | ✅ |
 | 2 | Hero | browser frame: coach dashboard [a] + overlapping phone frame [a] + annotation chips [c] | ✅ real captures |
 | 3 | Proof band | honest text proof + bilingual badge; pilot coach headshots later [b] | ✅ |
-| 4 | Problem | comparison cards + side photo slot [b: F-2, desktop only] | ✅ placeholder → C.2b photo |
+| 4 | Problem | comparison cards + side photo [b: F-2, desktop only] | ✅ real photo |
 | 5 | Features — 5 tabs | per-tab story screenshot [a] + client-side phone PiP [a], incl. real Messaging captures (D14) | ✅ real captures |
 | 6 | Coach ↔ Client sync | desktop frame + phone frame + animated flowing-dots connector [a+c] | ✅ real captures |
 | 7 | How it works | 3 steps, each with screenshot [a]; clean invite modal, brightness hack removed | ✅ real captures |
-| 8 | Segments band | fitness / nutrition / health-practitioner cards + photo slots [b: F-3/F-5/F-6] | ✅ placeholders → C.2b photos |
+| 8 | Segments band | fitness / nutrition / health-practitioner cards + photos [b: F-3/F-5/F-6] | ✅ real photos |
 | 9 | Client-app showcase | 3 phone frames [a] + "Installs like an app — no App Store needed" chip [c] | ✅ real captures |
 | 10 | Pricing | USD/AED + monthly/yearly toggles, tool icon chips [c] | ✅ |
-| 11 | Why Wazen | pillars; coach-profile proof screenshot [a]; regional photo slot [b: F-7/F-10]; founder quote (portrait pending [b: F-11]) | ✅ captures · C.2b photo + portrait |
+| 11 | Why Wazen | pillars; coach-profile proof screenshot [a]; regional photo [b: F-7]; founder quote (portrait pending [b: F-11]) | ✅ captures + photo · portrait pending |
 | 12 | FAQ | text accordion | ✅ |
-| 13 | CTA | mini dashboard+phone composite [a] + F-9 backdrop slot at 12% opacity [b] | ✅ captures → C.2b photo |
+| 13 | CTA | mini dashboard+phone composite [a] + F-9 photo backdrop at 12% opacity [b] | ✅ captures + photo |
 | 14 | Footer | logo mark, single Binaa Labs line, support@wazen.fit | ✅ |
 
 ### What shipped
@@ -125,14 +127,15 @@ Type key: **[a]** product visual (device frame) · **[b]** photography · **[c]*
 - **Pass A.1 — defect fixes:** the i18n remount root-cause fix (learning #1); content-anchored hero chips (physical coords while captures are LTR); densified messaging skeleton; flowing-dots sync connector with reduced-motion fallback; plan-like "today" skeleton; value-strip icon chips; AED add-on prices (D10).
 - **Pass C.1 — structure with placeholders:** `lib/screenshots.ts` locale map wired through every consumer; segments band built; `PhotoPlaceholder` component (branded, F-labeled, true final aspect) placed in all photo slots; coach-profile proof point in WhyWazen; OG composite cards EN+AR (learnings #2/#3).
 - **Pass C.2a — real capture swap:** all product screenshots replaced with the new Wazen capture set (curated demo data, new in-app logo, native AR captures — no more EN-on-/ar). 14 map entries (9 desktop + 5 client-mobile) with true per-locale dimensions; every `PhoneSkeleton` replaced by real PWA captures via the new `PhoneShot` component (hero, features PiPs ×5, sync panel, showcase ×3, CTA composite); messaging desktop tab got its real capture (D14); invite-modal brightness hack removed (new capture has a bright backdrop); all 20 old QA-data PNGs pruned from `public/screenshots/`; OG cards auto-picked-up the new dashboard captures. P0-3 (QA data) and P1-3 (EN screenshots on /ar) are closed. Demo data came from the D11 seed script after the D12 i18n-hardening prerequisite.
+- **Pass C.2b — photo placement (closes Pass B):** the six sourced photos (F-2/3/5/6/7/9 — D15) cropped to their slots' aspect ratios with sharp and exported as optimized WebP into `public/photos/` (19–79 KB each; JPG originals + unused F-8/F-10 moved to untracked `_photo-originals/`). Every placed `PhotoPlaceholder` replaced with `next/image` (`fill` + `sizes`, lazy — all slots are below the fold, `scaleIn` motion, alt text localized EN+AR in `lib/i18n.ts`): Problem F-2 (3:5 portrait, desktop-only column), Segments F-3/F-5/F-6 (3:2 card headers), WhyWazen F-7 (4:5, anchored `object-[50%_30%]` below `lg` so the 3:2 mobile crop keeps the subject's head), CTA F-9 (full-bleed 12% backdrop; corner slot tag removed). Fixed the aspect-ratio/min-width mobile viewport bug found during verification (learning #5). `.gitignore`'s `_preview/` entry was encoding-mangled and inert — rewritten, plus `_photo-originals/`. `PhotoPlaceholder` has no consumers left; the component stays for the optional F-4/F-8 slots, and the "NS" initials avatar remains until F-11 exists. Verified EN+AR × light+dark × desktop+mobile (32 shots in `_preview/c2b-*`).
 
 ---
 
 ## 6 · Remaining work
 
-### Pass B — owner asset production
+### Pass B — owner asset production ✅ complete
 
-**Screenshot captures: ✅ delivered and shipped (C.2a).** Remaining: photo sourcing (F-slots below) and the founder portrait.
+**Screenshot captures ✅ shipped (C.2a) · photo set v1 ✅ sourced and shipped (C.2b, D15 — TEMPORARY, refine post-launch).** Only the founder portrait (F-11) and the optional F-4/F-8 slots remain unsourced — none blocks launch.
 
 **Re-capture checklist** — ✅ completed; kept as the reference sheet for any future re-capture session:
 
@@ -144,23 +147,19 @@ Type key: **[a]** product visual (device frame) · **[b]** photography · **[c]*
 - **Environment:** `VITE_SHOW_DEV_TOOLS` unset before capturing; Docker bakes `seed.ts` — rebuild the image before seeding.
 - **File naming (D13):** drop files into the delivered tree — `public/Wazen-Screenshots/{Coach|Client} Dashboard/{Desktop|Mobile}/{en|ar}/<Name>.png`; `lib/screenshots.ts` maps them.
 
-**Photography briefs** — owner sources against these; every placeholder on the page is labeled with its F-number. Global rules: no women anywhere in frame (D7), no visible third-party logos, muted/desaturated tones that let teal `#3D8C84` / sage `#7BA898` UI sit on top, no neon gym lighting. Free-license sources (Unsplash/Pexels licenses) or own shoots.
+**Photography briefs** — kept as the reference sheet for the v2 refinement (D15). Global rules: no women anywhere in frame (D7), no visible third-party logos, muted/desaturated tones that let teal `#3D8C84` / sage `#7BA898` UI sit on top, no neon gym lighting. Free-license sources (Unsplash/Pexels licenses) or own shoots.
 
-| Slot | Required? | Brief |
+| Slot | Status | Brief |
 |---|---|---|
-| F-2 | ✅ | "The old way": man buried in admin — phone + laptop + papers, head in hand; moody/dark; must sit on dark teal `hsl(186,21%,14%)`. Alt composition: hands-only phone flooded with chat notifications. Portrait crop, Problem section side column. |
-| F-3 | ✅ | Male coach + male client mid-session (spot, pads, form cue); authentic modern gym; horizontal 3:2; bright neutral light. Boxing/MMA reads regionally right. Segments card 1. |
-| F-5 | ✅ | Two men in advisory conversation at a table — tablet/notebook, warm non-corporate setting. Alt: flat-lay meal-prep + plan + male hands. 3:2, segments card 2. |
-| F-6 | ✅ | Male practitioner consulting male client, warm clinic/office (not hospital-sterile); supports the medication/supplement differentiator. 3:2, segments card 3. |
-| F-7 / F-10 | ✅ pick one | F-7: Gulf men's gym scene — coach+client or strong single subject, modern upscale gym, dignified; vertical-crop survivable. F-10: male runner on a Gulf-city corniche at dawn. Owner decides which becomes the regional signal (WhyWazen, portrait 4:5). Own capture likely beats stock for both. |
-| F-9 | ✅ | Calm minimal desk + laptop, dusk/moody, no people. Used at ~12% opacity under the dark CTA — texture, not subject. |
-| F-4 | optional | Male gym-goer seated between sets, phone in hand — "submitting a check-in"; client-app showcase support. |
-| F-8 | optional | Man at kitchen counter or post-workout at home, morning light, phone in hand — "Sunday check-in" routine. |
-| F-11 | owner | Founder portrait: Naser Shadid; casual dark/teal top; soft natural side light; plain warm background or blurred gym; chest-up; croppable to ~200px circle; light + slightly moody variants for both themes. |
-
-### Pass C.2b — photo placement (blocked on owner sourcing)
-
-Sourced photos replace `PhotoPlaceholder` blocks (match by F-number, same aspect; use the `scaleIn` motion variant) · founder portrait replaces the "NS" initials avatar in WhyWazen. *(C.2a — captures, phone frames, invite modal, OG, PNG pruning — shipped.)*
+| F-2 | ✅ v1 shipped | "The old way": man buried in admin — phone + laptop + papers, head in hand; moody/dark; must sit on dark teal `hsl(186,21%,14%)`. Alt composition: hands-only phone flooded with chat notifications. Portrait crop, Problem section side column. |
+| F-3 | ✅ v1 shipped | Male coach + male client mid-session (spot, pads, form cue); authentic modern gym; horizontal 3:2; bright neutral light. Boxing/MMA reads regionally right. Segments card 1. |
+| F-5 | ✅ v1 shipped (accepted D7 edge concern — D15) | Two men in advisory conversation at a table — tablet/notebook, warm non-corporate setting. Alt: flat-lay meal-prep + plan + male hands. 3:2, segments card 2. |
+| F-6 | ✅ v1 shipped (bg poster/sticker noted — D15) | Male practitioner consulting male client, warm clinic/office (not hospital-sterile); supports the medication/supplement differentiator. 3:2, segments card 3. |
+| F-7 / F-10 | ✅ F-7 shipped (owner's pick; F-10 held in `_photo-originals/`) | F-7: Gulf men's gym scene — coach+client or strong single subject, modern upscale gym, dignified; vertical-crop survivable. F-10: male runner on a Gulf-city corniche at dawn. Own capture likely beats stock for both. |
+| F-9 | ✅ v1 shipped (pre-darkened — D15) | Calm minimal desk + laptop, dusk/moody, no people. Used at ~12% opacity under the dark CTA — texture, not subject. |
+| F-4 | optional — not sourced | Male gym-goer seated between sets, phone in hand — "submitting a check-in"; client-app showcase support. |
+| F-8 | optional — not sourced (a candidate sits unused in `_photo-originals/`) | Man at kitchen counter or post-workout at home, morning light, phone in hand — "Sunday check-in" routine. |
+| F-11 | owner — pending | Founder portrait: Naser Shadid; casual dark/teal top; soft natural side light; plain warm background or blurred gym; chest-up; croppable to ~200px circle; light + slightly moody variants for both themes. Replaces the "NS" initials avatar in WhyWazen when it exists. |
 
 ### Launch checklist (separate from passes)
 
@@ -173,4 +172,4 @@ Sourced photos replace `PhotoPlaceholder` blocks (match by F-number, same aspect
 
 ### Post-launch backlog
 
-45–60s product walkthrough video as a secondary CTA · real pilot-coach testimonials (headshot + one metric each) in the reserved slots · review-platform badges · dark-mode app captures if the app ships a dark theme.
+45–60s product walkthrough video as a secondary CTA · real pilot-coach testimonials (headshot + one metric each) in the reserved slots · review-platform badges · dark-mode app captures if the app ships a dark theme · **photo set v2** — replace the temporary stock set (D15) with own-shoot / Gulf-authentic photography; fix the F-5/F-6 noted concerns; source F-4/F-8 if wanted.

@@ -63,6 +63,8 @@ const en = {
       { title: "Structured check-ins", body: "Review them all from one dashboard" },
       { title: "Progress you can actually see", body: "Clear charts and summaries" },
     ],
+    photoAlt:
+      "A coach working late, buried in admin — head in hand over a desk with a phone, laptop, and paper notes",
   },
   features: {
     eyebrow: "Everything you need",
@@ -125,14 +127,20 @@ const en = {
       {
         title: "Fitness coaches",
         body: "Program workouts, track adherence, and keep every client's training on schedule.",
+        photoAlt:
+          "A fitness coach fist-bumping his client at a machine in a modern gym",
       },
       {
         title: "Nutrition coaches",
         body: "Set macro targets and meal plans — and see exactly how clients follow them.",
+        photoAlt:
+          "A nutrition consultation — a coach writes a weekly meal plan across the table from a client, a bowl of fruit between them",
       },
       {
         title: "Health practitioners",
         body: "Manage nutrition, supplement, and medication plans with structured check-ins.",
+        photoAlt:
+          "A health practitioner in conversation with a client at his office desk",
       },
     ],
   },
@@ -272,6 +280,8 @@ const en = {
       "Coaches build a public profile clients can see — active clients, programs delivered, compliance rate, and experience.",
     profileAlt:
       "A coach's public profile in Wazen showing active clients, programs delivered, compliance rate, and years of experience",
+    regionalPhotoAlt:
+      "An athlete training with a dumbbell in a dark, modern gym",
     founderEyebrow: "Why we built this",
     founderQuote:
       "“We built Wazen because coaching shouldn’t mean living in WhatsApp threads and spreadsheets. Every coach deserves one calm, organized place to manage clients, deliver plans, and actually see progress — so the focus stays on coaching, not admin.”",
@@ -392,6 +402,8 @@ const ar: Dictionary = {
       { title: "متابعات منظّمة", body: "راجعها كلها من لوحة تحكم واحدة" },
       { title: "تقدّم تراه فعلًا", body: "رسوم بيانية وملخصات واضحة" },
     ],
+    photoAlt:
+      "مدرب يعمل حتى وقت متأخر غارقًا في المهام الإدارية — رأسه بين يديه وأمامه هاتف وحاسوب وأوراق",
   },
   features: {
     eyebrow: "كل ما تحتاجه",
@@ -453,14 +465,18 @@ const ar: Dictionary = {
       {
         title: "مدربو اللياقة",
         body: "أنشئ خطط التمارين، وتابع الالتزام، وحافظ على انتظام تدريب كل عميل.",
+        photoAlt: "مدرب لياقة يحيّي عميله بقبضة اليد بجانب جهاز تمرين في نادٍ حديث",
       },
       {
         title: "مدربو التغذية",
         body: "حدّد أهداف السعرات والخطط الغذائية — واعرف بدقة كيف يلتزم بها عملاؤك.",
+        photoAlt:
+          "استشارة تغذية — مدرب يكتب خطة وجبات أسبوعية على الطاولة أمام عميله وبينهما طبق فواكه",
       },
       {
         title: "الممارسون الصحيون",
         body: "أدِر خطط التغذية والمكملات والأدوية مع متابعات منظّمة.",
+        photoAlt: "ممارس صحي يتحاور مع عميله على مكتبه",
       },
     ],
   },
@@ -599,6 +615,7 @@ const ar: Dictionary = {
       "يبني المدربون ملفًا عامًا يراه العملاء — العملاء النشطون، والبرامج المقدَّمة، ونسبة الالتزام، وسنوات الخبرة.",
     profileAlt:
       "الملف العام للمدرب في وازن يعرض العملاء النشطين والبرامج المقدَّمة ونسبة الالتزام وسنوات الخبرة",
+    regionalPhotoAlt: "رياضي يتدرّب برفع الدمبل في نادٍ حديث هادئ الإضاءة",
     founderEyebrow: "لماذا بنينا هذا",
     founderQuote:
       "«بنينا وازن لأن التدريب لا يجب أن يعني العيش وسط محادثات واتساب وجداول البيانات. كل مدرب يستحق مكانًا واحدًا هادئًا ومنظّمًا لإدارة العملاء وتقديم الخطط ورؤية التقدّم فعلًا — ليبقى التركيز على التدريب، لا على الأعمال الإدارية.»",

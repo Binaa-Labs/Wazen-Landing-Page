@@ -1,20 +1,18 @@
 "use client";
 
+import Image from "next/image";
 import { motion } from "framer-motion";
 
 import { useLanguage } from "@/components/LanguageProvider";
-import { fadeUp, staggerContainer, viewport } from "@/components/motion";
-import PhotoPlaceholder from "@/components/ui/PhotoPlaceholder";
+import { fadeUp, scaleIn, staggerContainer, viewport } from "@/components/motion";
 import SectionHeader from "@/components/ui/SectionHeader";
 
-/* Structural card data — icon + §7 photo slot. Index-coupled to
-   t.segments.cards for title/body. Photo placeholders are replaced with
-   sourced photography in Pass C.2 (same aspect, same position). */
+/* Structural card data — icon + §7 sourced photo. Index-coupled to
+   t.segments.cards for title/body/photoAlt. */
 const CARD_META = [
   {
     id: "fitness",
-    photoLabel: "F-3",
-    photoHint: "Coach + client training",
+    photoSrc: "/photos/f-3.webp",
     icon: (
       // Dumbbell
       <>
@@ -25,8 +23,7 @@ const CARD_META = [
   },
   {
     id: "nutrition",
-    photoLabel: "F-5",
-    photoHint: "Nutrition consult",
+    photoSrc: "/photos/f-5.webp",
     icon: (
       // Apple
       <>
@@ -37,8 +34,7 @@ const CARD_META = [
   },
   {
     id: "health",
-    photoLabel: "F-6",
-    photoHint: "Practitioner consult",
+    photoSrc: "/photos/f-6.webp",
     icon: (
       // Heart + pulse
       <>
@@ -82,12 +78,18 @@ export default function Segments() {
               }}
               className="flex flex-col overflow-hidden rounded-card border border-primary/10 bg-surface shadow-sm"
             >
-              <PhotoPlaceholder
-                label={card.photoLabel}
-                hint={card.photoHint}
-                aspect="aspect-[3/2]"
-                className="rounded-b-none"
-              />
+              <motion.div
+                variants={scaleIn}
+                className="relative aspect-[3/2] overflow-hidden"
+              >
+                <Image
+                  src={card.photoSrc}
+                  alt={t.segments.cards[i].photoAlt}
+                  fill
+                  sizes="(min-width: 768px) 33vw, calc(100vw - 48px)"
+                  className="object-cover"
+                />
+              </motion.div>
               <div className="flex flex-1 flex-col gap-2.5 p-7">
                 <span className="flex size-11 items-center justify-center rounded-full bg-primary-light text-primary">
                   <svg

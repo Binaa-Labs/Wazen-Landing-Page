@@ -4,11 +4,10 @@ import Image from "next/image";
 import { motion } from "framer-motion";
 
 import { useLanguage } from "@/components/LanguageProvider";
-import { fadeUp, staggerContainer, viewport } from "@/components/motion";
+import { fadeUp, scaleIn, staggerContainer, viewport } from "@/components/motion";
 import Badge from "@/components/ui/Badge";
 import BrowserFrame from "@/components/ui/BrowserFrame";
 import Lightbox from "@/components/ui/Lightbox";
-import PhotoPlaceholder from "@/components/ui/PhotoPlaceholder";
 import SectionHeader from "@/components/ui/SectionHeader";
 import { getShot } from "@/lib/screenshots";
 
@@ -71,7 +70,10 @@ export default function WhyWazen() {
         </motion.div>
 
         {/* Coach-profile proof point (P0-4 step 2; capture re-shot in Pass B)
-            paired with the regional photo slot (F-7 or F-10, owner's pick). */}
+            paired with the F-7 regional photo (owner's pick over F-10). The
+            source is a 4:5 portrait crop; below lg the slot flips to 3:2, so
+            the image is anchored ~30% from the top to keep the subject's head
+            in frame. */}
         <motion.div
           variants={fadeUp}
           initial="hidden"
@@ -106,11 +108,21 @@ export default function WhyWazen() {
               {t.why.profileCaption}
             </p>
           </div>
-          <PhotoPlaceholder
-            label="F-7 / F-10"
-            hint="Regional shot — owner's pick"
-            className="min-h-[280px] max-lg:aspect-[3/2]"
-          />
+          {/* min-h only at lg: pairing min-height with the max-lg aspect-ratio
+              transfers a 420px min-WIDTH through the ratio on mobile, which
+              overflows the 342px column and stretches the layout viewport. */}
+          <motion.div
+            variants={scaleIn}
+            className="relative overflow-hidden rounded-xl max-lg:aspect-[3/2] lg:min-h-[280px]"
+          >
+            <Image
+              src="/photos/f-7.webp"
+              alt={t.why.regionalPhotoAlt}
+              fill
+              sizes="(min-width: 1024px) 340px, calc(100vw - 48px)"
+              className="object-cover object-[50%_30%] lg:object-center"
+            />
+          </motion.div>
         </motion.div>
 
         <motion.div

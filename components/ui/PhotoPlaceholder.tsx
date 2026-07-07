@@ -1,8 +1,9 @@
 /* Pass C.1 placeholder for sourced photography. Renders a branded panel at
    the EXACT aspect ratio and position the final photo will use, labeled with
    its F-number from §7 of LANDING-AUDIT-PLAN.md so the owner can map sourced
-   alternatives to slots from the preview. Pass C.2 replaces each instance
-   with a real <Image> — same wrapper, same aspect. */
+   alternatives to slots from the preview. Pass C.2b replaced every placed
+   instance with a real <Image>; currently unused, kept for the optional
+   F-4/F-8 slots if they're ever sourced. */
 
 type PhotoPlaceholderProps = {
   /** §7 slot id shown on the panel, e.g. "F-3" */
