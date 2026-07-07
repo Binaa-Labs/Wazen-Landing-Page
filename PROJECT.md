@@ -1,7 +1,7 @@
 # Wazen Landing Page — Project Document
 
 > Single source of truth for this repo. A developer joining cold should get the full picture from this file: what Wazen is, what this repo is, every decision made and why, what's shipped, and what remains.
-> Current state: **Pass A ✅ · Pass A.1 ✅ · Pass B ✅ (captures + photo set v1 delivered) · Pass C.1 ✅ · Pass C.2 ✅ (a: real captures · b: real photos, EN+AR, desktop+mobile).** All on `feat/landing-revamp`. Remaining: launch checklist + post-launch backlog; founder portrait (F-11) and optional F-4/F-8 still unsourced.
+> Current state: **Pass A ✅ · Pass A.1 ✅ · Pass B ✅ (captures + photo set v1 delivered) · Pass C.1 ✅ · Pass C.2 ✅ (a: real captures · b: real photos, EN+AR, desktop+mobile) · SEO baseline ✅ (July 2026, D16).** All on `feat/landing-revamp`. Remaining: launch checklist + post-launch backlog; founder portrait (F-11) and optional F-4/F-8 still unsourced.
 
 ---
 
@@ -79,12 +79,13 @@ Single-source-of-truth files — change these, not call sites:
 | D13 | Screenshot naming: keep the delivered tree `public/Wazen-Screenshots/{Coach\|Client} Dashboard/{Desktop\|Mobile}/{en\|ar}/<Name>.png`; all path knowledge in `lib/screenshots.ts` | Re-captures drop in without rename churn. |
 | D14 | Messaging tab uses the real Coach Messages capture (supersedes the D4 skeleton note) | Capture now exists; fake next to real reads wrong. |
 | D15 | Photo set v1 (F-2/3/5/6/7/9, Unsplash/Pexels free license) shipped as **TEMPORARY** — flagged for later refinement/own shoot. F-7 chosen over F-10 as the regional signal. F-5's partial second hand (nail polish at frame edge) is a D7 concern **accepted by owner** for v1; the crop trims most of it. F-6 carries a small background poster + laptop sticker — noted for the v2 swap. F-9 pre-darkened/desaturated in the export so the 12% CTA backdrop reads as texture, not subject. | Real photography now beats placeholders for launch; stock is good enough for v1 and gets replaced by Gulf-authentic shots post-launch. |
+| D16 | SEO baseline (July 2026): category-led `<title>` + meta description on both locales — EN targets "coaching platform" / "personal trainer software", AR targets منصة تدريب / برنامج للمدربين; `sizes` added to the two unsized dashboard images (hero, Features sync panel); sitemap `lastModified` bumped. og/twitter share titles keep the promise-led wording. Owner declined the Terms-page "software studio"→"product company" edit — legal wording stays as-is. | Audit found metadata/hreflang/sitemap/robots/JSON-LD/headings/alts already complete and Lighthouse SEO already 100, but no category keyword appeared anywhere Google weighs (only in og/twitter/keywords tags), and the unsized images served a single `w=3840` srcset candidate to phones (~89 KB where ~23 KB suffices — LCP). Verified post-change: build clean, Lighthouse SEO 100/100 EN + AR. |
 
 **Standing constraints:**
 - **No fabricated testimonials or social proof.** Pre-launch startup: the proof band uses honest claims ("Built with founding coaches…"), the coach-profile screenshot is the product-proof visual, and testimonial slots stay empty until real pilot coaches exist. Review-platform badges are a post-launch item.
 - **No women in photography** (D7) — repeated because it governs all future sourcing.
 - Pricing is USD/AED via the manual toggle only (D6); FAQ prose quotes USD.
-- Binaa Labs naming rules per D2; "software studio" phrasing is banned (use "product company").
+- Binaa Labs naming rules per D2; "software studio" phrasing is banned on the landing page (use "product company"). Exception: the Terms page keeps its existing "software studio" wording by owner decision (D16) — don't "fix" it.
 
 ---
 
@@ -127,6 +128,7 @@ Type key: **[a]** product visual (device frame) · **[b]** photography · **[c]*
 - **Pass A.1 — defect fixes:** the i18n remount root-cause fix (learning #1); content-anchored hero chips (physical coords while captures are LTR); densified messaging skeleton; flowing-dots sync connector with reduced-motion fallback; plan-like "today" skeleton; value-strip icon chips; AED add-on prices (D10).
 - **Pass C.1 — structure with placeholders:** `lib/screenshots.ts` locale map wired through every consumer; segments band built; `PhotoPlaceholder` component (branded, F-labeled, true final aspect) placed in all photo slots; coach-profile proof point in WhyWazen; OG composite cards EN+AR (learnings #2/#3).
 - **Pass C.2a — real capture swap:** all product screenshots replaced with the new Wazen capture set (curated demo data, new in-app logo, native AR captures — no more EN-on-/ar). 14 map entries (9 desktop + 5 client-mobile) with true per-locale dimensions; every `PhoneSkeleton` replaced by real PWA captures via the new `PhoneShot` component (hero, features PiPs ×5, sync panel, showcase ×3, CTA composite); messaging desktop tab got its real capture (D14); invite-modal brightness hack removed (new capture has a bright backdrop); all 20 old QA-data PNGs pruned from `public/screenshots/`; OG cards auto-picked-up the new dashboard captures. P0-3 (QA data) and P1-3 (EN screenshots on /ar) are closed. Demo data came from the D11 seed script after the D12 i18n-hardening prerequisite.
+- **SEO baseline pass (July 2026, D16):** full audit of metadata, hreflang, robots/sitemap, JSON-LD, headings, alts, and CWV risks against the rendered production HTML — nearly everything was already in place (single h1, valid heading ladder, zero missing alts, complete hreflang both directions, JSON-LD @graph with Organization/WebSite/SoftwareApplication/FAQPage, hero preload, Lighthouse SEO 100 both locales). Changes shipped: owner-approved category-led `<title>` + meta description EN + AR (see D16), `sizes` on the hero and Features-sync dashboard images (phones were fetching the `w=3840` variant), sitemap `lastModified` bump. Known-benign: the `metadataBase` build warning comes from the auto-generated `_not-found` route only (no root layout exists by design — route groups own their layouts).
 - **Pass C.2b — photo placement (closes Pass B):** the six sourced photos (F-2/3/5/6/7/9 — D15) cropped to their slots' aspect ratios with sharp and exported as optimized WebP into `public/photos/` (19–79 KB each; JPG originals + unused F-8/F-10 moved to untracked `_photo-originals/`). Every placed `PhotoPlaceholder` replaced with `next/image` (`fill` + `sizes`, lazy — all slots are below the fold, `scaleIn` motion, alt text localized EN+AR in `lib/i18n.ts`): Problem F-2 (3:5 portrait, desktop-only column), Segments F-3/F-5/F-6 (3:2 card headers), WhyWazen F-7 (4:5, anchored `object-[50%_30%]` below `lg` so the 3:2 mobile crop keeps the subject's head), CTA F-9 (full-bleed 12% backdrop; corner slot tag removed). Fixed the aspect-ratio/min-width mobile viewport bug found during verification (learning #5). `.gitignore`'s `_preview/` entry was encoding-mangled and inert — rewritten, plus `_photo-originals/`. `PhotoPlaceholder` has no consumers left; the component stays for the optional F-4/F-8 slots, and the "NS" initials avatar remains until F-11 exists. Verified EN+AR × light+dark × desktop+mobile (32 shots in `_preview/c2b-*`).
 
 ---
@@ -167,6 +169,7 @@ Type key: **[a]** product visual (device frame) · **[b]** photography · **[c]*
 - [x] BrowserFrame address-bar text matches the real app domain (Hero, Features ×5 tabs, WhyWazen, OG card)
 - [ ] Click-test every CTA returns 200 (pending domain verified live)
 - [ ] Re-verify OG preview via WhatsApp (primary share channel for the audience)
+- [ ] Run the live URLs through Google's Rich Results test / validator.schema.org after deploy (FAQPage + SoftwareApplication) — offline JSON-LD validation done in the SEO pass (D16); the hosted validators need the production URL
 - [ ] Final logo SVG swapped into `components/ui/Logo.tsx` + favicon/app-icon (`app/icon.tsx`, `app/apple-icon.tsx`)
 - [ ] support@wazen.fit forwarding configured (footer contact)
 

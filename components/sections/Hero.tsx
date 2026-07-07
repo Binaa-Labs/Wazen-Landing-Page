@@ -201,6 +201,7 @@ export default function Hero() {
                     width={dash.width}
                     height={dash.height}
                     preload
+                    sizes="(min-width: 1168px) 1120px, calc(100vw - 48px)"
                     className="h-auto w-full dark:opacity-90"
                   />
                 </Lightbox>

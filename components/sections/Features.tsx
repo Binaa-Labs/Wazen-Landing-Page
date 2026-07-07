@@ -320,6 +320,7 @@ export default function Features() {
                   alt={t.features.coachLabel}
                   width={coachDash.width}
                   height={coachDash.height}
+                  sizes="(min-width: 1000px) 600px, (min-width: 640px) calc(100vw - 320px), calc(100vw - 48px)"
                   className="h-auto w-full rounded-lg dark:opacity-90"
                 />
               </Lightbox>

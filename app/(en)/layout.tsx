@@ -4,9 +4,9 @@ import RootShell from "@/components/RootShell";
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://wazen.fit"),
-  title: "Wazen — Run your coaching practice from one calm, organized place",
+  title: "Wazen — Coaching Platform for Personal Trainers & Coaches",
   description:
-    "Wazen brings your clients, plans, check-ins, progress, and messages into a single system — built for coaches in UAE, GCC & MENA. Free for your first 5 clients.",
+    "Coaching platform & personal trainer software for the UAE, GCC & MENA. Clients, plans, check-ins, progress and messaging in one place. Free for 5 clients.",
   keywords: [
     "coaching platform",
     "coach app",
