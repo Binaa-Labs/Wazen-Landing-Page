@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Phase 2 Mockup — Hero Option A (Photography-led)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@500;600;700&family=Inter:wght@400;500&family=Fraunces:ital,opsz,wght@1,9..144,400;1,9..144,500&display=swap" rel="stylesheet">
+<style>
+  /* Wazen tokens (mirror of globals.css) */
+  :root {
+    --primary: hsl(186, 21%, 26%);
+    --primary-dark: hsl(186, 21%, 14%);
+    --primary-darker: hsl(186, 21%, 10%);
+    --sage: hsl(99, 22%, 72%);
+    --sage-light: hsl(99, 22%, 92%);
+    --sage-dark: hsl(99, 20%, 42%);
+    --ink: hsl(0, 0%, 5%);
+    --bg: hsl(0, 0%, 95%);
+    --surface: hsl(0, 0%, 100%);
+    --font-display: "Outfit", sans-serif;
+    --font-body: "Inter", sans-serif;
+    --font-serif: "Fraunces", Georgia, serif;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: var(--font-body); background: var(--bg); color: var(--ink); -webkit-font-smoothing: antialiased; }
+
+  /* ── Nav (transparent over photo) ─────────────────────────────── */
+  nav {
+    position: absolute; top: 0; left: 0; right: 0; z-index: 10;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 22px 48px; color: #fff;
+  }
+  .logo { display: flex; align-items: center; gap: 10px; font-family: var(--font-display); font-weight: 700; font-size: 1.15rem; }
+  .logo-tile { width: 34px; height: 34px; border-radius: 9px; background: var(--sage); color: var(--primary-dark); display: grid; place-items: center; font-size: 1rem; }
+  .nav-links { display: flex; gap: 28px; font-size: .85rem; color: rgba(255,255,255,.75); font-weight: 500; }
+  .nav-cta { display: flex; align-items: center; gap: 14px; }
+  .nav-login { font-size: .85rem; color: rgba(255,255,255,.85); font-weight: 500; }
+  .nav-btn { background: rgba(255,255,255,.14); border: 1px solid rgba(255,255,255,.25); backdrop-filter: blur(8px); color: #fff; font-family: var(--font-display); font-weight: 600; font-size: .85rem; padding: 10px 22px; border-radius: 100px; }
+
+  /* ── HERO: full-bleed photography ──────────────────────────────── */
+  .hero {
+    position: relative; height: 860px; overflow: hidden;
+    display: flex; align-items: flex-end;
+    background: var(--primary-dark);
+  }
+  .hero-photo { position: absolute; inset: 0; }
+  .hero-photo img { width: 100%; height: 100%; object-fit: cover; object-position: 50% 30%; }
+  /* Teal duotone scrim: keeps photography cinematic and brand-cast */
+  .hero-scrim {
+    position: absolute; inset: 0;
+    background:
+      linear-gradient(to top, hsla(186,21%,8%,.94) 0%, hsla(186,21%,10%,.62) 38%, hsla(186,21%,14%,.35) 70%, hsla(186,21%,16%,.45) 100%);
+  }
+  .hero-tint { position: absolute; inset: 0; background: hsla(186,40%,20%,.30); mix-blend-mode: color; }
+
+  .hero-content { position: relative; z-index: 2; max-width: 1200px; margin: 0 auto; width: 100%; padding: 0 48px 72px; color: #fff; }
+
+  /* Persona slider — the Everfit mechanic, Wazen skin: labels with a
+     progress underline that fills over ~6s, then advances */
+  .personas { display: flex; gap: 32px; margin-bottom: 28px; }
+  .persona { font-family: var(--font-display); font-size: .85rem; font-weight: 600; letter-spacing: .06em; text-transform: uppercase; padding-bottom: 10px; position: relative; color: rgba(255,255,255,.45); }
+  .persona .rail { position: absolute; bottom: 0; left: 0; right: 0; height: 2px; background: rgba(255,255,255,.18); border-radius: 2px; }
+  .persona.active { color: #fff; }
+  .persona.active .rail::after { content: ""; position: absolute; inset: 0; width: 62%; background: var(--sage); border-radius: 2px; }
+
+  .badge { display: inline-flex; align-items: center; gap: 8px; border: 1px solid rgba(255,255,255,.22); background: rgba(255,255,255,.08); backdrop-filter: blur(6px); border-radius: 100px; padding: 7px 16px; font-size: .78rem; font-weight: 500; color: rgba(255,255,255,.9); margin-bottom: 22px; }
+  .badge .dot { width: 7px; height: 7px; border-radius: 50%; background: var(--sage); }
+
+  h1 { font-family: var(--font-display); font-weight: 700; font-size: 4.1rem; line-height: 1.08; letter-spacing: -0.03em; max-width: 860px; }
+  h1 .serif { font-family: var(--font-serif); font-style: italic; font-weight: 500; color: hsl(99, 32%, 82%); letter-spacing: -0.01em; }
+
+  .sub { margin-top: 20px; font-size: 1.1rem; line-height: 1.7; color: rgba(255,255,255,.78); max-width: 560px; }
+
+  .ctas { display: flex; align-items: center; gap: 16px; margin-top: 32px; }
+  .btn-primary { background: var(--sage); color: var(--primary-darker); font-family: var(--font-display); font-weight: 600; font-size: .95rem; padding: 15px 30px; border-radius: 100px; box-shadow: 0 16px 48px hsla(99,22%,40%,.35); }
+  .btn-ghost { border: 1px solid rgba(255,255,255,.35); color: #fff; font-family: var(--font-display); font-weight: 600; font-size: .95rem; padding: 14px 28px; border-radius: 100px; }
+
+  .trust { display: flex; gap: 22px; margin-top: 26px; font-size: .8rem; color: rgba(255,255,255,.65); }
+  .trust span::before { content: "✓  "; color: var(--sage); }
+
+  /* ── Product-proof section (relocated composite) ───────────────── */
+  .proof { background: var(--bg); padding: 88px 48px 120px; text-align: center; }
+  .eyebrow { font-size: .75rem; font-weight: 600; letter-spacing: .1em; text-transform: uppercase; color: var(--sage-dark); }
+  .proof h2 { font-family: var(--font-display); font-size: 2.5rem; font-weight: 700; letter-spacing: -0.02em; margin-top: 14px; color: var(--ink); }
+  .proof p.lead { margin: 14px auto 0; max-width: 620px; color: hsla(0,0%,5%,.6); font-size: 1.02rem; line-height: 1.7; }
+
+  .composite { position: relative; max-width: 1040px; margin: 56px auto 0; }
+  .glow { position: absolute; left: 50%; top: 50%; transform: translate(-50%,-50%); width: 85%; height: 70%; border-radius: 50%; background: hsla(186,21%,26%,.22); filter: blur(90px); }
+  .browser { position: relative; border-radius: 14px; overflow: hidden; box-shadow: 0 32px 64px hsla(186,21%,10%,.16); background: #fff; text-align: left; }
+  .browser-bar { display: flex; align-items: center; gap: 10px; padding: 10px 14px; background: hsl(0,0%,97%); border-bottom: 1px solid hsl(0,0%,90%); }
+  .traffic { display: flex; gap: 6px; }
+  .traffic i { width: 10px; height: 10px; border-radius: 50%; background: hsl(0,0%,85%); }
+  .urlpill { flex: 1; max-width: 300px; margin: 0 auto; background: #fff; border: 1px solid hsl(0,0%,90%); border-radius: 100px; font-size: .7rem; color: hsla(0,0%,5%,.55); padding: 4px 14px; text-align: center; }
+  .browser img { width: 100%; display: block; }
+  .phone { position: absolute; bottom: -42px; right: 28px; width: 200px; border-radius: 26px; border: 6px solid hsl(200,12%,13%); overflow: hidden; box-shadow: 0 32px 64px hsla(186,21%,10%,.28); background: #fff; }
+  .phone img { width: 100%; display: block; }
+  .chip { position: absolute; display: flex; align-items: center; gap: 8px; background: #fff; border: 1px solid hsla(186,21%,26%,.1); border-radius: 100px; padding: 7px 14px 7px 7px; font-size: .78rem; font-weight: 500; color: hsla(0,0%,5%,.8); box-shadow: 0 4px 16px hsla(186,21%,10%,.08); }
+  .chip .ico { width: 20px; height: 20px; border-radius: 50%; display: grid; place-items: center; font-size: .65rem; }
+  .chip.check { left: 24%; top: 44%; } .chip.check .ico { background: var(--sage-light); color: var(--sage-dark); }
+  .chip.trend { right: 180px; bottom: 110px; } .chip.trend .ico { background: hsl(186,21%,93%); color: var(--primary); }
+
+  /* ── Mockup label ──────────────────────────────────────────────── */
+  .mocknote { background: var(--primary-darker); color: rgba(255,255,255,.55); font-size: .72rem; padding: 12px 48px; text-align: center; letter-spacing: .04em; }
+
+  /* ── Mobile ────────────────────────────────────────────────────── */
+  @media (max-width: 640px) {
+    html, body { max-width: 100%; overflow-x: hidden; }
+    nav { padding: 16px 20px; } .nav-links, .nav-login { display: none; }
+    .hero { height: 660px; }
+    .hero-content { padding: 0 20px 48px; }
+    /* Persona labels must never widen the layout viewport (PROJECT.md
+       learning #5 class of bug): wrap instead of overflowing */
+    .personas { flex-wrap: wrap; gap: 8px 16px; margin-bottom: 20px; } .persona { font-size: .66rem; }
+    .badge { font-size: .68rem; max-width: 100%; }
+    h1 { font-size: 2.3rem; }
+    .sub { font-size: .95rem; }
+    .ctas { flex-direction: column; align-items: stretch; gap: 10px; margin-top: 24px; }
+    .btn-primary, .btn-ghost { text-align: center; }
+    .trust { flex-wrap: wrap; gap: 10px 16px; }
+    .proof { padding: 56px 20px 80px; }
+    .proof h2 { font-size: 1.7rem; }
+    .phone { width: 110px; right: 10px; bottom: -24px; border-width: 4px; }
+    .chip.check { display: none; } .chip.trend { display: none; }
+    .mocknote { padding: 12px 20px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="hero">
+  <div class="hero-photo"><img src="../../public/photos/f-7.webp" alt=""></div>
+  <div class="hero-tint"></div>
+  <div class="hero-scrim"></div>
+
+  <nav>
+    <div class="logo"><span class="logo-tile">W</span>Wazen</div>
+    <div class="nav-links"><span>Features</span><span>How it works</span><span>Pricing</span><span>FAQ</span></div>
+    <div class="nav-cta"><span class="nav-login">Log in</span><span class="nav-btn">Start free</span></div>
+  </nav>
+
+  <div class="hero-content">
+    <div class="personas">
+      <div class="persona active">Fitness coaches<span class="rail"></span></div>
+      <div class="persona">Nutrition coaches<span class="rail"></span></div>
+      <div class="persona">Health practitioners<span class="rail"></span></div>
+    </div>
+    <div class="badge"><span class="dot"></span>Free for your first 5 clients — full platform, no limits</div>
+    <h1>Run your coaching practice from <span class="serif">one calm, organized place</span></h1>
+    <p class="sub">Wazen brings your clients, plans, check-ins, progress, and messages into a single system — so you spend less time chasing and more time coaching.</p>
+    <div class="ctas">
+      <span class="btn-primary">Start free — up to 5 clients</span>
+      <span class="btn-ghost">See how it works ↓</span>
+    </div>
+    <div class="trust">
+      <span>No credit card required</span>
+      <span>Free forever for 5 clients</span>
+      <span>Arabic &amp; English</span>
+    </div>
+  </div>
+</div>
+
+<div class="proof">
+  <div class="eyebrow">The coach dashboard</div>
+  <h2>Your whole practice, one screen</h2>
+  <p class="lead">The dashboard your clients never see — and the app they live in. Everything below syncs in real time.</p>
+  <div class="composite">
+    <div class="glow"></div>
+    <div class="browser">
+      <div class="browser-bar">
+        <div class="traffic"><i></i><i></i><i></i></div>
+        <div class="urlpill">app.wazen.fit/dashboard</div>
+      </div>
+      <img src="../../public/Wazen-Screenshots/Coach%20Dashboard/Desktop/en/Dashboard_Tab.png" alt="">
+    </div>
+    <div class="chip check"><span class="ico">✓</span>Check-in reviewed</div>
+    <div class="phone"><img src="../../public/Wazen-Screenshots/Client%20Dashboard/Mobile/en/Home_Tab.png" alt=""></div>
+    <div class="chip trend"><span class="ico">↗</span>Weight ↓ 0.7 kg</div>
+  </div>
+</div>
+
+<div class="mocknote">PHASE 2 MOCKUP — HERO OPTION A · photography-led hero, product composite relocated below · stand-in photo: F-7 (final shots per photo brief H-1…H-3) · static render of an auto-rotating persona slider</div>
+
+</body>
+</html>
