@@ -21,8 +21,15 @@ export const OG_ALT: Record<Locale, string> = {
 
 /* headline/sub are arrays of PRE-BROKEN lines: Satori's RTL line-wrapping
    reorders words across wrapped lines, so Arabic must never soft-wrap —
-   each line renders as its own non-wrapping node. (Within a single line,
-   RTL order is correct.) */
+   each line renders as its own node and must FIT its line (learning #2).
+   Within a single line, Satori's bidi does order Arabic words correctly.
+
+   KNOWN ARTIFACT (pre-existing, cosmetic): Satori measures Arabic advances
+   as if unshaped but draws them shaped, so heavily-joined words carry
+   trailing slack — e.g. "التدريبي" renders ~106px of phantom space beside
+   it. Verified identical with native strings, manual word-spans, and with
+   diacritics stripped; not fixable from here while Tajawal is pinned. A
+   Satori/next upgrade or an own OG pipeline is the real fix. */
 const COPY: Record<
   Locale,
   { headline: string[]; sub: string[]; chip: string; region: string }
@@ -87,14 +94,16 @@ export async function buildOgImage(locale: Locale) {
         }}
       >
         {/* Left: brand + localized copy. Satori needs an explicit
-            direction:rtl to run bidi word reordering for Arabic. */}
+            direction:rtl to run bidi word reordering for Arabic.
+            paddingRight is wider on AR so the end-aligned chip clears the
+            overlapping phone frame on the right. */}
         <div
           style={{
             display: "flex",
             flexDirection: "column",
             width: 560,
             paddingBottom: 56,
-            paddingRight: 24,
+            paddingRight: isAr ? 44 : 24,
             textAlign: isAr ? "right" : "left",
             alignItems: isAr ? "flex-end" : "flex-start",
             ...(isAr ? { direction: "rtl" as const } : {}),
@@ -120,12 +129,16 @@ export async function buildOgImage(locale: Locale) {
             </div>
             <span style={{ fontSize: 34, fontWeight: 700 }}>Wazen · وازن</span>
           </div>
+          {/* EN 36px keeps each pre-broken headline line to at most one
+              natural wrap (≤3 rendered lines total) so the column never
+              overflows and pushes the chip under the region line. AR lines
+              are short and stay at 52px. */}
           <div
             style={{
               display: "flex",
               flexDirection: "column",
               marginTop: 44,
-              fontSize: 52,
+              fontSize: isAr ? 52 : 36,
               lineHeight: 1.2,
               fontWeight: 800,
               alignItems: isAr ? "flex-end" : "flex-start",
@@ -156,9 +169,13 @@ export async function buildOgImage(locale: Locale) {
               </div>
             ))}
           </div>
+          {/* flexShrink 0 on the chip + region: the column must never
+              compress these against each other again (the old 4-line EN
+              headline pushed the chip halfway under the region line). */}
           <div
             style={{
               display: "flex",
+              flexShrink: 0,
               marginTop: 28,
               padding: "10px 22px",
               borderRadius: 100,
@@ -173,6 +190,7 @@ export async function buildOgImage(locale: Locale) {
           <div
             style={{
               display: "flex",
+              flexShrink: 0,
               marginTop: "auto",
               fontSize: 20,
               color: "rgba(255,255,255,0.55)",

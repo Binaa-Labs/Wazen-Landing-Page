@@ -81,7 +81,13 @@ export default function WhyWazen() {
           viewport={viewport}
           className="mx-auto mt-14 grid max-w-4xl items-stretch gap-6 lg:grid-cols-[1.6fr_1fr]"
         >
-          <div className="flex flex-col">
+          {/* min-w-0: the address-bar URL inside BrowserFrame is an unbroken
+              forced-LTR token, and a grid item's automatic minimum is its
+              min-content — without this the single-column track inflates to
+              ~331px and stretches the layout viewport below ~380px wide
+              (learning #5 class). The frame's own overflow-hidden + trailing
+              spacer absorb the clip; no visual change at ≥390px. */}
+          <div className="flex min-w-0 flex-col">
             <motion.div
               whileHover={{ scale: 1.02 }}
               transition={{ duration: 0.25, ease: "easeOut" }}
