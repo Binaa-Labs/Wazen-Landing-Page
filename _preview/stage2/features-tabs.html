@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Stage 2 Mockup — Features (progress-underline tabs + composed scene)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@500;600;700;800&family=Inter:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  /* Wazen tokens (mirror of globals.css) */
+  :root {
+    --primary: hsl(186, 21%, 26%);
+    --primary-light: hsl(186, 21%, 93%);
+    --primary-dark: hsl(186, 21%, 14%);
+    --primary-darker: hsl(186, 21%, 10%);
+    --sage: hsl(99, 22%, 72%);
+    --sage-light: hsl(99, 22%, 92%);
+    --sage-dark: hsl(99, 20%, 42%);
+    --ink: hsl(0, 0%, 5%);
+    --bg: hsl(0, 0%, 95%);
+    --surface: hsl(0, 0%, 100%);
+    --font-display: "Outfit", sans-serif;
+    --font-body: "Inter", sans-serif;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: var(--font-body); background: var(--bg); color: var(--ink); -webkit-font-smoothing: antialiased; }
+
+  .features { padding: 88px 48px 120px; max-width: 1200px; margin: 0 auto; text-align: center; }
+  .eyebrow { font-size: .75rem; font-weight: 600; letter-spacing: .1em; text-transform: uppercase; color: var(--sage-dark); }
+  h2 { font-family: var(--font-display); font-size: 2.5rem; font-weight: 700; letter-spacing: -0.02em; margin-top: 14px; }
+  .lead { margin: 14px auto 0; max-width: 640px; color: hsla(0,0%,5%,.6); font-size: 1.02rem; line-height: 1.7; }
+
+  /* ── D21 tabs: pills → progress-underline. The active rail doubles as
+        the auto-advance timer (shown mid-dwell at ~55%) ──────────────── */
+  .tabs { display: flex; justify-content: center; gap: 36px; margin-top: 52px; }
+  .tab { display: flex; flex-direction: column; align-items: center; gap: 10px; padding-bottom: 0; }
+  .tab .lbl { display: flex; align-items: center; gap: 8px; font-family: var(--font-display); font-size: .88rem; font-weight: 600; color: hsla(0,0%,5%,.38); }
+  .tab .rail { width: 100%; height: 3px; border-radius: 3px; background: hsla(0,0%,5%,.08); position: relative; overflow: hidden; }
+  .tab.active .lbl { color: var(--ink); }
+  .tab.active .rail::after { content: ""; position: absolute; inset: 0; width: 55%; background: var(--sage-dark); border-radius: 3px; }
+
+  /* Panel copy */
+  .panel-head { margin-top: 56px; }
+  .panel-head h3 { font-family: var(--font-display); font-size: 1.55rem; font-weight: 600; }
+  .panel-head p { margin: 12px auto 0; max-width: 560px; color: hsla(0,0%,5%,.6); font-size: .95rem; line-height: 1.7; }
+
+  /* ── Composed scene: browser + breakout phone + real-capture fragments
+        over a teal-mist wash, ghost chapter number behind ─────────────── */
+  .scene { position: relative; max-width: 1060px; height: 560px; margin: 56px auto 0; text-align: left; }
+  .wash { position: absolute; inset: 44px 0 44px 170px; border-radius: 28px; background: linear-gradient(135deg, hsl(186,21%,93%) 0%, hsl(99,22%,92%) 100%); z-index: 0; }
+  .ghostnum { position: absolute; top: -96px; right: -8px; font-family: var(--font-display); font-weight: 800; font-size: 17rem; line-height: 1; color: hsla(186,21%,26%,.06); z-index: 1; }
+
+  .browser { position: absolute; left: 0; top: 0; width: 680px; border-radius: 16px; overflow: hidden; background: #fff; box-shadow: 0 32px 64px hsla(186,21%,10%,.16); z-index: 2; }
+  .browser-bar { display: flex; align-items: center; gap: 10px; padding: 11px 16px; background: #fff; border-bottom: 1px solid hsla(186,21%,26%,.12); }
+  .traffic { display: flex; gap: 6px; }
+  .traffic i { width: 11px; height: 11px; border-radius: 50%; }
+  .traffic i:nth-child(1) { background: hsl(2,68%,63%); }
+  .traffic i:nth-child(2) { background: hsl(41,79%,58%); }
+  .traffic i:nth-child(3) { background: hsl(122,29%,55%); }
+  .urlpill { background: hsl(180,7%,95%); border-radius: 100px; font-size: .72rem; color: hsla(0,0%,5%,.55); padding: 5px 34px; margin-left: 8px; }
+  .browser img { width: 100%; display: block; aspect-ratio: 21 / 10; object-fit: cover; object-position: top; }
+
+  .phone { position: absolute; right: 64px; bottom: -54px; width: 196px; border-radius: 30px; border: 7px solid hsl(200,12%,13%); overflow: hidden; background: #fff; box-shadow: 0 24px 48px hsla(186,21%,10%,.24); z-index: 3; }
+  .phone img { width: 100%; display: block; aspect-ratio: 9 / 18.4; object-fit: cover; object-position: top; }
+
+  /* Real-capture fragments (CSS crops of shipped screenshots — nothing invented) */
+  .frag { position: absolute; border-radius: 14px; box-shadow: 0 16px 48px hsla(186,21%,10%,.18); border: 1px solid hsla(186,21%,26%,.08); background-color: #fff; background-repeat: no-repeat; z-index: 4; }
+  .frag.adherence { /* Analytics_Tab_1 → “76% · Avg Adherence” stat tile */
+    right: 250px; top: 34px; width: 250px; height: 96px;
+    background-image: url("../../public/Wazen-Screenshots/Coach%20Dashboard/Desktop/en/Analytics_Tab_1.png");
+    background-size: 470% auto; background-position: 33.5% 20%;
+  }
+  .frag.weight { /* client Progress_Tab_1 → “WEIGHT (KG) · 82.7 kg” tile */
+    left: 48px; bottom: 152px; width: 236px; height: 102px;
+    background-image: url("../../public/Wazen-Screenshots/Client%20Dashboard/Desktop/en/Progress_Tab_1.png");
+    background-size: 300% auto; background-position: 31% 10.8%;
+  }
+
+  .caption { margin-top: 92px; font-size: .8rem; color: hsla(0,0%,5%,.5); }
+
+  .mocknote { background: var(--primary-darker); color: rgba(255,255,255,.55); font-size: .72rem; padding: 12px 48px; text-align: center; letter-spacing: .04em; }
+
+  /* Mobile: tabs keep the underline vocabulary in a scroll row; the scene
+     simplifies (fragments hide, phone shrinks) — desktop is the decision
+     surface for this mock */
+  @media (max-width: 640px) {
+    html, body { max-width: 100%; overflow-x: hidden; }
+    .features { padding: 56px 20px 80px; }
+    h2 { font-size: 1.7rem; }
+    .tabs { gap: 18px; overflow-x: auto; justify-content: flex-start; }
+    .scene { height: auto; }
+    .ghostnum, .frag, .wash { display: none; }
+    .browser { position: static; width: 100%; }
+    .phone { width: 110px; right: 6px; bottom: -30px; border-width: 4px; }
+    .caption { margin-top: 56px; }
+  }
+</style>
+</head>
+<body>
+
+<section class="features">
+  <div class="eyebrow">Everything you need</div>
+  <h2>One platform. Every tool your coaching practice needs.</h2>
+  <p class="lead">Stop stitching together apps. Wazen brings client management, plans, check-ins, progress tracking, and messaging into one organized system.</p>
+
+  <div class="tabs">
+    <div class="tab"><span class="lbl">Client Management</span><span class="rail"></span></div>
+    <div class="tab active"><span class="lbl">Check-ins</span><span class="rail"></span></div>
+    <div class="tab"><span class="lbl">Progress &amp; Analytics</span><span class="rail"></span></div>
+    <div class="tab"><span class="lbl">Plans &amp; Templates</span><span class="rail"></span></div>
+    <div class="tab"><span class="lbl">Messaging</span><span class="rail"></span></div>
+  </div>
+
+  <div class="panel-head">
+    <h3>Structured check-ins, zero chasing</h3>
+    <p>Create check-in schedules for each client. They submit from their app, you review everything from one organized queue — no more hunting through messages.</p>
+  </div>
+
+  <div class="scene">
+    <div class="ghostnum">02</div>
+    <div class="wash"></div>
+    <div class="browser">
+      <div class="browser-bar">
+        <div class="traffic"><i></i><i></i><i></i></div>
+        <div class="urlpill">app.wazen.fit/dashboard</div>
+      </div>
+      <img src="../../public/Wazen-Screenshots/Coach%20Dashboard/Desktop/en/Dashboard_Tab.png" alt="">
+    </div>
+    <div class="frag adherence"></div>
+    <div class="frag weight"></div>
+    <div class="phone"><img src="../../public/Wazen-Screenshots/Client%20Dashboard/Mobile/en/Check_In_Tab.png" alt=""></div>
+  </div>
+
+  <p class="caption">The check-in queue — clients submit from their phone</p>
+</section>
+
+<div class="mocknote">STAGE 2 MOCKUP — FEATURES · D21 settled: progress-underline tabs, active rail = auto-advance timer (shown mid-dwell) · panel redesigned as a composed scene: browser capture + phone breaking the wash + two floating fragments cropped from REAL captures (Analytics adherence tile · client weight tile) · ghost chapter number behind · static render</div>
+
+</body>
+</html>

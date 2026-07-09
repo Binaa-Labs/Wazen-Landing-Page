@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Stage 2 Mockup — CTA (OG-card composition, pre-seeded)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@500;600;700&family=Inter:wght@400;500&family=Tajawal:wght@800&display=swap" rel="stylesheet">
+<style>
+  /* Wazen tokens (mirror of globals.css) */
+  :root {
+    --primary: hsl(186, 21%, 26%);
+    --primary-dark: hsl(186, 21%, 14%);
+    --primary-darker: hsl(186, 21%, 10%);
+    --sage: hsl(99, 22%, 72%);
+    --sage-light: hsl(99, 22%, 92%);
+    --sage-dark: hsl(99, 20%, 42%);
+    --ink: hsl(0, 0%, 5%);
+    --bg: hsl(0, 0%, 95%);
+    --surface: hsl(0, 0%, 100%);
+    --font-display: "Outfit", sans-serif;
+    --font-body: "Inter", sans-serif;
+    --font-arabic: "Tajawal", sans-serif;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: var(--font-body); background: var(--bg); color: var(--ink); -webkit-font-smoothing: antialiased; }
+
+  /* ── CTA section: current backdrop (F-9 @12% + ghost wordmark), new
+        OG-card composition — copy start-side, real composite bleeding
+        off the end side ─────────────────────────────────────────────── */
+  .cta { position: relative; overflow: hidden; background: var(--primary-dark); padding: 104px 0 112px; }
+  .cta-photo { position: absolute; inset: 0; opacity: .12; }
+  .cta-photo img { width: 100%; height: 100%; object-fit: cover; }
+  .ghost {
+    position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%);
+    font-family: var(--font-arabic); font-weight: 800;
+    font-size: clamp(10rem, 22vw, 18rem); line-height: 1;
+    color: rgba(255,255,255,.04); white-space: nowrap; pointer-events: none; z-index: 0;
+  }
+
+  .cta-grid {
+    position: relative; z-index: 1;
+    max-width: 1200px; margin: 0 auto; padding: 0 48px;
+    display: grid; grid-template-columns: minmax(0, 46fr) minmax(0, 54fr);
+    gap: 56px; align-items: center; color: #fff;
+  }
+
+  /* Start side — badge → h2 → body → checkmarks → sage CTA → login line */
+  .badge { display: inline-flex; align-items: center; gap: 8px; border: 1px solid hsla(99,22%,72%,.35); background: hsla(99,22%,72%,.12); border-radius: 100px; padding: 7px 16px; font-size: .78rem; font-weight: 500; color: hsl(99,28%,84%); }
+  .badge .dot { width: 7px; height: 7px; border-radius: 50%; background: var(--sage); }
+  h2 { font-family: var(--font-display); font-size: 2.7rem; font-weight: 700; letter-spacing: -0.02em; line-height: 1.15; margin-top: 22px; }
+  .body { margin-top: 16px; font-size: 1.02rem; line-height: 1.7; color: rgba(255,255,255,.75); max-width: 460px; }
+  .trust { margin-top: 26px; display: grid; grid-template-columns: auto auto; gap: 12px 28px; justify-content: start; }
+  .trust div { display: flex; align-items: center; gap: 10px; font-size: .88rem; color: rgba(255,255,255,.85); white-space: nowrap; }
+  .trust .tick { width: 22px; height: 22px; flex: none; border-radius: 50%; background: hsla(99,22%,72%,.16); color: var(--sage); display: grid; place-items: center; font-size: .7rem; }
+  .ctas { margin-top: 32px; display: flex; align-items: center; gap: 20px; flex-wrap: wrap; }
+  .btn-primary { display: inline-block; background: var(--sage); color: var(--primary-darker); font-family: var(--font-display); font-weight: 600; font-size: .98rem; padding: 16px 32px; border-radius: 100px; box-shadow: 0 16px 48px hsla(99,22%,40%,.30); }
+  .login { font-size: .85rem; color: rgba(255,255,255,.6); }
+  .login b { color: hsl(99,28%,84%); font-weight: 600; text-decoration: underline; text-underline-offset: 3px; }
+
+  /* End side — real dashboard in a browser frame + real phone capture,
+     the whole composite bleeding off the end edge (section clips it) */
+  .composite { position: relative; margin-inline-end: -180px; /* the bleed */ }
+  .browser { position: relative; border-radius: 16px; overflow: hidden; background: #fff; box-shadow: 0 32px 64px hsla(186,21%,6%,.5); }
+  .browser-bar { display: flex; align-items: center; gap: 10px; padding: 11px 16px; background: #fff; border-bottom: 1px solid hsla(186,21%,26%,.12); }
+  .traffic { display: flex; gap: 6px; }
+  .traffic i { width: 11px; height: 11px; border-radius: 50%; }
+  .traffic i:nth-child(1) { background: hsl(2,68%,63%); }
+  .traffic i:nth-child(2) { background: hsl(41,79%,58%); }
+  .traffic i:nth-child(3) { background: hsl(122,29%,55%); }
+  .urlpill { background: hsl(180,7%,95%); border-radius: 100px; font-size: .72rem; color: hsla(0,0%,5%,.55); padding: 5px 34px; margin-inline-start: 8px; }
+  .browser img { width: 100%; display: block; aspect-ratio: 640 / 306; object-fit: cover; object-position: top; }
+  .phone {
+    position: absolute; bottom: -36px; inset-inline-start: -44px; width: 172px;
+    border-radius: 28px; border: 7px solid hsl(200,12%,13%); overflow: hidden;
+    background: #fff; box-shadow: 0 24px 48px hsla(186,21%,6%,.45);
+  }
+  .phone img { width: 100%; display: block; aspect-ratio: 9 / 18.2; object-fit: cover; object-position: top; }
+
+  /* ── Mockup label ─────────────────────────────────────────────────── */
+  .mocknote { background: var(--primary-darker); color: rgba(255,255,255,.55); font-size: .72rem; padding: 12px 48px; text-align: center; letter-spacing: .04em; }
+
+  /* ── Mobile: copy first, composite below, still bleeding off the end ── */
+  @media (max-width: 640px) {
+    html, body { max-width: 100%; overflow-x: hidden; }
+    .cta { padding: 64px 0 96px; }
+    .cta-grid { grid-template-columns: 1fr; gap: 48px; padding: 0 20px; }
+    h2 { font-size: 1.9rem; }
+    .body { font-size: .95rem; }
+    .trust { grid-template-columns: 1fr; gap: 10px; }
+    .ctas { flex-direction: column; align-items: stretch; gap: 14px; }
+    .btn-primary { text-align: center; }
+    .login { text-align: center; }
+    .composite { margin-inline-end: -96px; margin-inline-start: 22px; }
+    .phone { width: 108px; border-width: 5px; bottom: -22px; inset-inline-start: -14px; }
+    .urlpill { padding: 4px 12px; font-size: .62rem; }
+    .ghost { font-size: 9rem; }
+    .mocknote { padding: 12px 20px; }
+  }
+</style>
+</head>
+<body>
+
+<section class="cta">
+  <div class="cta-photo"><img src="../../public/photos/f-9.webp" alt=""></div>
+  <div class="ghost">وازن</div>
+
+  <div class="cta-grid">
+    <div class="copy">
+      <div class="badge"><span class="dot"></span>Free to start — no credit card</div>
+      <h2>Bring your coaching into one organized place</h2>
+      <p class="body">Create your free account and start managing up to 5 active clients with the full platform — plans, check-ins, progress, and messaging.</p>
+      <div class="trust">
+        <div><span class="tick">✓</span>Free for your first 5 clients</div>
+        <div><span class="tick">✓</span>No credit card required</div>
+        <div><span class="tick">✓</span>Full core platform</div>
+        <div><span class="tick">✓</span>Arabic &amp; English</div>
+      </div>
+      <div class="ctas">
+        <span class="btn-primary">Start free — up to 5 clients</span>
+        <span class="login">Already using Wazen? <b>Log in</b></span>
+      </div>
+    </div>
+
+    <div class="composite">
+      <div class="browser">
+        <div class="browser-bar">
+          <div class="traffic"><i></i><i></i><i></i></div>
+          <div class="urlpill">app.wazen.fit/dashboard</div>
+        </div>
+        <img src="../../public/Wazen-Screenshots/Coach%20Dashboard/Desktop/en/Dashboard_Tab.png" alt="">
+      </div>
+      <div class="phone"><img src="../../public/Wazen-Screenshots/Client%20Dashboard/Mobile/en/Check_In_Tab.png" alt=""></div>
+    </div>
+  </div>
+</section>
+
+<div class="mocknote">STAGE 2 MOCKUP — CTA · OG-card composition over the current backdrop (F-9 @12% + وازن ghost wordmark) · real captures (dashboard keeps current, top crop · check-in phone keeps current) · CTA labels &amp; login line verbatim from lib/i18n.ts · static render (composite enters at the product motion register)</div>
+
+</body>
+</html>
