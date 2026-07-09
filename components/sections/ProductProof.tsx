@@ -12,74 +12,11 @@ import PhoneShot from "@/components/ui/PhoneShot";
 import { getShot } from "@/lib/screenshots";
 
 /* Product-proof section (D17): the Phase 1 hero composite — browser-framed
-   coach dashboard + overlapping client-app phone + annotation chips +
-   lightbox + glow + parallax — relocated below the photography hero.
-   Composite behavior is unchanged; entrances switched from on-load to
-   whileInView (it sits below the fold now) and the dashboard capture is
-   lazy (no preload) for the same reason. */
-
-function CheckDot() {
-  return (
-    <span className="flex size-5 shrink-0 items-center justify-center rounded-full bg-secondary-light text-secondary-dark">
-      <svg
-        viewBox="0 0 24 24"
-        fill="none"
-        stroke="currentColor"
-        strokeWidth="3"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-        className="size-3"
-        aria-hidden
-      >
-        <path d="m5 13 4 4L19 7" />
-      </svg>
-    </span>
-  );
-}
-
-function TrendDot() {
-  return (
-    <span className="flex size-5 shrink-0 items-center justify-center rounded-full bg-primary-light text-primary">
-      <svg
-        viewBox="0 0 24 24"
-        fill="none"
-        stroke="currentColor"
-        strokeWidth="2.4"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-        className="size-3"
-        aria-hidden
-      >
-        <path d="m3 16.5 5.5-5.5 4 4L21 7" />
-      </svg>
-    </span>
-  );
-}
-
-/* Floating annotation chips: translatable HTML (not baked into the
-   screenshot), so they work in both locales and stay legible at any
-   screenshot render size. */
-function AnnotationChip({
-  children,
-  className,
-  delay,
-}: {
-  children: React.ReactNode;
-  className: string;
-  delay: number;
-}) {
-  return (
-    <motion.div
-      initial={{ opacity: 0, y: 12 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={viewport}
-      transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1], delay }}
-      className={`absolute z-[2] flex items-center gap-2 rounded-pill border border-primary/10 bg-surface py-1.5 ps-1.5 pe-3.5 text-caption font-medium text-ink/80 shadow-md ${className}`}
-    >
-      {children}
-    </motion.div>
-  );
-}
+   coach dashboard + overlapping client-app phone + lightbox + glow +
+   parallax — relocated below the photography hero. Entrances switched from
+   on-load to whileInView (it sits below the fold now) and the dashboard
+   capture is lazy (no preload) for the same reason. The Phase 1 annotation
+   chips were removed in the post-2.1 fix-up (owner preview review). */
 
 export default function ProductProof() {
   const { t, lang } = useLanguage();
@@ -159,19 +96,6 @@ export default function ProductProof() {
               </BrowserFrame>
             </motion.div>
 
-            {/* Chips anchor to screenshot CONTENT, so they use physical
-                left/top: the capture is LTR in both locales (Pass C swaps in
-                mirrored AR captures — revisit anchors then). On mobile the
-                check chip floats centered above the frame so it never covers
-                the traffic lights or sidebar. */}
-            <AnnotationChip
-              delay={0.6}
-              className="max-sm:-top-4 max-sm:left-1/2 max-sm:-translate-x-1/2 sm:left-[26%] sm:top-[46%]"
-            >
-              <CheckDot />
-              {t.hero.chips[0]}
-            </AnnotationChip>
-
             <motion.div
               initial={{ opacity: 0, y: 24 }}
               whileInView={{ opacity: 1, y: 0 }}
@@ -179,11 +103,6 @@ export default function ProductProof() {
               transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1], delay: 0.4 }}
               className="absolute -bottom-8 end-3 z-[2] w-[26%] min-w-[104px] max-w-[170px] sm:end-8"
             >
-              {/* Weight chip rides with the phone frame, both directions */}
-              <AnnotationChip delay={0.8} className="-top-5 end-0 hidden sm:flex">
-                <TrendDot />
-                {t.hero.chips[1]}
-              </AnnotationChip>
               <PhoneShot
                 name="clientMobileHome"
                 alt={t.features.clientLabel}

@@ -38,7 +38,10 @@ const en = {
     ],
     dashboardAlt:
       "Wazen coach dashboard showing the client roster, attention queue, and upcoming check-ins",
-    chips: ["Check-in reviewed", "Weight ↓ 0.7 kg"],
+  },
+  lightbox: {
+    expand: "Expand image",
+    close: "Close",
   },
   video: {
     eyebrow: "See it in action",
@@ -400,7 +403,10 @@ const ar: Dictionary = {
     trust: ["بدون بطاقة ائتمان", "مجاني دائمًا لـ 5 عملاء", "العربية والإنجليزية"],
     dashboardAlt:
       "لوحة تحكم المدرب في وازن تعرض قائمة العملاء وقائمة المهام والمتابعات القادمة",
-    chips: ["تمت مراجعة المتابعة", "الوزن ↓ 0.7 كجم"],
+  },
+  lightbox: {
+    expand: "تكبير الصورة",
+    close: "إغلاق",
   },
   video: {
     eyebrow: "شاهده عمليًا",

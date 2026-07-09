@@ -131,9 +131,14 @@ export default function CTA() {
           <p className="mt-2 text-caption text-ink/55">{t.cta.cardSub}</p>
           <div className="relative mt-6 pb-7">
             <MiniDashboard />
-            {/* Decorative within the aria-hidden composite — empty alt */}
+            {/* Real capture — labeled with the matching showcase string so
+                its lightbox trigger has an accessible name (post-2.1) */}
             <div className="absolute -bottom-4 end-3 w-[26%] min-w-[88px] max-w-[120px]">
-              <PhoneShot name="clientMobileCheckin" alt="" sizes="120px" />
+              <PhoneShot
+                name="clientMobileCheckin"
+                alt={t.clientApp.phones[1]}
+                sizes="120px"
+              />
             </div>
           </div>
           <Button href={APP_URLS.signup} className="mt-5 w-full">

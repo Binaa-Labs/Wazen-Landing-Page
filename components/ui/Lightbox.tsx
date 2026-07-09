@@ -12,11 +12,17 @@ import { createPortal } from "react-dom";
 import Image from "next/image";
 import { AnimatePresence, motion } from "framer-motion";
 
+import { useLanguage } from "@/components/LanguageProvider";
+import PhoneFrame from "@/components/ui/PhoneFrame";
+
 type LightboxProps = {
   src: string;
   alt: string;
   width: number;
   height: number;
+  /** "image" (default): bare capture in a rounded card. "phone": the capture
+      stays inside a PhoneFrame in the dialog, centered at ~85vh tall. */
+  variant?: "image" | "phone";
   /** Classes for the in-place trigger (e.g. the aspect box / image wrapper) */
   className?: string;
   /** Controlled open — lets a parent component manage lightbox state */
@@ -58,11 +64,13 @@ export default function Lightbox({
   alt,
   width,
   height,
+  variant = "image",
   className,
   open: openProp,
   onOpenChange,
   children,
 }: LightboxProps) {
+  const { t } = useLanguage();
   const layoutId = `lightbox-${useId()}`;
   const isControlled = openProp !== undefined;
   const [internalOpen, setInternalOpen] = useState(false);
@@ -164,10 +172,11 @@ export default function Lightbox({
         type="button"
         layoutId={layoutId}
         onClick={() => setOpen(true)}
-        aria-label={`Expand image: ${alt}`}
-        className={`block cursor-pointer overflow-hidden ${
-          className ?? ""
-        }`}
+        aria-label={alt ? `${t.lightbox.expand}: ${alt}` : t.lightbox.expand}
+        className={`block cursor-pointer ${
+          /* phone triggers keep the frame's own rounding + shadow unclipped */
+          variant === "phone" ? "w-full" : "overflow-hidden"
+        } ${className ?? ""}`}
       >
         {children}
       </motion.button>
@@ -191,24 +200,44 @@ export default function Lightbox({
                   transition={{ duration: 0.25 }}
                   className="absolute inset-0 bg-ink/30 backdrop-blur-xl"
                 />
-                <motion.div
-                  layoutId={layoutId}
-                  onClick={(e) => e.stopPropagation()}
-                  className="relative z-[1] cursor-default overflow-hidden rounded-2xl shadow-2xl ring-1 ring-white/10"
-                >
-                  <Image
-                    src={src}
-                    alt={alt}
-                    width={width}
-                    height={height}
-                    className="h-auto max-h-[85vh] w-auto max-w-[90vw] rounded-2xl object-contain"
-                  />
-                </motion.div>
+                {variant === "phone" ? (
+                  /* The capture stays inside the phone chrome, centered and
+                     ~85vh tall (the frame's 9/19 window sets the width). */
+                  <motion.div
+                    layoutId={layoutId}
+                    onClick={(e) => e.stopPropagation()}
+                    className="relative z-[1] w-[calc(85vh*9/19)] max-w-[80vw] cursor-default"
+                  >
+                    <PhoneFrame>
+                      <Image
+                        src={src}
+                        alt={alt}
+                        fill
+                        sizes="440px"
+                        className="object-cover object-top dark:opacity-90"
+                      />
+                    </PhoneFrame>
+                  </motion.div>
+                ) : (
+                  <motion.div
+                    layoutId={layoutId}
+                    onClick={(e) => e.stopPropagation()}
+                    className="relative z-[1] cursor-default overflow-hidden rounded-2xl shadow-2xl ring-1 ring-white/10"
+                  >
+                    <Image
+                      src={src}
+                      alt={alt}
+                      width={width}
+                      height={height}
+                      className="h-auto max-h-[85vh] w-auto max-w-[90vw] rounded-2xl object-contain"
+                    />
+                  </motion.div>
+                )}
                 <button
                   ref={closeRef}
                   type="button"
                   onClick={close}
-                  aria-label="Close"
+                  aria-label={t.lightbox.close}
                   className="fixed end-4 top-4 z-[2] flex size-10 items-center justify-center rounded-full bg-white/10 text-white backdrop-blur-sm transition-colors hover:bg-white/20"
                 >
                   <CloseIcon />

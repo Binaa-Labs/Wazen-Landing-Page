@@ -5,7 +5,7 @@ import Image from "next/image";
 import { motion, useReducedMotion } from "framer-motion";
 
 import { useLanguage } from "@/components/LanguageProvider";
-import { crossfade, kenBurns, railFill } from "@/components/motion";
+import { crossfade, kenBurns } from "@/components/motion";
 import Badge from "@/components/ui/Badge";
 import Button from "@/components/ui/Button";
 import { APP_URLS } from "@/lib/links";
@@ -33,18 +33,29 @@ export default function Hero() {
   const { t, lang } = useLanguage();
   const reducedMotion = useReducedMotion();
   const [active, setActive] = useState(0);
+  /* Monotonic activation counter: keys the active rail's fill span so EVERY
+     activation (auto-advance, manual click, even re-clicking the active
+     persona) remounts a fresh span that fills from 0. Structural number,
+     never a translated string (learning #1). */
+  const [cycle, setCycle] = useState(0);
 
-  /* Auto-rotation. Manual label clicks reset the timer via the [active]
-     dependency. Reduced motion: no rotation at all — slide 1 stays static
-     and the labels become plain manual tabs. */
+  const select = (i: number) => {
+    setActive(i);
+    setCycle((c) => c + 1);
+  };
+
+  /* Auto-rotation. Every activation bumps `cycle`, so the timer resets on
+     manual clicks too (including re-clicking the active persona). Reduced
+     motion: no rotation at all — slide 1 stays static and the labels become
+     plain manual tabs. */
   useEffect(() => {
     if (reducedMotion) return;
-    const id = setTimeout(
-      () => setActive((i) => (i + 1) % PERSONAS.length),
-      DWELL_MS,
-    );
+    const id = setTimeout(() => {
+      setActive((i) => (i + 1) % PERSONAS.length);
+      setCycle((c) => c + 1);
+    }, DWELL_MS);
     return () => clearTimeout(id);
-  }, [active, reducedMotion]);
+  }, [cycle, reducedMotion]);
 
   return (
     <section className="relative flex min-h-[100svh] items-center overflow-hidden bg-primary-darker">
@@ -124,23 +135,33 @@ export default function Hero() {
                 /* Buttons + rails keyed by index (learning #1) */
                 <button
                   key={i}
-                  onClick={() => setActive(i)}
+                  onClick={() => select(i)}
                   aria-current={isActive || undefined}
                   className={`relative flex-1 cursor-pointer pb-2.5 pt-5 text-[0.7rem] font-medium uppercase tracking-[0.16em] transition-colors duration-300 sm:flex-none sm:pt-0 md:text-[0.78rem] ${
                     isActive ? "text-white" : "text-white/55 hover:text-white/85"
                   }`}
                 >
                   <span className="sr-only sm:not-sr-only">{card.title}</span>
+                  {/* Exactly ONE rail is ever non-empty: the fill span exists
+                      only on the active persona and remounts per activation
+                      (key={cycle}), so it always fills 0→1 over the dwell —
+                      outgoing rails empty instantly on unmount, wrap leaves
+                      the others empty, and a mid-fill click restarts from 0.
+                      Reduced motion: MotionConfig skips the tween, leaving a
+                      static full rail on the active persona. */}
                   <span
                     aria-hidden
                     className="absolute inset-x-0 bottom-0 h-[2px] rounded-pill bg-white/20"
                   >
-                    <motion.span
-                      variants={railFill}
-                      initial={false}
-                      animate={isActive ? "fill" : "empty"}
-                      className="absolute inset-0 origin-left rounded-pill bg-secondary rtl:origin-right"
-                    />
+                    {isActive && (
+                      <motion.span
+                        key={cycle}
+                        initial={{ scaleX: 0 }}
+                        animate={{ scaleX: 1 }}
+                        transition={{ duration: DWELL_MS / 1000, ease: "linear" }}
+                        className="absolute inset-0 origin-left rounded-pill bg-secondary rtl:origin-right"
+                      />
+                    )}
                   </span>
                 </button>
               );
