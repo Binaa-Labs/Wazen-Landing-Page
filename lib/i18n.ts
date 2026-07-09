@@ -13,6 +13,7 @@ const en = {
     pricing: "Pricing",
     faq: "FAQ",
     startFree: "Start free",
+    login: "Log in",
     switchToAr: "Switch to Arabic",
     switchToEn: "Switch to English",
     toDark: "Switch to dark mode",
@@ -21,6 +22,9 @@ const en = {
   },
   hero: {
     badge: "Free for your first 5 clients — full platform, no limits",
+    /* Persona slider labels reuse segments.cards[i].title verbatim (D17) —
+       only the group's accessible name lives here. */
+    personasLabel: "Who Wazen is for",
     h1Line1: "Run your coaching practice from",
     h1Underlined: "one calm, organized place",
     subheadline:
@@ -35,6 +39,27 @@ const en = {
     dashboardAlt:
       "Wazen coach dashboard showing the client roster, attention queue, and upcoming check-ins",
     chips: ["Check-in reviewed", "Weight ↓ 0.7 kg"],
+  },
+  video: {
+    eyebrow: "See it in action",
+    h2: "Two minutes inside Wazen",
+    lead: "One tour: the coach dashboard, a client's day in the app, and what a check-in looks like from both sides.",
+    /* Index-coupled to CHAPTERS in lib/video.ts — keep the order aligned. */
+    chapters: [
+      "Clients & check-ins",
+      "Plans that clients follow",
+      "Progress you can see",
+      "Messaging, in one place",
+    ],
+    playLabel: "Play the product tour",
+    chaptersLabel: "Video chapters",
+    posterAlt:
+      "A calm desk with a laptop and phone — poster frame for the Wazen product tour",
+  },
+  productProof: {
+    eyebrow: "The coach dashboard",
+    h2: "Your whole practice, one screen",
+    sub: "The dashboard your clients never see — and the app they live in. Everything below syncs in real time.",
   },
   trustBar: {
     items: [
@@ -356,6 +381,7 @@ const ar: Dictionary = {
     pricing: "الأسعار",
     faq: "الأسئلة الشائعة",
     startFree: "ابدأ مجانًا",
+    login: "تسجيل الدخول",
     switchToAr: "التبديل إلى العربية",
     switchToEn: "التبديل إلى الإنجليزية",
     toDark: "التبديل إلى الوضع الداكن",
@@ -364,6 +390,7 @@ const ar: Dictionary = {
   },
   hero: {
     badge: "مجاني لأول 5 عملاء — المنصة كاملة وبدون قيود",
+    personasLabel: "لمن صُمّم وازن",
     h1Line1: "أدِر عملك مع عملائك",
     h1Underlined: "من مكان واحد، منظّم وسلس",
     subheadline:
@@ -374,6 +401,25 @@ const ar: Dictionary = {
     dashboardAlt:
       "لوحة تحكم المدرب في وازن تعرض قائمة العملاء وقائمة المهام والمتابعات القادمة",
     chips: ["تمت مراجعة المتابعة", "الوزن ↓ 0.7 كجم"],
+  },
+  video: {
+    eyebrow: "شاهده عمليًا",
+    h2: "دقيقتان داخل وازن",
+    lead: "جولة واحدة: لوحة تحكم المدرب، ويوم العميل في التطبيق، وكيف تبدو المتابعة من الجهتين.",
+    chapters: [
+      "العملاء والمتابعات",
+      "خطط يلتزم بها العملاء",
+      "تقدّم تراه فعلًا",
+      "المراسلة، في مكان واحد",
+    ],
+    playLabel: "تشغيل جولة المنتج",
+    chaptersLabel: "فصول الفيديو",
+    posterAlt: "مكتب هادئ مع حاسوب محمول وهاتف — صورة غلاف لجولة وازن التعريفية",
+  },
+  productProof: {
+    eyebrow: "لوحة تحكم المدرب",
+    h2: "عملك التدريبي كاملًا، في شاشة واحدة",
+    sub: "اللوحة التي لا يراها عملاؤك — والتطبيق الذي يعيشون فيه. كل ما تراه هنا يتزامن لحظيًا.",
   },
   trustBar: {
     items: [

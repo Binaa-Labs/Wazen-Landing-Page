@@ -17,6 +17,7 @@
   --color-secondary: hsl(99, 22%, 72%); /* Sage — accents, underlines */
   --color-secondary-dark: hsl(99, 20%, 42%); /* Sage Dark — success text */
   --color-secondary-light: hsl(99, 22%, 92%); /* Sage Mist — badges */
+  --color-secondary-pale: hsl(99, 28%, 84%); /* Pale sage — hero serif accent on photo */
 
   --color-accent: hsl(201, 20%, 23%); /* Steel Blue — dark surface cards */
 
@@ -30,6 +31,18 @@
   --color-success: hsl(99, 20%, 42%);
   --color-success-bg: hsla(99, 20%, 42%, 0.06);
   --color-success-border: hsla(99, 20%, 42%, 0.2);
+
+  /* ── Logo mark (D23) ──────────────────────────────────────────────────
+     The inlined currentColor mark in components/ui/Logo.tsx reads these.
+     Dark-mode value MUST stay in the brand green family (owner hard
+     requirement) — switching sage↔teal in dark mode is this one token
+     (see the html.dark override below). Hex values are the owner-supplied
+     logo colorway set, not derived from the HSL brand tokens. */
+  --color-logo-mark: #3d8c84; /* light mode: logo teal */
+  --color-logo-on-photo: #f0f0ed; /* mark over the hero photo / transparent nav */
+
+  /* ── Photography treatment (Phase 2) ──────────────────────────────── */
+  --color-photo-duotone: hsla(186, 40%, 20%, 0.3); /* teal duotone cast, mix-blend-mode: color */
 
   /* ── Shadows ──────────────────────────────────────────────────────── */
   --shadow-sm: 0 1px 3px hsla(186, 21%, 10%, 0.06);
@@ -80,16 +93,21 @@
   --spacing-card-mobile: 20px;
 }
 
-/* Fonts alias the next/font variables wired up in app/layout.tsx (build
-   step 3); the named families are fallbacks until then. */
+/* Fonts alias the next/font variables wired up in RootShell (Outfit/Inter/
+   Tajawal) and app/(en)/layout.tsx (Fraunces — EN route only, italic subset;
+   the Georgia fallback covers the runtime EN-toggle on /ar where Fraunces
+   bytes were never loaded). */
 @theme inline {
   --font-display: var(--font-outfit), "Outfit", sans-serif;
   --font-body: var(--font-inter), "Inter", sans-serif;
   --font-arabic: var(--font-tajawal), "Tajawal", sans-serif;
+  --font-serif: var(--font-fraunces, Georgia), Georgia, serif;
 }
 
 /* Dark mode — .dark is set on <html> by the nav toggle (build step 18).
-   Brand colors stay as-is; only neutrals and tinted backgrounds flip. */
+   Brand colors stay as-is; only neutrals and tinted backgrounds flip.
+   Exception: the logo mark swaps teal→sage so the mark stays in the brand
+   green family on dark (D23 — one-token edit to change). */
 html.dark {
   color-scheme: dark;
   --color-bg: hsl(186, 24%, 7%);
@@ -101,6 +119,7 @@ html.dark {
   --color-primary-dark: hsl(186, 22%, 12%);
   --color-primary-darker: hsl(186, 24%, 8%);
   --color-secondary-light: hsl(99, 22%, 10%);
+  --color-logo-mark: #7ba898; /* dark mode: logo sage (green-in-dark, D23) */
 }
 
 @layer base {
@@ -138,8 +157,63 @@ html.dark {
     font-family: var(--font-arabic);
   }
 
+  /* Anchored sections land fully below the fixed full-width nav bar
+     (Pass 2.1 — the floating pill never needed this). */
+  [id] {
+    scroll-margin-top: 5.5rem;
+  }
+
   :focus-visible {
     outline: 2px solid var(--color-primary);
     outline-offset: 2px;
+  }
+}
+
+/* Hero copy entrance — CSS instead of Framer for THIS block only: Chrome
+   excludes the full-viewport hero photo from LCP as a background, so the
+   hero COPY is the page's LCP element. Two rules matter:
+   1. Framer SSRs `hidden` variants as opacity: 0 and only reveals after
+      hydration → LCP gated on JS. CSS animations start at first paint.
+   2. Content revealed by an opacity 0→1 animation never emits an LCP entry
+      at all (paint is recorded while invisible). So the headline/subheadline
+      use the translate-ONLY variant below — visible from first paint,
+      eligible for LCP — while the small elements keep the fade.
+   Same curve/offsets as fadeUp + staggerChildren, transform/opacity only.
+   Stagger via [animation-delay:…] utilities at the call site. */
+@keyframes hero-enter {
+  from {
+    opacity: 0;
+    transform: translateY(24px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes hero-enter-move {
+  from {
+    transform: translateY(24px);
+  }
+  to {
+    transform: translateY(0);
+  }
+}
+
+@layer components {
+  .hero-enter {
+    animation: hero-enter 0.5s cubic-bezier(0.16, 1, 0.3, 1) both;
+  }
+
+  /* LCP-eligible entrance: movement only, never opacity (see note above) */
+  .hero-enter-move {
+    animation: hero-enter-move 0.5s cubic-bezier(0.16, 1, 0.3, 1) both;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero-enter,
+  .hero-enter-move {
+    animation: none;
   }
 }

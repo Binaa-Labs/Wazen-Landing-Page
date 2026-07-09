@@ -2,6 +2,7 @@ import { readFile } from "fs/promises";
 import { join } from "path";
 import { ImageResponse } from "next/og";
 
+import { LOGO_TEAL, MARK_PATH, MARK_RATIO, MARK_VIEWBOX } from "@/lib/brand";
 import type { Locale } from "@/lib/i18n";
 import { SHOTS } from "@/lib/screenshots";
 
@@ -100,6 +101,8 @@ export async function buildOgImage(locale: Locale) {
           }}
         >
           <div style={{ display: "flex", alignItems: "center", gap: 14 }}>
+            {/* Real Wazen mark (fixed teal colorway — Satori can't read CSS
+                tokens) on a white tile, from the public/brand/ master (D23) */}
             <div
               style={{
                 display: "flex",
@@ -109,12 +112,11 @@ export async function buildOgImage(locale: Locale) {
                 height: 52,
                 borderRadius: 12,
                 background: "#ffffff",
-                color: "#35565b",
-                fontSize: 32,
-                fontWeight: 800,
               }}
             >
-              W
+              <svg viewBox={MARK_VIEWBOX} width={40} height={40 * MARK_RATIO}>
+                <path fill={LOGO_TEAL} d={MARK_PATH} />
+              </svg>
             </div>
             <span style={{ fontSize: 34, fontWeight: 700 }}>Wazen · وازن</span>
           </div>

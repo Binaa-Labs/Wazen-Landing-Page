@@ -1,6 +1,22 @@
 import type { Metadata, Viewport } from "next";
+import { Fraunces } from "next/font/google";
 
 import RootShell from "@/components/RootShell";
+
+/* Hero serif accent (D18) — italic style only, EN route only. The /ar route
+   never loads Fraunces: the Arabic accent is Tajawal 800 (no italic), and
+   globals.css gives --font-serif a Georgia fallback for the runtime
+   EN-toggle-on-/ar edge case. */
+const fraunces = Fraunces({
+  variable: "--font-fraunces",
+  subsets: ["latin"],
+  style: "italic",
+  display: "swap",
+  /* Decorative accent, not body text: keep it OFF the preload critical path
+     so it queues behind the LCP text's fonts instead of ahead of them —
+     display:swap shows the Georgia fallback until it arrives. */
+  preload: false,
+});
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://wazen.fit"),
@@ -64,5 +80,9 @@ export const viewport: Viewport = {
 export default function EnLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
-  return <RootShell lang="en">{children}</RootShell>;
+  return (
+    <RootShell lang="en" fontVariables={fraunces.variable}>
+      {children}
+    </RootShell>
+  );
 }

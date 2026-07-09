@@ -1,244 +1,205 @@
 "use client";
 
-import { useRef } from "react";
+import { useEffect, useState } from "react";
 import Image from "next/image";
-import { motion, useScroll, useTransform } from "framer-motion";
+import { motion, useReducedMotion } from "framer-motion";
 
 import { useLanguage } from "@/components/LanguageProvider";
-import { fadeUp, staggerContainer } from "@/components/motion";
+import { crossfade, kenBurns, railFill } from "@/components/motion";
 import Badge from "@/components/ui/Badge";
-import BrowserFrame from "@/components/ui/BrowserFrame";
 import Button from "@/components/ui/Button";
-import Lightbox from "@/components/ui/Lightbox";
-import PhoneShot from "@/components/ui/PhoneShot";
 import { APP_URLS } from "@/lib/links";
-import { getShot } from "@/lib/screenshots";
 
-function WavyUnderline() {
-  return (
-    <svg
-      viewBox="0 0 300 12"
-      preserveAspectRatio="none"
-      aria-hidden
-      className="absolute -bottom-1.5 left-0 h-2.5 w-full text-secondary md:-bottom-2.5 md:h-3"
-    >
-      <path
-        d="M2 9 Q 20 3, 40 8 T 80 8 T 120 8 T 160 8 T 200 8 T 240 8 T 298 7"
-        fill="none"
-        stroke="currentColor"
-        strokeWidth="5"
-        strokeLinecap="round"
-      />
-    </svg>
-  );
-}
+/* Hero Option A (D17): full-bleed photography + persona slider. The Phase 1
+   dashboard composite lives in ProductProof.tsx now.
 
-function CheckDot() {
-  return (
-    <span className="flex size-5 shrink-0 items-center justify-center rounded-full bg-secondary-light text-secondary-dark">
-      <svg
-        viewBox="0 0 24 24"
-        fill="none"
-        stroke="currentColor"
-        strokeWidth="3"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-        className="size-3"
-        aria-hidden
-      >
-        <path d="m5 13 4 4L19 7" />
-      </svg>
-    </span>
-  );
-}
+   Persona slides are structural and INDEX-COUPLED to t.segments.cards —
+   labels render straight from segments.cards[i].title so the hero and the
+   Segments band can never drift apart. All three slides use the F-7 stand-in
+   crop until the H-series photos land in Pass 2.3 (D22); the object-position
+   keeps the subject's head in frame on portrait viewports (C.2b pattern). */
+const PERSONAS = [
+  { src: "/photos/hero-f7.webp", position: "object-[45%_30%]" }, // fitness (H-1 slot)
+  { src: "/photos/hero-f7.webp", position: "object-[45%_30%]" }, // nutrition (H-2 slot)
+  { src: "/photos/hero-f7.webp", position: "object-[45%_30%]" }, // health (H-3 slot)
+] as const;
 
-function TrendDot() {
-  return (
-    <span className="flex size-5 shrink-0 items-center justify-center rounded-full bg-primary-light text-primary">
-      <svg
-        viewBox="0 0 24 24"
-        fill="none"
-        stroke="currentColor"
-        strokeWidth="2.4"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-        className="size-3"
-        aria-hidden
-      >
-        <path d="m3 16.5 5.5-5.5 4 4L21 7" />
-      </svg>
-    </span>
-  );
-}
-
-/* Floating annotation chips: translatable HTML (not baked into the
-   screenshot), so they work in both locales and stay legible at any
-   screenshot render size. */
-function AnnotationChip({
-  children,
-  className,
-  delay,
-}: {
-  children: React.ReactNode;
-  className: string;
-  delay: number;
-}) {
-  return (
-    <motion.div
-      initial={{ opacity: 0, y: 12 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1], delay }}
-      className={`absolute z-[2] flex items-center gap-2 rounded-pill border border-primary/10 bg-surface py-1.5 ps-1.5 pe-3.5 text-caption font-medium text-ink/80 shadow-md ${className}`}
-    >
-      {children}
-    </motion.div>
-  );
-}
+/* Dwell equals the railFill duration in components/motion.ts, so the advance
+   fires exactly as the active rail completes — the rail never sits visibly
+   full. The 0.6s crossfade overlaps the start of the next dwell. */
+const DWELL_MS = 6000;
 
 export default function Hero() {
   const { t, lang } = useLanguage();
-  const dash = getShot("coachDashboard", lang);
+  const reducedMotion = useReducedMotion();
+  const [active, setActive] = useState(0);
 
-  /* Parallax: the framed screenshot drifts at ~80% of scroll speed as the
-     section scrolls through the viewport. */
-  const frameRef = useRef<HTMLDivElement>(null);
-  const { scrollYProgress } = useScroll({
-    target: frameRef,
-    offset: ["start end", "end start"],
-  });
-  const parallaxY = useTransform(scrollYProgress, [0, 1], [0, -60]);
+  /* Auto-rotation. Manual label clicks reset the timer via the [active]
+     dependency. Reduced motion: no rotation at all — slide 1 stays static
+     and the labels become plain manual tabs. */
+  useEffect(() => {
+    if (reducedMotion) return;
+    const id = setTimeout(
+      () => setActive((i) => (i + 1) % PERSONAS.length),
+      DWELL_MS,
+    );
+    return () => clearTimeout(id);
+  }, [active, reducedMotion]);
 
   return (
-    <section className="bg-bg px-6 pt-28 pb-section-mobile md:pt-36 md:pb-section">
-      <div className="mx-auto max-w-[1120px] text-center">
-        <motion.div
-          variants={staggerContainer}
-          initial="hidden"
-          animate="visible"
-          className="flex flex-col items-center gap-5"
-        >
-          <motion.div variants={fadeUp}>
-            <Badge variant="pill" tone="sage" dot>
+    <section className="relative flex min-h-[100svh] items-center overflow-hidden bg-primary-darker">
+      {/* ── Photo layers (decorative) ─────────────────────────────────── */}
+      <div aria-hidden className="absolute inset-0">
+        {PERSONAS.map((p, i) => (
+          /* Slides keyed by index, never by translated label (learning #1) */
+          <motion.div
+            key={i}
+            variants={crossfade}
+            initial={false}
+            animate={i === active ? "visible" : "hidden"}
+            transition={reducedMotion ? { duration: 0 } : undefined}
+            className="absolute inset-0"
+          >
+            <motion.div
+              variants={kenBurns}
+              initial={false}
+              animate={i === active ? "active" : "rest"}
+              className="absolute inset-0"
+            >
+              <Image
+                src={p.src}
+                alt=""
+                fill
+                preload={i === 0}
+                sizes="100vw"
+                className={`object-cover ${p.position}`}
+              />
+            </motion.div>
+          </motion.div>
+        ))}
+
+        {/* Teal duotone cast — keeps any sourced photo in brand */}
+        <div className="absolute inset-0 bg-photo-duotone mix-blend-color" />
+        {/* Scrim: uniform veil + vertical gradient only — horizontally
+            symmetric so the start-aligned copy works mirrored on /ar */}
+        <div className="absolute inset-0 bg-primary-darker/40" />
+        <div className="absolute inset-0 bg-linear-to-t from-primary-darker via-primary-darker/10 to-primary-darker/60" />
+      </div>
+
+      <div className="relative mx-auto w-full max-w-content px-6 pt-28 pb-16 md:pt-32 md:pb-20">
+        {/* ── Persona slider tabs ───────────────────────────────────────
+            Deliberately not nav-like (owner note): smaller, uppercase, wide
+            tracking, railed, and separated from the nav zone.
+            ≥sm: single row of labeled tabs. Below sm: three EQUAL-WIDTH bare
+            rails in one row (labels go sr-only — they can never widen the
+            layout viewport, learning #5) with the ACTIVE persona's label as
+            one line above the row, crossfading with the persona change. */}
+        <div className="mb-10 md:mb-12">
+          {/* Mobile active-label line — stacked spans keyed by index
+              (learning #1). aria-hidden: screen readers get the persona
+              names from the buttons' sr-only text + aria-current. */}
+          <div aria-hidden className="relative h-4 sm:hidden">
+            {t.segments.cards.map((card, i) => (
+              <motion.span
+                key={i}
+                variants={crossfade}
+                initial={false}
+                animate={i === active ? "visible" : "hidden"}
+                transition={reducedMotion ? { duration: 0 } : undefined}
+                className="absolute inset-0 truncate text-start text-[0.7rem] font-medium uppercase leading-4 tracking-[0.16em] text-white"
+              >
+                {card.title}
+              </motion.span>
+            ))}
+          </div>
+
+          <div
+            role="group"
+            aria-label={t.hero.personasLabel}
+            className="mt-2 flex gap-3 sm:mt-0 sm:flex-wrap sm:gap-x-7 sm:gap-y-4"
+          >
+            {t.segments.cards.map((card, i) => {
+              const isActive = i === active;
+              return (
+                /* Buttons + rails keyed by index (learning #1) */
+                <button
+                  key={i}
+                  onClick={() => setActive(i)}
+                  aria-current={isActive || undefined}
+                  className={`relative flex-1 cursor-pointer pb-2.5 pt-5 text-[0.7rem] font-medium uppercase tracking-[0.16em] transition-colors duration-300 sm:flex-none sm:pt-0 md:text-[0.78rem] ${
+                    isActive ? "text-white" : "text-white/55 hover:text-white/85"
+                  }`}
+                >
+                  <span className="sr-only sm:not-sr-only">{card.title}</span>
+                  <span
+                    aria-hidden
+                    className="absolute inset-x-0 bottom-0 h-[2px] rounded-pill bg-white/20"
+                  >
+                    <motion.span
+                      variants={railFill}
+                      initial={false}
+                      animate={isActive ? "fill" : "empty"}
+                      className="absolute inset-0 origin-left rounded-pill bg-secondary rtl:origin-right"
+                    />
+                  </span>
+                </button>
+              );
+            })}
+          </div>
+        </div>
+
+        {/* ── Copy block — staggers in once on load, never re-animates.
+            Entrance is CSS (.hero-enter, globals.css), NOT Framer: the
+            headline is the page's LCP element (Chrome treats the full-
+            viewport photo as a background), so it must paint before
+            hydration. ── */}
+        <div className="flex max-w-[58rem] flex-col items-start gap-5 text-start">
+          <div className="hero-enter">
+            <Badge variant="pill" tone="glass" dot>
               {t.hero.badge}
             </Badge>
-          </motion.div>
+          </div>
 
-          <motion.h1
-            variants={fadeUp}
-            className="text-display text-balance text-ink max-md:text-[clamp(1.5rem,7vw,2.6rem)]"
-          >
+          <h1 className="hero-enter-move text-balance text-[clamp(2rem,7vw,2.6rem)] font-bold leading-[1.12] tracking-[-0.03em] text-white [animation-delay:90ms] md:text-[clamp(2.6rem,3.85vw,3.45rem)]">
             <span className="block">{t.hero.h1Line1}</span>
-            <span className="relative inline-block whitespace-nowrap">
-              {t.hero.h1Underlined}
-              <WavyUnderline />
-            </span>
-          </motion.h1>
+            {/* Serif accent (D18) keys off the LIVE language state, not the
+                route — the runtime toggle re-points <html> without
+                navigation. EN: Fraunces italic (pale sage). AR: Tajawal 800
+                in the same sage — never an italic/faux-slanted Arabic. */}
+            {lang === "en" ? (
+              <em className="font-serif font-medium italic text-secondary-pale">
+                {t.hero.h1Underlined}
+              </em>
+            ) : (
+              <span className="font-extrabold text-secondary-pale">
+                {t.hero.h1Underlined}
+              </span>
+            )}
+          </h1>
 
-          <motion.p
-            variants={fadeUp}
-            className="mx-auto max-w-2xl text-body-lg text-ink/60"
-          >
+          <p className="hero-enter-move max-w-xl text-body-lg text-white/75 [animation-delay:180ms]">
             {t.hero.subheadline}
-          </motion.p>
+          </p>
 
-          <motion.div
-            variants={fadeUp}
-            className="flex flex-wrap items-center justify-center gap-4"
-          >
-            <Button href={APP_URLS.signup}>{t.hero.ctaPrimary}</Button>
-            <Button variant="secondary" href="#features">
+          <div className="hero-enter mt-1 flex flex-wrap items-center gap-4 [animation-delay:270ms] max-sm:w-full max-sm:flex-col max-sm:items-stretch">
+            <Button variant="sage" href={APP_URLS.signup}>
+              {t.hero.ctaPrimary}
+            </Button>
+            <Button variant="glass" href="#features">
               {t.hero.ctaSecondary}
             </Button>
-          </motion.div>
+          </div>
 
-          <motion.div
-            variants={fadeUp}
-            className="flex flex-wrap items-center justify-center gap-x-5 gap-y-2 text-caption text-ink/55"
-          >
+          <div className="hero-enter flex flex-wrap items-center gap-x-5 gap-y-2 text-caption text-white/65 [animation-delay:360ms]">
             {t.hero.trust.map((item) => (
               <span key={item} className="inline-flex items-center gap-1.5">
-                <span aria-hidden className="text-success">
+                <span aria-hidden className="text-secondary">
                   ✓
                 </span>
                 {item}
               </span>
             ))}
-          </motion.div>
-        </motion.div>
-
-        {/* Composite: coach dashboard in a browser frame + the client app in
-            an overlapping phone frame — the coach↔client pairing in one
-            glance. Both are real locale-aware captures (Pass C.2a). */}
-        <div ref={frameRef} className="relative mt-12 perspective-[1200px]">
-          {/* Ambient teal glow behind the frame */}
-          <div
-            aria-hidden
-            className="pointer-events-none absolute left-1/2 top-1/2 -z-10 h-[70%] w-[85%] -translate-x-1/2 -translate-y-1/2 rounded-[50%] bg-primary/25 blur-[90px]"
-          />
-          <motion.div
-            style={{ y: parallaxY }}
-            initial={{ opacity: 0, rotateX: 8, scale: 0.96 }}
-            animate={{ opacity: 1, rotateX: 0, scale: 1 }}
-            transition={{ duration: 0.9, ease: [0.16, 1, 0.3, 1], delay: 0.3 }}
-            className="relative"
-          >
-            <motion.div
-              whileHover={{ scale: 1.03, y: -4 }}
-              transition={{ duration: 0.25, ease: "easeOut" }}
-              className="w-full"
-            >
-              <BrowserFrame url="app.wazen.fit/dashboard">
-                <Lightbox
-                  src={dash.src}
-                  alt={t.hero.dashboardAlt}
-                  width={dash.width}
-                  height={dash.height}
-                  className="w-full"
-                >
-                  <Image
-                    src={dash.src}
-                    alt={t.hero.dashboardAlt}
-                    width={dash.width}
-                    height={dash.height}
-                    preload
-                    sizes="(min-width: 1168px) 1120px, calc(100vw - 48px)"
-                    className="h-auto w-full dark:opacity-90"
-                  />
-                </Lightbox>
-              </BrowserFrame>
-            </motion.div>
-
-            {/* Chips anchor to screenshot CONTENT, so they use physical
-                left/top: the capture is LTR in both locales (Pass C swaps in
-                mirrored AR captures — revisit anchors then). On mobile the
-                check chip floats centered above the frame so it never covers
-                the traffic lights or sidebar. */}
-            <AnnotationChip
-              delay={0.9}
-              className="max-sm:-top-4 max-sm:left-1/2 max-sm:-translate-x-1/2 sm:left-[26%] sm:top-[46%]"
-            >
-              <CheckDot />
-              {t.hero.chips[0]}
-            </AnnotationChip>
-
-            <motion.div
-              initial={{ opacity: 0, y: 24 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1], delay: 0.7 }}
-              className="absolute -bottom-8 end-3 z-[2] w-[26%] min-w-[104px] max-w-[170px] sm:end-8"
-            >
-              {/* Weight chip rides with the phone frame, both directions */}
-              <AnnotationChip delay={1.1} className="-top-5 end-0 hidden sm:flex">
-                <TrendDot />
-                {t.hero.chips[1]}
-              </AnnotationChip>
-              <PhoneShot
-                name="clientMobileHome"
-                alt={t.features.clientLabel}
-                sizes="170px"
-              />
-            </motion.div>
-          </motion.div>
+          </div>
         </div>
       </div>
     </section>

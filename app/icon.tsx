@@ -1,11 +1,15 @@
 import { ImageResponse } from "next/og";
 
+import { LOGO_LIGHT, LOGO_TEAL, MARK_PATH, MARK_RATIO, MARK_VIEWBOX } from "@/lib/brand";
+
 export const size = { width: 512, height: 512 };
 export const contentType = "image/png";
 
-/* Brand wordmark mark: white "W" on the deep-teal brand color (#35565b),
-   matching the OG image and the in-page logo. */
+/* App icon: the real Wazen mark (light colorway) on the logo teal — matches
+   app/favicon.ico and public/brand/wazen-logo-512.png, all drawn from the
+   same public/brand/ master set (D23). */
 export default function Icon() {
+  const markWidth = 380;
   return new ImageResponse(
     (
       <div
@@ -15,14 +19,16 @@ export default function Icon() {
           display: "flex",
           alignItems: "center",
           justifyContent: "center",
-          background: "#35565b",
-          color: "#ffffff",
-          fontSize: 320,
-          fontWeight: 800,
-          fontFamily: "Arial, sans-serif",
+          background: LOGO_TEAL,
         }}
       >
-        W
+        <svg
+          viewBox={MARK_VIEWBOX}
+          width={markWidth}
+          height={markWidth * MARK_RATIO}
+        >
+          <path fill={LOGO_LIGHT} d={MARK_PATH} />
+        </svg>
       </div>
     ),
     size,

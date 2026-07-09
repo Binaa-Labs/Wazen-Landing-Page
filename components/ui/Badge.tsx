@@ -1,4 +1,4 @@
-export type BadgeTone = "primary" | "sage" | "error" | "success";
+export type BadgeTone = "primary" | "sage" | "error" | "success" | "glass";
 
 type BadgeProps = {
   variant?: "eyebrow" | "pill";
@@ -19,6 +19,8 @@ const toneClasses: Record<BadgeTone, string> = {
   sage: "bg-secondary-light text-secondary-dark",
   error: "border border-error-border bg-error-bg text-error",
   success: "border border-success-border bg-success-bg text-success",
+  /* Over photography / dark hero (Phase 2) */
+  glass: "border border-white/20 bg-white/10 text-white backdrop-blur-md",
 };
 
 export default function Badge({

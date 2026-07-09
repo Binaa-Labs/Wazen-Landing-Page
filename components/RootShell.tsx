@@ -33,9 +33,14 @@ const INIT_SCRIPT = `(function(){try{var d=document.documentElement;var t=localS
 
 export default function RootShell({
   lang,
+  fontVariables,
   children,
 }: {
   lang: Locale;
+  /** Extra next/font variable classes a route layout loads on top of the
+      shared set (e.g. the EN route's Fraunces italic for the hero accent —
+      /ar deliberately never loads it). */
+  fontVariables?: string;
   children: React.ReactNode;
 }) {
   return (
@@ -43,7 +48,15 @@ export default function RootShell({
       lang={lang}
       dir={lang === "ar" ? "rtl" : "ltr"}
       suppressHydrationWarning
-      className={`${outfit.variable} ${inter.variable} ${tajawal.variable} h-full`}
+      className={[
+        outfit.variable,
+        inter.variable,
+        tajawal.variable,
+        fontVariables,
+        "h-full",
+      ]
+        .filter(Boolean)
+        .join(" ")}
     >
       <body className="min-h-full flex flex-col">
         <script dangerouslySetInnerHTML={{ __html: INIT_SCRIPT }} />
