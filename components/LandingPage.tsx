@@ -8,6 +8,7 @@ import Footer from "@/components/sections/Footer";
 import Hero from "@/components/sections/Hero";
 import HowItWorks from "@/components/sections/HowItWorks";
 import Nav from "@/components/sections/Nav";
+import PhotoDivider from "@/components/sections/PhotoDivider";
 import Pricing from "@/components/sections/Pricing";
 import Problem from "@/components/sections/Problem";
 import ProductProof from "@/components/sections/ProductProof";
@@ -29,6 +30,8 @@ export default function LandingPage() {
         <TrustBar />
         <Problem />
         <Features />
+        {/* Photo divider ① (D30) — pure figure, not a section */}
+        <PhotoDivider />
         <HowItWorks />
         <Segments />
         <ClientApp />

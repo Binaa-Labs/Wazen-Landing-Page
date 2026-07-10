@@ -1,49 +1,68 @@
 "use client";
 
 import Image from "next/image";
-import { motion } from "framer-motion";
+import { motion, type Variants } from "framer-motion";
 
 import { useLanguage } from "@/components/LanguageProvider";
-import { fadeUp, scaleIn, staggerContainer, viewport } from "@/components/motion";
+import { photoReveal, viewport } from "@/components/motion";
 import SectionHeader from "@/components/ui/SectionHeader";
 
-/* Structural card data — icon + §7 sourced photo. Index-coupled to
-   t.segments.cards for title/body/photoAlt. */
-const CARD_META = [
+/* Stage-2 redesign (D32): the three photo-top cards become an asymmetric
+   mosaic of duotone photo panels with the copy ON the photo over a
+   bottom scrim — the deliberate mini-hero echo (same three personas as the
+   hero slider; both read t.segments.cards[i].title, so the labels
+   verbatim-match by construction). Fitness (F-3) is the large panel;
+   nutrition (F-5) + health (F-6) stack beside it. Panels are self-dark
+   (photo + scrim) — identical in both themes.
+
+   R1 (owner review requirement): each panel's bottom scrim must yield AA
+   contrast for the copy over the LIGHTEST region of ITS photo, verified
+   per photo with sampled ratios — hence per-panel scrim strengths below
+   (F-5's light clipboard/table region is the known hard case). Scrims are
+   horizontal-symmetric and bottom-anchored: direction-neutral, RTL-safe.
+
+   Copy-on-photo panels are Segments-only on the page (§6 anti-uniformity
+   contract; the divider's overlay is one line, not a copy block). */
+
+/* Structural panel data — photo + per-panel scrim. Index-coupled to
+   t.segments.cards for title/body; keys are structural ids (learning #1).
+   The photos are decorative in this composition (alt="") — the on-photo
+   copy carries the persona semantics; the photoAlt dictionary keys retire
+   in the 2.2c i18n pass. */
+const PANEL_META = [
   {
     id: "fitness",
     photoSrc: "/photos/f-3.webp",
-    icon: (
-      // Dumbbell
-      <>
-        <path d="M7 8v8M4.5 9.5v5M17 8v8M19.5 9.5v5" />
-        <path d="M7 12h10" />
-      </>
-    ),
+    big: true,
+    scrim:
+      "bg-linear-to-t from-primary-darker/90 from-8% via-primary-darker/45 via-42% to-primary-darker/5",
   },
   {
     id: "nutrition",
+    /* F-5's clipboard/table region is the page's lightest copy backdrop —
+       strongest scrim of the three (R1). */
     photoSrc: "/photos/f-5.webp",
-    icon: (
-      // Apple
-      <>
-        <path d="M12 7c-3.5-2-7 .5-7 4.5 0 3.6 2.6 7 5 7 .9 0 1.3-.5 2-.5s1.1.5 2 .5c2.4 0 5-3.4 5-7C19 7.5 15.5 5 12 7Z" />
-        <path d="M12 7c0-2 1.5-3.5 3-4" />
-      </>
-    ),
+    big: false,
+    scrim:
+      "bg-linear-to-t from-primary-darker/95 from-12% via-primary-darker/60 via-48% to-primary-darker/10",
   },
   {
     id: "health",
+    /* F-6's bright wall sits exactly behind the EN title's tail — the mid
+       stop is the one that matters here (measured 4.01:1 at via-50%). */
     photoSrc: "/photos/f-6.webp",
-    icon: (
-      // Heart + pulse
-      <>
-        <path d="M12 20.5C7 16.5 3.5 13 3.5 9.3 3.5 6.4 5.7 4.5 8 4.5c1.6 0 3.1.8 4 2.2.9-1.4 2.4-2.2 4-2.2 2.3 0 4.5 1.9 4.5 4.8 0 3.7-3.5 7.2-8.5 11.2Z" />
-        <path d="M7 12h3l1.5-2.5 2 4L15 11h2" />
-      </>
-    ),
+    big: false,
+    scrim:
+      "bg-linear-to-t from-primary-darker/90 from-8% via-primary-darker/62 via-55% to-primary-darker/5",
   },
-];
+] as const;
+
+/* Mosaic stagger — photography register: slower step than the default
+   0.08 container so the three photoReveals read as a sequence. */
+const mosaicStagger: Variants = {
+  hidden: {},
+  visible: { transition: { staggerChildren: 0.12 } },
+};
 
 export default function Segments() {
   const { t } = useLanguage();
@@ -61,54 +80,53 @@ export default function Segments() {
         />
 
         <motion.div
-          variants={staggerContainer}
+          variants={mosaicStagger}
           initial="hidden"
           whileInView="visible"
           viewport={viewport}
-          className="mt-14 grid gap-6 md:grid-cols-3"
+          className="mt-11 grid gap-3.5 md:mt-16 md:grid-cols-[1.15fr_1fr] md:gap-[18px]"
         >
-          {CARD_META.map((card, i) => (
+          {PANEL_META.map((panel, i) => (
             <motion.div
-              key={card.id}
-              variants={fadeUp}
-              whileHover={{
-                y: -4,
-                boxShadow: "var(--shadow-lg)",
-                transition: { duration: 0.25, ease: "easeOut" },
-              }}
-              className="flex flex-col overflow-hidden rounded-card border border-primary/10 bg-surface shadow-sm"
+              key={panel.id}
+              variants={photoReveal}
+              className={`group relative overflow-hidden rounded-3xl bg-primary-dark shadow-lg transition-shadow duration-300 hover:shadow-xl ${
+                panel.big
+                  ? "h-[300px] md:row-span-2 md:h-auto md:min-h-[584px]"
+                  : "h-[240px] md:h-auto md:min-h-[283px]"
+              }`}
             >
-              <motion.div
-                variants={scaleIn}
-                className="relative aspect-[3/2] overflow-hidden"
-              >
-                <Image
-                  src={card.photoSrc}
-                  alt={t.segments.cards[i].photoAlt}
-                  fill
-                  sizes="(min-width: 768px) 33vw, calc(100vw - 48px)"
-                  className="object-cover"
+              {/* Hover = slow scale of the IMAGE inside the fixed frame —
+                  CSS transform on the img itself, so it never fights the
+                  panel's Framer entrance; motion-safe keeps it off under
+                  reduced motion. */}
+              <Image
+                src={panel.photoSrc}
+                alt=""
+                fill
+                sizes={
+                  panel.big
+                    ? "(min-width: 768px) 55vw, calc(100vw - 48px)"
+                    : "(min-width: 768px) 45vw, calc(100vw - 48px)"
+                }
+                className="object-cover motion-safe:transition-transform motion-safe:duration-500 motion-safe:ease-out motion-safe:group-hover:scale-[1.03]"
+              />
+              {/* Shared duotone + the panel's own bottom scrim (R1) */}
+              <div
+                aria-hidden
+                className="absolute inset-0 bg-photo-duotone mix-blend-color"
+              />
+              <div aria-hidden className={`absolute inset-0 ${panel.scrim}`} />
+
+              <div className="absolute inset-x-0 bottom-0 p-6 md:p-7">
+                <div
+                  aria-hidden
+                  className="h-[3px] w-11 rounded-pill bg-secondary"
                 />
-              </motion.div>
-              <div className="flex flex-1 flex-col gap-2.5 p-7">
-                <span className="flex size-11 items-center justify-center rounded-full bg-primary-light text-primary">
-                  <svg
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    strokeWidth="1.7"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    className="size-5"
-                    aria-hidden
-                  >
-                    {card.icon}
-                  </svg>
-                </span>
-                <h3 className="mt-1.5 text-h3 text-ink">
+                <h3 className="mt-3.5 text-h3 text-white">
                   {t.segments.cards[i].title}
                 </h3>
-                <p className="text-body text-ink/60">
+                <p className="mt-2 max-w-[420px] text-body text-white/80">
                   {t.segments.cards[i].body}
                 </p>
               </div>
