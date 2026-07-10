@@ -103,6 +103,9 @@ const TAB_META: {
   shotName: ShotName;
   phonePip: ShotName;
   fragments: Fragment[];
+  /** Anchor the panel's 21/10 crop to the capture's bottom instead of the
+      default top (the HowItWorks `center` flag pattern). */
+  cropBottom?: boolean;
 }[] = [
   {
     id: "clients",
@@ -126,15 +129,22 @@ const TAB_META: {
   {
     id: "progress",
     url: "app.wazen.fit/progress",
-    /* D40: coach view of a client's progress (metric tiles + weight trend,
-       View_Client_Progress_1) — same coach-story correction as tab 2. URL
-       mismatch resolves at the 2.3 re-capture (ledger note). */
+    /* D40 + addendum (2.2a.2): coach view of a client's progress,
+       View_Client_Progress_2, BOTTOM-anchored so the visible panel region
+       is the "Adherence & Wellness Averages" card (owner reference crop);
+       the Lightbox still opens the full capture. Holds for EN and AR —
+       both captures keep the card in their bottom region. URL mismatch
+       resolves at the 2.3 re-capture (ledger note). */
     shotName: "coachViewProgress",
     phonePip: "clientMobileProgress",
-    /* Plan Adherence ALONE (re-checked at 2.2a.1 against _1): the capture's
-       21/10 crop shows the full metric tile grid, so any metric-tile chip
-       is pure duplication (the original Stage-2 rule); the roster-wide 81%
-       stat appears nowhere in the capture — it stays as the one chip. */
+    cropBottom: true,
+    /* Plan Adherence stays the ONLY chip on this tab. Durable rule, checked
+       against every capture this slot has pointed at: the chip may not
+       repeat a stat visible in the panel crop, and the roster-wide plan-
+       adherence stat (from coachAnalytics) appears in none of them — the
+       adherence bars visible here are per-client averages, a different
+       stat that shares only the theme. If this slot's capture changes
+       again, re-run that test before touching the chip. */
     fragments: [FRAGMENTS.planAdherence],
   },
   {
@@ -417,7 +427,9 @@ export default function Features() {
                           alt={text.primaryAlt}
                           fill
                           sizes="(min-width: 1024px) 645px, calc(100vw - 48px)"
-                          className="object-cover object-top dark:opacity-90"
+                          className={`object-cover dark:opacity-90 ${
+                            meta.cropBottom ? "object-bottom" : "object-top"
+                          }`}
                         />
                       </Lightbox>
                     </BrowserFrame>

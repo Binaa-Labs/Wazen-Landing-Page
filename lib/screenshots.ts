@@ -51,7 +51,7 @@ export const SHOTS = {
      Dimensions verified per file via sharp metadata (EN 2560×1600,
      AR 3840×2400 — matching coachDesk). */
   coachViewCheckin: coachDesk("View_Client_Check_in"),
-  coachViewProgress: coachDesk("View_Client_Progress_1"),
+  coachViewProgress: coachDesk("View_Client_Progress_2"),
   clientProgress: {
     en: cap(`${BASE}/Client Dashboard/Desktop/en/Progress_Tab_1.png`, 1606, 1040),
     ar: cap(`${BASE}/Client Dashboard/Desktop/ar/Progress_Tab_1.png`, 3840, 2400),
