@@ -1,6 +1,6 @@
 "use client";
 
-import { Fragment, useEffect, useRef, useState } from "react";
+import { Fragment, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 
 import { useLanguage } from "@/components/LanguageProvider";
@@ -172,9 +172,9 @@ function BillingToggle({
   );
 }
 
-/* Manual USD/AED switch (no geo-IP): defaults follow the locale — AED on
-   /ar, USD on /en — and re-follow a language switch until the visitor picks
-   a currency themselves. */
+/* Manual USD/AED switch (no geo-IP, D6): defaults to USD on BOTH locales
+   (D41 — supersedes D6's AED-on-/ar default; the toggle, fixed AED prices,
+   and no-geo-IP rules are unchanged). */
 function CurrencyToggle({
   currency,
   onChange,
@@ -215,25 +215,12 @@ function CurrencyToggle({
 }
 
 export default function Pricing() {
-  const { t, lang } = useLanguage();
+  const { t } = useLanguage();
   const [period, setPeriod] = useState<Period>("monthly");
-  const [currency, setCurrency] = useState<Currency>(
-    lang === "ar" ? "AED" : "USD",
-  );
-  const currencyTouched = useRef(false);
-
-  /* Re-default the currency when the visitor switches language, unless
-     they've explicitly chosen one. */
-  useEffect(() => {
-    if (!currencyTouched.current) {
-      setCurrency(lang === "ar" ? "AED" : "USD");
-    }
-  }, [lang]);
-
-  const pickCurrency = (next: Currency) => {
-    currencyTouched.current = true;
-    setCurrency(next);
-  };
+  /* USD default on both locales (D41). The pre-D41 per-locale default and
+     its re-follow-on-language-switch effect are gone; a visitor's explicit
+     choice naturally survives language switches. */
+  const [currency, setCurrency] = useState<Currency>("USD");
 
   return (
     <section
@@ -255,7 +242,7 @@ export default function Pricing() {
           className="mt-10 flex flex-wrap items-center justify-center gap-3 text-center"
         >
           <BillingToggle period={period} onChange={setPeriod} />
-          <CurrencyToggle currency={currency} onChange={pickCurrency} />
+          <CurrencyToggle currency={currency} onChange={setCurrency} />
         </motion.div>
 
         <motion.div

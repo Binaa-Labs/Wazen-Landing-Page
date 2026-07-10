@@ -46,6 +46,12 @@ export const SHOTS = {
   coachAnalytics: coachDesk("Analytics_Tab_1"),
   coachProfile: coachDesk("Public_Profile_Tab"),
   coachMessages: coachDesk("Messages_Tab"),
+  /* Coach view-client pages (Pass 2.2a.1, D40): Features tabs 2/3 tell
+     coach stories, so their panels show the coach's view of a client.
+     Dimensions verified per file via sharp metadata (EN 2560×1600,
+     AR 3840×2400 — matching coachDesk). */
+  coachViewCheckin: coachDesk("View_Client_Check_in"),
+  coachViewProgress: coachDesk("View_Client_Progress_1"),
   clientProgress: {
     en: cap(`${BASE}/Client Dashboard/Desktop/en/Progress_Tab_1.png`, 1606, 1040),
     ar: cap(`${BASE}/Client Dashboard/Desktop/ar/Progress_Tab_1.png`, 3840, 2400),

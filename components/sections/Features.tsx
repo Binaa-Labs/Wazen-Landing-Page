@@ -39,11 +39,15 @@ type Fragment = {
 };
 
 const FRAGMENTS = {
+  /* AR y = 12.3 on the analytics family (2.2a.1 calibration): the AR tiles
+     stack the numeral ABOVE the labels, and the 2.2a value (17, mirrored
+     from EN) started below it — chips rendered label-only in AR. 12.3
+     starts at the tile card's own top padding. */
   avgAdherence: {
     shotName: "coachAnalytics",
     region: {
       en: { x: 26.4, y: 17, w: 21.5 },
-      ar: { x: 52.1, y: 17, w: 21.5 },
+      ar: { x: 52.1, y: 12.3, w: 21.5 },
     },
     aspect: "aspect-[13/5]",
   },
@@ -51,7 +55,7 @@ const FRAGMENTS = {
     shotName: "coachAnalytics",
     region: {
       en: { x: 49.3, y: 17, w: 21.4 },
-      ar: { x: 29.3, y: 17, w: 21.4 },
+      ar: { x: 29.3, y: 12.3, w: 21.4 },
     },
     aspect: "aspect-[13/5]",
   },
@@ -59,7 +63,7 @@ const FRAGMENTS = {
     shotName: "coachAnalytics",
     region: {
       en: { x: 72.2, y: 17, w: 21.5 },
-      ar: { x: 6.3, y: 17, w: 21.5 },
+      ar: { x: 6.3, y: 12.3, w: 21.5 },
     },
     aspect: "aspect-[13/5]",
   },
@@ -67,7 +71,12 @@ const FRAGMENTS = {
     shotName: "clientProgress",
     region: {
       en: { x: 23.5, y: 8.5, w: 34.7 },
-      ar: { x: 41.8, y: 8.5, w: 34.7 },
+      /* AR is NOT a mirror of EN here (2.2a.1 verification): the AR client
+         capture lays tiles 4-across vs EN's 2×2 (different capture
+         viewport), so the AR crop is an interior slice of the weight tile
+         (label + numeral; the chip frame supplies the card look) — the EN
+         box proportions can't hold the full AR tile. */
+      ar: { x: 58.5, y: 22.2, w: 17.5 },
     },
     aspect: "aspect-[11/4]",
   },
@@ -105,7 +114,11 @@ const TAB_META: {
   {
     id: "check-ins",
     url: "app.wazen.fit/dashboard",
-    shotName: "coachDashboard",
+    /* D40: coach view of a client's check-ins — the copy tells a coach
+       story ("you review everything from one organized queue"); the old
+       client-view capture contradicted it. URL mismatch resolves at the
+       2.3 re-capture (ledger note). */
+    shotName: "coachViewCheckin",
     phonePip: "clientMobileCheckin",
     /* the approved Stage-2 mock pairing */
     fragments: [FRAGMENTS.avgAdherence, FRAGMENTS.weight],
@@ -113,12 +126,15 @@ const TAB_META: {
   {
     id: "progress",
     url: "app.wazen.fit/progress",
-    shotName: "clientProgress",
+    /* D40: coach view of a client's progress (metric tiles + weight trend,
+       View_Client_Progress_1) — same coach-story correction as tab 2. URL
+       mismatch resolves at the 2.3 re-capture (ledger note). */
+    shotName: "coachViewProgress",
     phonePip: "clientMobileProgress",
-    /* Plan Adherence ALONE: every metric tile in the clientProgress capture
-       (weight, body fat, muscle mass) is already visible inside the panel's
-       own 21/10 crop of that same capture — any of them as a chip is pure
-       duplication. */
+    /* Plan Adherence ALONE (re-checked at 2.2a.1 against _1): the capture's
+       21/10 crop shows the full metric tile grid, so any metric-tile chip
+       is pure duplication (the original Stage-2 rule); the roster-wide 81%
+       stat appears nowhere in the capture — it stays as the one chip. */
     fragments: [FRAGMENTS.planAdherence],
   },
   {
