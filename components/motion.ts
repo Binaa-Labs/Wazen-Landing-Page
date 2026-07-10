@@ -63,4 +63,36 @@ export const railFill: Variants = {
   fill: { scaleX: 1, transition: { duration: 6, ease: "linear" } },
 };
 
+/* ── Stage-2 vocabulary (Pass 2.2a, D26–D39) ─────────────────────────────
+   Same rules as above: transform/opacity only, index keys, MotionConfig
+   reducedMotion="user" degrades transforms to opacity-only automatically. */
+
+/* Photography register (0.9s+): the slower sibling of scaleIn — interleave
+   photos and photo backdrops read slower than UI frames by design. */
+export const photoReveal: Variants = {
+  hidden: { opacity: 0, scale: 1.08 },
+  visible: {
+    opacity: 1,
+    scale: 1,
+    transition: { duration: 0.9, ease: [0.16, 1, 0.3, 1] },
+  },
+};
+
+/* Connector/spine lines draw in via scale, NOT SVG dash offsets — dash
+   animation would break the transform/opacity-only rule. Pair with
+   `origin-left rtl:origin-right` (horizontal) or `origin-top` (vertical);
+   the axis is chosen by which variant key the element animates to. */
+export const drawLine: Variants = {
+  hidden: { scaleX: 0, scaleY: 1, opacity: 1 },
+  visible: {
+    scaleX: 1,
+    transition: { duration: 0.8, ease: [0.16, 1, 0.3, 1] },
+  },
+  hiddenY: { scaleY: 0, scaleX: 1, opacity: 1 },
+  visibleY: {
+    scaleY: 1,
+    transition: { duration: 0.8, ease: [0.16, 1, 0.3, 1] },
+  },
+};
+
 export const viewport = { once: true, margin: "-80px" } as const;
