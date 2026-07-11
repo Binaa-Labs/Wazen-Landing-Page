@@ -1,32 +1,122 @@
 "use client";
 
-import { motion } from "framer-motion";
+import { motion, useReducedMotion } from "framer-motion";
 
 import { useLanguage } from "@/components/LanguageProvider";
-import { fadeUp, staggerContainer, viewport } from "@/components/motion";
+import {
+  fadeUp,
+  phoneFloat,
+  photoReveal,
+  staggerContainer,
+  viewport,
+} from "@/components/motion";
 import Badge from "@/components/ui/Badge";
+import PhoneFrame from "@/components/ui/PhoneFrame";
 import PhoneShot from "@/components/ui/PhoneShot";
+import PhotoPlaceholder from "@/components/ui/PhotoPlaceholder";
 import SectionHeader from "@/components/ui/SectionHeader";
 import type { ShotName } from "@/lib/screenshots";
 
-/* Real locale-aware PWA captures, index-coupled to t.clientApp.phones. */
-const PHONE_SHOTS: ShotName[] = [
-  "clientMobileHome",
-  "clientMobileCheckin",
-  "clientMobileProgress",
+/* Stage-2 redesign (D33/D34): the teal-mist band becomes the page's
+   mid-point DARK beat (primary-dark → primary-darker, identical in both
+   themes — the Problem/CTA precedent) with the D-2 photo as a low-opacity
+   duotone backdrop behind three phones. The third phone carries the
+   white-label story: in-app coach branding (logo, name, theme) is REAL
+   today (D34 truth boundary) and renders as a NEW-CAPTURE placeholder
+   until the demo-coach capture exists (2.3); the fictional coach is never
+   named, quoted, or captioned as a customer.
+
+   Phones enter staggered at the product register, then idle on phoneFloat
+   (§3) — the page's only loop besides the rail timers; MotionConfig strips
+   the transform loop under reduced motion (float OFF). Static ±4° tilts
+   live on inner divs (2.2a pattern — Framer owns the motion wrappers'
+   transforms); tilt angles are direction-neutral and the row order flips
+   logically under RTL. */
+
+/* Structural phone data — keys/tilts/caption indices, index-coupled to
+   nothing translated (learning #1). Captions follow their captures:
+   the check-in capture keeps "Weekly check-in" (phones[1]) and the home
+   capture keeps "Today's plan" (phones[0]) — the dictionary order didn't
+   change, the ROW order did (mock: check-in · home raised · white-label).
+   phones[2] ("Progress") loses its consumer here and is deliberately NOT
+   retired — the Req-10 i18n list is exhaustive; flagged in PROJECT.md. */
+const PHONE_META: {
+  id: string;
+  shot?: ShotName; // undefined → the white-label NEW-CAPTURE slot
+  captionIndex?: number;
+  tilt: string;
+  raised?: boolean;
+}[] = [
+  { id: "checkin", shot: "clientMobileCheckin", captionIndex: 1, tilt: "-rotate-4" },
+  { id: "home", shot: "clientMobileHome", captionIndex: 0, tilt: "", raised: true },
+  { id: "white-label", tilt: "rotate-4" },
 ];
 
 export default function ClientApp() {
   const { t } = useLanguage();
+  /* Float OFF entirely under reduced motion (§2.6) — gating the animate
+     prop, not just the tween: MotionConfig alone would still APPLY the
+     final keyframe as a static translateY(-4px). Same explicit-gate
+     precedent as the Features auto-advance (D21). */
+  const reducedMotion = useReducedMotion();
+
+  /* D34 Option A string stays byte-verbatim in the dictionary; the bold
+     lead is a PRESENTATIONAL split on the first " — " (both locales carry
+     it), reassembled exactly around the same separator. */
+  const caption = t.clientApp.whiteLabelCaption;
+  const dashAt = caption.indexOf(" — ");
+  const captionLead = dashAt === -1 ? caption : caption.slice(0, dashAt);
+  const captionRest = dashAt === -1 ? "" : caption.slice(dashAt);
 
   return (
     <section
       id="client-app"
-      className="bg-primary-light px-6 py-section-compact-mobile md:py-section-compact"
+      className="relative overflow-hidden bg-linear-to-b from-primary-dark to-primary-darker px-6 py-section-compact-mobile text-white md:py-section-compact"
     >
-      <div className="mx-auto max-w-content">
+      {/* D-2 backdrop slot (brief activated, unsourced — PhotoPlaceholder
+          interim per the 2.2b precedent; sized h/w-full, corners pushed
+          under the section clip). R3 (owner note): the "two white phones
+          read clinical" concern is reassessed only after the REAL D-2
+          lands at backdrop opacity under this scrim (2.3) — do not tune
+          for it against the placeholder. */}
+      <motion.div
+        aria-hidden
+        variants={photoReveal}
+        initial="hidden"
+        whileInView="visible"
+        viewport={viewport}
+        className="absolute inset-0 opacity-55"
+      >
+        {/* Texture layer: oversized so the placeholder's centered label
+            block falls below the section clip — the phones sit over the
+            band's center and stray hint text would peek out beside them. */}
+        <div className="absolute inset-x-0 top-0 h-[240%]">
+          <PhotoPlaceholder label="D-2" tone="dark" className="h-full w-full" />
+        </div>
+        {/* Slot label at the mock's top-end position, clear of the phones.
+            Desktop-review affordance only — at 390px it collides with the
+            centered header, so it hides below md (texture layer stays). */}
+        <div className="absolute end-4 top-4 hidden h-28 w-72 max-w-[60%] md:block">
+          <PhotoPlaceholder
+            label="D-2"
+            hint="Man at home post-workout, phone in hand"
+            tone="dark"
+            className="h-full w-full"
+          />
+        </div>
+        <div className="absolute inset-0 bg-photo-duotone mix-blend-color" />
+      </motion.div>
+      {/* Backdrop scrim — static, deepening toward the section's bottom */}
+      <div
+        aria-hidden
+        className="absolute inset-0 bg-linear-to-b from-primary-dark/55 via-primary-dark/80 to-primary-darker/90"
+      />
+
+      <div className="relative z-[1] mx-auto max-w-content">
         <SectionHeader
           eyebrow={t.clientApp.eyebrow}
+          eyebrowTone="sage"
+          onDark
           title={t.clientApp.h2}
           description={t.clientApp.description}
         />
@@ -36,24 +126,61 @@ export default function ClientApp() {
           initial="hidden"
           whileInView="visible"
           viewport={viewport}
-          className="mx-auto mt-14 flex max-w-3xl items-end justify-center gap-5 sm:gap-8"
+          className="mx-auto mt-12 flex max-w-3xl items-end justify-center gap-3 sm:gap-10 md:mt-16"
         >
-          {PHONE_SHOTS.map((name, i) => (
+          {PHONE_META.map((p, i) => (
             <motion.div
-              key={name}
+              key={p.id}
               variants={fadeUp}
-              className={`w-full max-w-[190px] ${
-                i === 1 ? "sm:-translate-y-4" : ""
-              } ${i === 2 ? "hidden sm:block" : ""}`}
+              className={`flex w-full max-w-[190px] flex-col items-center gap-3 sm:gap-4 ${
+                p.raised ? "mb-4 sm:mb-7" : ""
+              }`}
             >
-              <PhoneShot
-                name={name}
-                alt={t.clientApp.phones[i]}
-                sizes="190px"
-              />
-              <p className="mt-3 text-center text-caption font-medium text-ink/65">
-                {t.clientApp.phones[i]}
-              </p>
+              {/* Float wrapper is its own motion element so the loop never
+                  fights the entrance above or the static tilt below. */}
+              <motion.div
+                variants={phoneFloat}
+                animate={reducedMotion ? undefined : "float"}
+                custom={i}
+                className="w-full"
+              >
+                <div className={p.tilt || undefined}>
+                  {p.shot ? (
+                    <PhoneShot
+                      name={p.shot}
+                      alt={t.clientApp.phones[p.captionIndex!]}
+                      sizes="190px"
+                    />
+                  ) : (
+                    /* White-label NEW-CAPTURE slot inside real phone chrome
+                       (no invented UI). Fictional demo coach — unnamed.
+                       The hint line overflows the 9/19 window at phone-row
+                       mobile widths (clips the chip), so the container hides
+                       the placeholder's hint span below md — the component
+                       itself stays unmodified. */
+                    <PhoneFrame className="max-md:[&_span:last-child]:hidden">
+                      <PhotoPlaceholder
+                        label="NEW CAPTURE"
+                        hint="Client Home with a demo coach's own branding applied in-app — logo · name · theme"
+                        tone="light"
+                        className="h-full w-full"
+                      />
+                    </PhoneFrame>
+                  )}
+                </div>
+              </motion.div>
+              {p.shot ? (
+                <p className="text-center text-[0.68rem] font-medium text-white/65 sm:text-caption">
+                  {t.clientApp.phones[p.captionIndex!]}
+                </p>
+              ) : (
+                <p className="max-w-[220px] text-center text-[0.68rem] text-white/65 sm:text-caption">
+                  <b className="font-semibold text-secondary-pale">
+                    {captionLead}
+                  </b>
+                  {captionRest}
+                </p>
+              )}
             </motion.div>
           ))}
         </motion.div>
@@ -63,7 +190,7 @@ export default function ClientApp() {
           initial="hidden"
           whileInView="visible"
           viewport={viewport}
-          className="mt-10 text-center"
+          className="mt-10 text-center md:mt-14"
         >
           <Badge variant="pill" tone="sage" className="px-5 py-2">
             {t.clientApp.pwaChip}

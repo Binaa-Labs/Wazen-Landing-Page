@@ -113,7 +113,8 @@ const en = {
         headline: "Structured check-ins, zero chasing",
         body: "Create check-in schedules for each client. They submit from their app, you review everything from one organized queue — no more hunting through messages.",
         caption: "The check-in queue — clients submit from their phone",
-        primaryAlt: "Coach dashboard attention queue with submitted check-ins",
+        primaryAlt:
+          "A client's submitted check-ins as the coach reviews them in Wazen",
         secondaryAlt: "Check-in management tab for a single client",
       },
       {
@@ -155,20 +156,14 @@ const en = {
       {
         title: "Fitness coaches",
         body: "Program workouts, track adherence, and keep every client's training on schedule.",
-        photoAlt:
-          "A fitness coach fist-bumping his client at a machine in a modern gym",
       },
       {
         title: "Nutrition coaches",
         body: "Set macro targets and meal plans — and see exactly how clients follow them.",
-        photoAlt:
-          "A nutrition consultation — a coach writes a weekly meal plan across the table from a client, a bowl of fruit between them",
       },
       {
         title: "Health practitioners",
         body: "Manage nutrition, supplement, and medication plans with structured check-ins.",
-        photoAlt:
-          "A health practitioner in conversation with a client at his office desk",
       },
     ],
   },
@@ -178,6 +173,10 @@ const en = {
     description:
       "Every plan you assign lands in a clean app your clients open on their own phone: today's workout, macro targets, check-ins, and progress charts. It works on any phone, in Arabic or English.",
     phones: ["Today's plan", "Weekly check-in", "Progress"],
+    /* White-label claim (D34, Option A — verbatim; truth boundary: in-app
+       branding only, never custom domains/emails/standalone apps) */
+    whiteLabelCaption:
+      "Your brand, front and center — clients see your logo, name, and colors in their app.",
     pwaChip: "Installs like an app — no App Store needed",
   },
   how: {
@@ -363,8 +362,6 @@ const en = {
       "Full core platform",
       "Arabic & English",
     ],
-    cardTitle: "Create your free account",
-    cardSub: "Up to 5 active clients · Full core platform · No credit card",
     ctaLabel: "Start free — up to 5 clients",
     loginPrompt: "Already using Wazen?",
     loginLink: "Log in",
@@ -476,7 +473,7 @@ const ar: Dictionary = {
         headline: "متابعات منظّمة، بلا ملاحقة",
         body: "أنشئ جداول متابعة لكل عميل. يرسلونها من تطبيقهم، وتراجعها كلها من قائمة واحدة منظّمة — دون البحث في الرسائل.",
         caption: "قائمة المتابعات — يرسلها العملاء من هواتفهم",
-        primaryAlt: "قائمة مهام لوحة المدرب مع المتابعات المُرسلة",
+        primaryAlt: "متابعات العميل المُرسلة كما يراجعها المدرب في وازن",
         secondaryAlt: "تبويب إدارة المتابعات لعميل واحد",
       },
       {
@@ -517,18 +514,14 @@ const ar: Dictionary = {
       {
         title: "مدربو اللياقة",
         body: "أنشئ خطط التمارين، وتابع الالتزام، وحافظ على انتظام تدريب كل عميل.",
-        photoAlt: "مدرب لياقة يحيّي عميله بقبضة اليد بجانب جهاز تمرين في نادٍ حديث",
       },
       {
         title: "مدربو التغذية",
         body: "حدّد أهداف السعرات والخطط الغذائية — واعرف بدقة كيف يلتزم بها عملاؤك.",
-        photoAlt:
-          "استشارة تغذية — مدرب يكتب خطة وجبات أسبوعية على الطاولة أمام عميله وبينهما طبق فواكه",
       },
       {
         title: "الممارسون الصحيون",
         body: "أدِر خطط التغذية والمكملات والأدوية مع متابعات منظّمة.",
-        photoAlt: "ممارس صحي يتحاور مع عميله على مكتبه",
       },
     ],
   },
@@ -538,6 +531,9 @@ const ar: Dictionary = {
     description:
       "كل خطة تعيّنها تصل إلى تطبيق أنيق يفتحه عميلك على هاتفه: تمرين اليوم، وأهداف السعرات، والمتابعات، ورسوم التقدّم. يعمل على أي هاتف، بالعربية أو الإنجليزية.",
     phones: ["خطة اليوم", "المتابعة الأسبوعية", "التقدّم"],
+    /* White-label claim (D34, Option A — verbatim) */
+    whiteLabelCaption:
+      "علامتك في الواجهة — يرى عملاؤك شعارك واسمك وألوانك داخل تطبيقهم.",
     pwaChip: "يعمل كتطبيق على الهاتف — دون الحاجة لمتجر التطبيقات",
   },
   how: {
@@ -721,8 +717,6 @@ const ar: Dictionary = {
       "المنصة الأساسية كاملة",
       "العربية والإنجليزية",
     ],
-    cardTitle: "أنشئ حسابك المجاني",
-    cardSub: "حتى 5 عملاء نشطين · المنصة الأساسية كاملة · بدون بطاقة ائتمان",
     ctaLabel: "ابدأ مجانًا — حتى 5 عملاء",
     loginPrompt: "تستخدم وازن بالفعل؟",
     loginLink: "تسجيل الدخول",

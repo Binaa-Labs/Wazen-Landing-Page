@@ -95,4 +95,22 @@ export const drawLine: Variants = {
   },
 };
 
+/* ClientApp phones idle on a slow float after their entrance (§3, D33) —
+   the page's ONLY loop besides the rail timers. translateY ±4px over 6s,
+   ease-in-out, infinite alternate; the per-phone 0.8s stagger arrives via
+   the `custom` prop (i × 0.8). Transform-only, so MotionConfig
+   reducedMotion="user" strips the loop entirely — float OFF, not slowed. */
+export const phoneFloat: Variants = {
+  float: (i: number) => ({
+    y: [4, -4],
+    transition: {
+      duration: 6,
+      ease: "easeInOut",
+      repeat: Infinity,
+      repeatType: "reverse",
+      delay: i * 0.8,
+    },
+  }),
+};
+
 export const viewport = { once: true, margin: "-80px" } as const;

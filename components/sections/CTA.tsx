@@ -6,52 +6,32 @@ import { motion, type Variants } from "framer-motion";
 import { useLanguage } from "@/components/LanguageProvider";
 import { fadeUp, viewport } from "@/components/motion";
 import Badge from "@/components/ui/Badge";
+import BrowserFrame from "@/components/ui/BrowserFrame";
 import Button from "@/components/ui/Button";
 import GhostWordmark from "@/components/ui/GhostWordmark";
 import PhoneShot from "@/components/ui/PhoneShot";
+import { getShot } from "@/lib/screenshots";
 import { APP_URLS } from "@/lib/links";
 
-/* Abstract dashboard corner (stat tiles + review queue) paired with the
-   client-app phone — a small product composite in place of the old
-   feature-list card. Decorative; Pass C may swap in a real capture crop. */
-function MiniDashboard() {
-  return (
-    <div
-      aria-hidden
-      className="overflow-hidden rounded-xl border border-ink/8 bg-bg p-3.5 pe-[30%]"
-    >
-      <div className="flex gap-2">
-        {[0, 1].map((i) => (
-          <div key={i} className="flex-1 rounded-lg bg-surface p-2.5 shadow-sm">
-            <div className="h-1.5 w-8 rounded-pill bg-ink/10" />
-            <div className="mt-2 h-2.5 w-12 rounded-pill bg-primary/25" />
-          </div>
-        ))}
-      </div>
-      <div className="mt-2.5 flex flex-col gap-2">
-        {[0, 1, 2].map((i) => (
-          <div
-            key={i}
-            className="flex items-center gap-2 rounded-lg bg-surface p-2 shadow-sm"
-          >
-            <div className="size-5 shrink-0 rounded-full bg-primary/20" />
-            <div className="h-1.5 w-1/2 rounded-pill bg-ink/10" />
-            <div className="ms-auto h-4 w-10 rounded-pill bg-secondary-light" />
-          </div>
-        ))}
-      </div>
-    </div>
-  );
-}
+/* Stage-2 recomposition (D36, owner-pre-seeded): the white card + the
+   MiniDashboard decorative skeleton die (the last D14-class surface —
+   MiniDashboard was a local function here, so nothing else consumed it).
+   The proven OG-card composition takes the panel: copy start-side, REAL
+   captures end-side — coachDashboard in a BrowserFrame (top crop, the
+   same crop the OG card ships) + the check-in phone overlapping its
+   start-bottom corner, the whole composite bleeding off the END edge and
+   clipped by the section's overflow-hidden. Off-viewport bleed is
+   CTA-exclusive on the page (§6). Backdrop unchanged: primary-dark +
+   F-9 at 12% (texture, not subject — D15) + the shared centered ghost
+   wordmark. Dark band identical in both themes. */
 
-/* Shared fadeUp timing plus a 150ms trail so the card lands after the
-   left column */
-const fadeUpDelayed: Variants = {
+/* Composite settles at the product register (0.7s) after the copy. */
+const compositeIn: Variants = {
   hidden: { opacity: 0, y: 24 },
   visible: {
     opacity: 1,
     y: 0,
-    transition: { duration: 0.5, ease: [0.16, 1, 0.3, 1], delay: 0.15 },
+    transition: { duration: 0.7, ease: [0.16, 1, 0.3, 1], delay: 0.15 },
   },
 };
 
@@ -73,12 +53,14 @@ function CheckIcon({ className }: { className?: string }) {
 }
 
 export default function CTA() {
-  const { t } = useLanguage();
+  const { t, lang } = useLanguage();
+  const dashboard = getShot("coachDashboard", lang);
 
   return (
     <section className="relative overflow-hidden bg-primary-dark px-6 py-section-compact-mobile md:py-section-compact">
       {/* F-9 photo backdrop at 12% opacity — texture under the dark teal,
-          not a subject. Decorative: empty alt inside an aria-hidden layer. */}
+          not a subject; static by design (D15). Decorative: empty alt
+          inside an aria-hidden layer. */}
       <div aria-hidden className="absolute inset-0 z-0 opacity-[0.12]">
         <Image
           src="/photos/f-9.webp"
@@ -89,7 +71,9 @@ export default function CTA() {
         />
       </div>
       <GhostWordmark />
-      <div className="relative z-[1] mx-auto grid max-w-content items-center gap-12 lg:grid-cols-2">
+
+      <div className="relative z-[1] mx-auto grid max-w-content items-center gap-12 lg:grid-cols-[minmax(0,46fr)_minmax(0,54fr)] lg:gap-14">
+        {/* ── Copy column (copy register) ──────────────────────────── */}
         <motion.div
           variants={fadeUp}
           initial="hidden"
@@ -103,10 +87,13 @@ export default function CTA() {
           <p className="mt-4 max-w-xl text-body-lg text-white/80">
             {t.cta.body}
           </p>
-          <ul className="mt-7 flex flex-col gap-3">
-            {t.cta.trust.map((item) => (
+          {/* 2×2 trust rows. Index keys (learning #1): these previously
+              keyed by the translated string inside this whileInView parent
+              — a latent remount-to-hidden bug, fixed with the rebuild. */}
+          <ul className="mt-7 grid justify-start gap-x-7 gap-y-3 sm:grid-cols-[auto_auto]">
+            {t.cta.trust.map((item, i) => (
               <li
-                key={item}
+                key={i}
                 className="flex items-center gap-2.5 text-body text-white/85"
               >
                 <span className="flex size-6 shrink-0 items-center justify-center rounded-full bg-secondary/15 text-secondary">
@@ -116,43 +103,59 @@ export default function CTA() {
               </li>
             ))}
           </ul>
+          <div className="mt-8 flex flex-col items-stretch gap-4 sm:flex-row sm:items-center sm:gap-5">
+            {/* Sage pill — the dark-surface primary (D19), label verbatim */}
+            <Button href={APP_URLS.signup} variant="sage">
+              {t.cta.ctaLabel}
+            </Button>
+            <p className="text-center text-sm text-white/60 sm:text-start">
+              {t.cta.loginPrompt}{" "}
+              <a
+                href={APP_URLS.login}
+                className="font-semibold text-secondary-pale underline underline-offset-3 hover:text-secondary"
+              >
+                {t.cta.loginLink}
+              </a>
+            </p>
+          </div>
         </motion.div>
 
+        {/* ── Composite column (product register): real dashboard + phone.
+               DESKTOP bleeds off the END edge, clipped by the section's
+               overflow-hidden (LTR right / RTL left — D36/§6, unchanged).
+               MOBILE renders fully inside the viewport (owner decision at
+               2.2c.1 review, D44 — partial supersession of the §2.9 mobile
+               bleed clause): ms-3.5 gives the phone's −14px start overhang
+               room so nothing crosses the content edge. ────────────────── */}
         <motion.div
-          variants={fadeUpDelayed}
+          variants={compositeIn}
           initial="hidden"
           whileInView="visible"
           viewport={viewport}
-          className="rounded-card bg-surface p-7 shadow-xl sm:p-9"
+          className="relative ms-3.5 lg:-me-45 lg:ms-0"
         >
-          <h3 className="text-h3 text-primary dark:text-ink">
-            {t.cta.cardTitle}
-          </h3>
-          <p className="mt-2 text-caption text-ink/55">{t.cta.cardSub}</p>
-          <div className="relative mt-6 pb-7">
-            <MiniDashboard />
-            {/* Real capture — labeled with the matching showcase string so
-                its lightbox trigger has an accessible name (post-2.1) */}
-            <div className="absolute -bottom-4 end-3 w-[26%] min-w-[88px] max-w-[120px]">
-              <PhoneShot
-                name="clientMobileCheckin"
-                alt={t.clientApp.phones[1]}
-                sizes="120px"
+          <BrowserFrame url="app.wazen.fit/dashboard">
+            {/* Top crop — stat tiles + attention queue, the OG-card region.
+                Decorative beside the copy (no dictionary key exists for it
+                and the Req-10 list is closed); the phone carries the
+                composite's accessible name. */}
+            <div className="relative aspect-[640/306] w-full">
+              <Image
+                src={dashboard.src}
+                alt=""
+                fill
+                sizes="(min-width: 1024px) 760px, 100vw"
+                className="object-cover object-top dark:opacity-90"
               />
             </div>
+          </BrowserFrame>
+          <div className="absolute -bottom-6 -start-3.5 w-[108px] lg:-bottom-9 lg:-start-11 lg:w-[172px]">
+            <PhoneShot
+              name="clientMobileCheckin"
+              alt={t.clientApp.phones[1]}
+              sizes="172px"
+            />
           </div>
-          <Button href={APP_URLS.signup} className="mt-5 w-full">
-            {t.cta.ctaLabel}
-          </Button>
-          <p className="mt-4 text-center text-caption text-ink/55">
-            {t.cta.loginPrompt}{" "}
-            <a
-              href={APP_URLS.login}
-              className="font-medium text-primary hover:underline dark:text-ink"
-            >
-              {t.cta.loginLink}
-            </a>
-          </p>
         </motion.div>
       </div>
     </section>
