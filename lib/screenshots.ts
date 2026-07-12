@@ -63,6 +63,15 @@ export const SHOTS = {
 
   /* ── Client mobile (PWA, phone frames) ───────────────────────────── */
   clientMobileHome: clientMobile("Home_Tab"),
+  /* White-label demo capture (2.3b, D34): client Home carrying the
+     FICTIONAL "Apex Coaching" brand (in-app logo/name/theme — the real,
+     shipping capability; never captioned as a real customer). 1170×2520 —
+     20px shorter than the D9 standard, so explicit dims instead of the
+     clientMobile helper. */
+  clientMobileWhiteLabel: {
+    en: cap(`${BASE}/Client Dashboard/Mobile/en/Whitelabel_Home_Tab.png`, 1170, 2520),
+    ar: cap(`${BASE}/Client Dashboard/Mobile/ar/Whitelabel_Home_Tab.png`, 1170, 2520),
+  },
   clientMobileCheckin: clientMobile("Check_In_Tab"),
   clientMobileProgress: clientMobile("Progress_Tab_1"),
   clientMobilePlans: clientMobile("Plans_Tab"),

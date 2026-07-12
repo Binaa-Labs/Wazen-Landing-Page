@@ -12,9 +12,7 @@ import {
   viewport,
 } from "@/components/motion";
 import Badge from "@/components/ui/Badge";
-import PhoneFrame from "@/components/ui/PhoneFrame";
 import PhoneShot from "@/components/ui/PhoneShot";
-import PhotoPlaceholder from "@/components/ui/PhotoPlaceholder";
 import SectionHeader from "@/components/ui/SectionHeader";
 import type { ShotName } from "@/lib/screenshots";
 
@@ -23,9 +21,9 @@ import type { ShotName } from "@/lib/screenshots";
    themes — the Problem/CTA precedent) with the D-2 photo as a low-opacity
    duotone backdrop behind three phones. The third phone carries the
    white-label story: in-app coach branding (logo, name, theme) is REAL
-   today (D34 truth boundary) and renders as a NEW-CAPTURE placeholder
-   until the demo-coach capture exists (2.3); the fictional coach is never
-   named, quoted, or captioned as a customer.
+   today (D34 truth boundary) and ships with the real demo capture (2.3b) —
+   the FICTIONAL "Apex Coaching" brand; never named, quoted, or captioned
+   as a real customer.
 
    Phones enter staggered at the product register, then idle on phoneFloat
    (§3) — the page's only loop besides the rail timers; MotionConfig strips
@@ -43,14 +41,15 @@ import type { ShotName } from "@/lib/screenshots";
    retired — the Req-10 i18n list is exhaustive; flagged in PROJECT.md. */
 const PHONE_META: {
   id: string;
-  shot?: ShotName; // undefined → the white-label NEW-CAPTURE slot
+  shot: ShotName;
+  /** index into t.clientApp.phones; undefined → the D34 white-label caption */
   captionIndex?: number;
   tilt: string;
   raised?: boolean;
 }[] = [
   { id: "checkin", shot: "clientMobileCheckin", captionIndex: 1, tilt: "-rotate-4" },
   { id: "home", shot: "clientMobileHome", captionIndex: 0, tilt: "", raised: true },
-  { id: "white-label", tilt: "rotate-4" },
+  { id: "white-label", shot: "clientMobileWhiteLabel", tilt: "rotate-4" },
 ];
 
 export default function ClientApp() {
@@ -137,33 +136,25 @@ export default function ClientApp() {
                 className="w-full"
               >
                 <div className={p.tilt || undefined}>
-                  {p.shot ? (
-                    <PhoneShot
-                      name={p.shot}
-                      alt={t.clientApp.phones[p.captionIndex!]}
-                      sizes="190px"
-                    />
-                  ) : (
-                    /* White-label NEW-CAPTURE slot inside real phone chrome
-                       (no invented UI). Fictional demo coach — unnamed.
-                       The hint line overflows the 9/19 window at phone-row
-                       mobile widths (clips the chip), so the container hides
-                       the placeholder's hint span below md — the component
-                       itself stays unmodified. */
-                    <PhoneFrame className="max-md:[&_span:last-child]:hidden">
-                      <PhotoPlaceholder
-                        label="NEW CAPTURE"
-                        hint="Client Home with a demo coach's own branding applied in-app — logo · name · theme"
-                        tone="light"
-                        className="h-full w-full"
-                      />
-                    </PhoneFrame>
-                  )}
+                  {/* Phone 3 = the real white-label capture (2.3b, D34
+                      closed): fictional "Apex Coaching" branding applied
+                      in-app. Same PhoneShot lightbox as phones 1–2; alt =
+                      the phone's caption, consistent with the others (the
+                      D34 claim string for this one). */}
+                  <PhoneShot
+                    name={p.shot}
+                    alt={
+                      p.captionIndex !== undefined
+                        ? t.clientApp.phones[p.captionIndex]
+                        : t.clientApp.whiteLabelCaption
+                    }
+                    sizes="190px"
+                  />
                 </div>
               </motion.div>
-              {p.shot ? (
+              {p.captionIndex !== undefined ? (
                 <p className="text-center text-[0.68rem] font-medium text-white/65 sm:text-caption">
-                  {t.clientApp.phones[p.captionIndex!]}
+                  {t.clientApp.phones[p.captionIndex]}
                 </p>
               ) : (
                 <p className="max-w-[220px] text-center text-[0.68rem] text-white/65 sm:text-caption">

@@ -25,7 +25,10 @@ import { APP_URLS } from "@/lib/links";
    keeps their full width (Y picks the band), phones keep ~57% (X picks
    the subject side). NEVER mirror these files — embossed lettering. */
 const PERSONAS = [
-  { src: "/photos/hero-h1-fitness.webp", position: "object-[65%_50%]" },
+  /* Slide-1 mobile X is owner-picked from the 2.3b candidate renders;
+     desktop (md+) keeps the gate-approved 65% (full-frame at 16:9, X
+     near-inert there anyway). */
+  { src: "/photos/hero-h1-fitness.webp", position: "object-[75%_50%] md:object-[65%_50%]" },
   { src: "/photos/hero-h2-nutrition.webp", position: "object-[30%_50%]" },
   { src: "/photos/hero-h3-health.webp", position: "object-[28%_55%]" },
 ] as const;
