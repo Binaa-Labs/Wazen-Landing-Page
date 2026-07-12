@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import { motion, useReducedMotion } from "framer-motion";
 
 import { useLanguage } from "@/components/LanguageProvider";
@@ -73,12 +74,13 @@ export default function ClientApp() {
       id="client-app"
       className="relative overflow-hidden bg-linear-to-b from-primary-dark to-primary-darker px-6 py-section-compact-mobile text-white md:py-section-compact"
     >
-      {/* D-2 backdrop slot (brief activated, unsourced — PhotoPlaceholder
-          interim per the 2.2b precedent; sized h/w-full, corners pushed
-          under the section clip). R3 (owner note): the "two white phones
-          read clinical" concern is reassessed only after the REAL D-2
-          lands at backdrop opacity under this scrim (2.3) — do not tune
-          for it against the placeholder. */}
+      {/* D-2 backdrop (landed 2.3a as an owner-accepted v1 — deadlift
+          close-up, deviates from the home-post-workout brief; see the 2.3a
+          D-row, D15-swappable). R3 RESOLVED here: opacity judged against
+          the real photo via the 2.3a triptych (45/55/65 renders, owner
+          pick recorded in the same D-row), and the two-white-phones-read-
+          clinical concern was reassessed against it at the 2.3a review.
+          Decorative texture under duotone + scrim: alt="". */}
       <motion.div
         aria-hidden
         variants={photoReveal}
@@ -87,23 +89,13 @@ export default function ClientApp() {
         viewport={viewport}
         className="absolute inset-0 opacity-55"
       >
-        {/* Texture layer: oversized so the placeholder's centered label
-            block falls below the section clip — the phones sit over the
-            band's center and stray hint text would peek out beside them. */}
-        <div className="absolute inset-x-0 top-0 h-[240%]">
-          <PhotoPlaceholder label="D-2" tone="dark" className="h-full w-full" />
-        </div>
-        {/* Slot label at the mock's top-end position, clear of the phones.
-            Desktop-review affordance only — at 390px it collides with the
-            centered header, so it hides below md (texture layer stays). */}
-        <div className="absolute end-4 top-4 hidden h-28 w-72 max-w-[60%] md:block">
-          <PhotoPlaceholder
-            label="D-2"
-            hint="Man at home post-workout, phone in hand"
-            tone="dark"
-            className="h-full w-full"
-          />
-        </div>
+        <Image
+          src="/photos/clientapp-d2.webp"
+          alt=""
+          fill
+          sizes="100vw"
+          className="object-cover object-center"
+        />
         <div className="absolute inset-0 bg-photo-duotone mix-blend-color" />
       </motion.div>
       {/* Backdrop scrim — static, deepening toward the section's bottom */}

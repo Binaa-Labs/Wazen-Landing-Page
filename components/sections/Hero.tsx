@@ -15,13 +15,19 @@ import { APP_URLS } from "@/lib/links";
 
    Persona slides are structural and INDEX-COUPLED to t.segments.cards —
    labels render straight from segments.cards[i].title so the hero and the
-   Segments band can never drift apart. All three slides use the F-7 stand-in
-   crop until the H-series photos land in Pass 2.3 (D22); the object-position
-   keeps the subject's head in frame on portrait viewports (C.2b pattern). */
+   Segments band can never drift apart. H-series photos are per-persona
+   environment scenes WITHOUT people (owner pivot from the person-in-frame
+   brief, 2.3a — partial supersession of D22; people stay on the page via
+   D-1/F-3/F-5/F-6/F-7). H-1 is a 1920×1280 landscape (stock, v1 swap at
+   the 2.3a gate — see the gate D-row): at 16:9 desktop it shows nearly
+   full-frame; portrait phones keep ~31% of its width, so X anchors the
+   dumbbell-rack side. H-2/H-3 are left-weighted 4:5 masters: desktop
+   keeps their full width (Y picks the band), phones keep ~57% (X picks
+   the subject side). NEVER mirror these files — embossed lettering. */
 const PERSONAS = [
-  { src: "/photos/hero-f7.webp", position: "object-[45%_30%]" }, // fitness (H-1 slot)
-  { src: "/photos/hero-f7.webp", position: "object-[45%_30%]" }, // nutrition (H-2 slot)
-  { src: "/photos/hero-f7.webp", position: "object-[45%_30%]" }, // health (H-3 slot)
+  { src: "/photos/hero-h1-fitness.webp", position: "object-[65%_50%]" },
+  { src: "/photos/hero-h2-nutrition.webp", position: "object-[30%_50%]" },
+  { src: "/photos/hero-h3-health.webp", position: "object-[28%_55%]" },
 ] as const;
 
 /* Dwell equals the railFill duration in components/motion.ts, so the advance

@@ -1,10 +1,10 @@
 "use client";
 
+import Image from "next/image";
 import { motion } from "framer-motion";
 
 import { useLanguage } from "@/components/LanguageProvider";
 import { photoReveal, viewport } from "@/components/motion";
-import PhotoPlaceholder from "@/components/ui/PhotoPlaceholder";
 
 /* Photo divider ① (Stage 2, D30): a pure <figure> band between Features and
    HowItWorks — it restores people after the page's longest people-free run.
@@ -13,11 +13,12 @@ import PhotoPlaceholder from "@/components/ui/PhotoPlaceholder";
    (§2.3). The whole band enters with photoReveal and nothing else;
    MotionConfig degrades it to opacity-only under reduced motion.
 
-   The D-1 photo (man resting between sets, phone in hand — brief activated
-   in PHASE2-PHOTO-SOURCING.md) is still unsourced, so the slot renders the
-   branded PhotoPlaceholder until Pass 2.3 (approved interim per D30). The
-   shared duotone + scrim already sit above it, so the photo swap is a
-   drop-in. Band is self-dark — identical in both themes. */
+   D-1 landed in Pass 2.3a as a v1 with an owner-accepted narrative
+   mismatch (battle-ropes action, not the resting-with-phone brief — see
+   the 2.3a D-row; D15-swappable class). The subject sits right-of-center
+   in the 1920×822 file; object-position keeps him reading at the 340/260
+   band heights. Decorative (alt="" — the overlay line carries the
+   semantics, D42 class). Band is self-dark — identical in both themes. */
 
 export default function PhotoDivider() {
   const { t } = useLanguage();
@@ -31,29 +32,26 @@ export default function PhotoDivider() {
         viewport={viewport}
         className="absolute inset-0"
       >
-        {/* D-1 slot. The placeholder bakes in rounded corners; oversizing it
-            slightly pushes them under the band's overflow-hidden so the
-            interim render stays truly full-bleed. */}
-        <div className="absolute -inset-2">
-          {/* h/w-full (not absolute): the placeholder root keeps its own
-              position and its children are all absolutely positioned, so it
-              must be given its box explicitly or it collapses to 0 height. */}
-          <PhotoPlaceholder
-            label="D-1"
-            hint="Man resting between sets, phone in hand"
-            tone="dark"
-            className="h-full w-full"
-          />
-        </div>
-        {/* Shared duotone + scrim (darkest at the copy's bottom edge;
-            horizontally symmetric, RTL-safe) */}
+        <Image
+          src="/photos/divider-d1.webp"
+          alt=""
+          fill
+          sizes="100vw"
+          className="object-cover object-[68%_35%]"
+        />
+        {/* Shared duotone + scrim (horizontally symmetric, RTL-safe —
+            the caption sits bottom-START, which is the subject side under
+            RTL, so the veil + bottom stops are tuned for the D-1 photo's
+            brightness: strengthened at the 2.3a review after the raw
+            photo washed out the band and AR caption contrast. */}
         <div
           aria-hidden
           className="absolute inset-0 bg-photo-duotone mix-blend-color"
         />
+        <div aria-hidden className="absolute inset-0 bg-primary-dark/35" />
         <div
           aria-hidden
-          className="absolute inset-0 bg-linear-to-t from-primary-darker/80 via-primary-dark/35 via-45% to-primary-dark/55"
+          className="absolute inset-0 bg-linear-to-t from-primary-darker/85 via-primary-dark/45 via-45% to-primary-dark/55"
         />
 
         {/* One overlay line — reused copy, not a copy block (§6) */}
