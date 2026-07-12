@@ -3,7 +3,7 @@
 import { motion } from "framer-motion";
 
 type ButtonProps = {
-  variant?: "primary" | "secondary";
+  variant?: "primary" | "secondary" | "sage" | "glass";
   size?: "md" | "sm";
   /** Renders a motion.a when set; motion.button otherwise */
   href?: string;
@@ -19,6 +19,10 @@ const variantClasses = {
   primary: "bg-primary text-white hover:bg-primary-hover",
   secondary:
     "border border-primary bg-transparent text-primary hover:bg-primary/5",
+  /* Dark/photo surfaces only (Phase 2): */
+  sage: "bg-secondary text-primary-darker hover:bg-secondary/85", // hero primary (D19)
+  glass:
+    "border border-white/25 bg-white/10 text-white backdrop-blur-md hover:bg-white/20", // hero ghost + transparent-nav CTA
 };
 
 const sizeClasses = {

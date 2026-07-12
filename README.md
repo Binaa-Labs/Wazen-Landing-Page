@@ -1,36 +1,18 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Wazen Landing Page
 
-## Getting Started
+Marketing landing page for **Wazen (وازن)** — a B2B2C coaching platform (coach dashboard + PWA client app) for fitness coaches, nutrition coaches, and health practitioners in the UAE, GCC, and MENA. Bilingual English/Arabic with full RTL support, light + dark themes.
 
-First, run the development server:
+This repo is the landing page (**wazen.fit**) only — not the app. Built with Next.js (App Router), TypeScript, Tailwind CSS v4, and Framer Motion. A product of Binaa Labs.
+
+**→ Read [PROJECT.md](PROJECT.md) first** — it is the single source of truth: product context, tech conventions, decisions log, do-not-regress learnings, revamp status, and remaining work.
+
+## Development
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+npm install
+npm run dev     # http://localhost:3000 (EN) · /ar (Arabic)
+npm run build   # production build
+npm run lint
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
-
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
-
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Deployed on Vercel: branch pushes create preview deployments; `main` is production. Work on feature branches (currently `feat/landing-revamp`) — never commit to `main` directly.

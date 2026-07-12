@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Stage 2 Mockup — Client App (cinematic dark band + white-label phone)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@500;600;700&family=Inter:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  /* Wazen tokens (mirror of globals.css) */
+  :root {
+    --primary: hsl(186, 21%, 26%);
+    --primary-dark: hsl(186, 21%, 14%);
+    --primary-darker: hsl(186, 21%, 10%);
+    --sage: hsl(99, 22%, 72%);
+    --sage-pale: hsl(99, 28%, 84%);
+    --sage-dark: hsl(99, 20%, 42%);
+    --ink: hsl(0, 0%, 5%);
+    --bg: hsl(0, 0%, 95%);
+    --surface: hsl(0, 0%, 100%);
+    --font-display: "Outfit", sans-serif;
+    --font-body: "Inter", sans-serif;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: var(--font-body); background: var(--bg); color: var(--ink); -webkit-font-smoothing: antialiased; }
+
+  /* ── ClientApp: teal-mist section becomes the page's mid-point dark
+        cinematic beat — D-2 photo backdrop (placeholder until sourced)
+        behind three floating phones ──────────────────────────────────── */
+  .clientapp { position: relative; overflow: hidden; background: linear-gradient(to bottom, var(--primary-dark) 0%, var(--primary-darker) 100%); padding: 96px 0 118px; color: #fff; }
+
+  /* D-2 backdrop slot — PhotoPlaceholder convention (branded, labeled,
+     true final aspect = full-bleed 16:9-ish), used at backdrop opacity */
+  .backdrop { position: absolute; inset: 0; opacity: .55; }
+  .backdrop .ph {
+    position: absolute; inset: 0;
+    background:
+      repeating-linear-gradient(45deg, rgba(255,255,255,.05) 0 1px, transparent 1px 14px),
+      linear-gradient(135deg, rgba(255,255,255,.08) 0%, hsla(99,22%,72%,.15) 50%, rgba(255,255,255,.04) 100%);
+  }
+  .backdrop .chip {
+    position: absolute; top: 26px; inset-inline-end: 26px;
+    display: inline-flex; align-items: center; gap: 8px;
+    background: rgba(255,255,255,.15); color: rgba(255,255,255,.9);
+    border-radius: 100px; padding: 6px 14px; font-size: .72rem; font-weight: 600;
+  }
+  .backdrop-scrim { position: absolute; inset: 0; background: linear-gradient(to bottom, hsla(186,21%,14%,.55) 0%, hsla(186,21%,12%,.78) 55%, hsla(186,21%,10%,.92) 100%); }
+
+  .inner { position: relative; z-index: 1; max-width: 1200px; margin: 0 auto; padding: 0 48px; text-align: center; }
+  .eyebrow { font-size: .75rem; font-weight: 600; letter-spacing: .1em; text-transform: uppercase; color: var(--sage-pale); }
+  h2 { font-family: var(--font-display); font-size: 2.5rem; font-weight: 700; letter-spacing: -0.02em; margin-top: 14px; }
+  .lead { margin: 14px auto 0; max-width: 680px; color: rgba(255,255,255,.72); font-size: 1.02rem; line-height: 1.7; }
+
+  .phones { display: flex; align-items: flex-end; justify-content: center; gap: 44px; margin-top: 72px; }
+  .unit { display: flex; flex-direction: column; align-items: center; gap: 16px; }
+  .phone { width: 208px; border-radius: 30px; border: 7px solid hsl(200,12%,13%); overflow: hidden; background: #fff; box-shadow: 0 40px 80px hsla(186,21%,4%,.55); }
+  .phone img { width: 100%; display: block; aspect-ratio: 9 / 18.4; object-fit: cover; object-position: top; }
+  .unit:nth-child(1) .phone { transform: rotate(-4deg); }
+  .unit:nth-child(2) { margin-bottom: 30px; }
+  .unit:nth-child(3) .phone { transform: rotate(4deg); }
+  .cap { font-size: .82rem; color: rgba(255,255,255,.65); max-width: 220px; }
+  .cap b { color: var(--sage-pale); font-weight: 600; }
+
+  /* White-label phone: NEW-CAPTURE placeholder inside the frame
+     (PhotoPlaceholder convention, dark tone) — no invented UI */
+  .phone .ph-slot {
+    aspect-ratio: 9 / 18.4; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 12px; padding: 16px; text-align: center;
+    background:
+      repeating-linear-gradient(45deg, hsla(186,21%,26%,.06) 0 1px, transparent 1px 14px),
+      linear-gradient(160deg, hsl(186,21%,93%) 0%, hsl(99,22%,92%) 60%, hsl(186,21%,90%) 100%);
+  }
+  .ph-slot .cam { width: 30px; height: 30px; border-radius: 50%; background: hsla(186,21%,26%,.12); color: var(--primary); display: grid; place-items: center; font-size: .85rem; }
+  .ph-slot .tag { background: #fff; color: var(--primary); border-radius: 100px; padding: 5px 12px; font-size: .68rem; font-weight: 700; letter-spacing: .02em; box-shadow: 0 2px 8px hsla(186,21%,10%,.10); }
+  .ph-slot .hint { font-size: .66rem; line-height: 1.5; color: hsla(186,21%,20%,.65); }
+
+  .pwa { display: inline-flex; align-items: center; gap: 8px; margin-top: 56px; background: hsla(99,22%,72%,.15); border: 1px solid hsla(99,22%,72%,.4); color: var(--sage-pale); border-radius: 100px; padding: 9px 20px; font-size: .82rem; font-weight: 600; }
+  .pwa .dot { width: 7px; height: 7px; border-radius: 50%; background: var(--sage); }
+
+  .mocknote { background: var(--primary-darker); color: rgba(255,255,255,.55); font-size: .72rem; padding: 12px 48px; text-align: center; letter-spacing: .04em; }
+
+  @media (max-width: 640px) {
+    html, body { max-width: 100%; overflow-x: hidden; }
+    .clientapp { padding: 64px 0 84px; }
+    .inner { padding: 0 20px; }
+    h2 { font-size: 1.8rem; }
+    .phones { gap: 16px; margin-top: 48px; }
+    .phone { width: 132px; border-width: 5px; }
+    .unit:nth-child(2) { margin-bottom: 16px; }
+    .cap { font-size: .68rem; max-width: 140px; }
+    .mocknote { padding: 12px 20px; }
+  }
+</style>
+</head>
+<body>
+
+<section class="clientapp">
+  <div class="backdrop">
+    <div class="ph"></div>
+    <div class="chip">📷 D-2 · ClientApp backdrop — man at home post-workout, phone in hand, morning light (low-opacity, duotone)</div>
+  </div>
+  <div class="backdrop-scrim"></div>
+
+  <div class="inner">
+    <div class="eyebrow">The client app</div>
+    <h2>Your clients get a real app — included</h2>
+    <p class="lead">Every plan you assign lands in a clean app your clients open on their own phone: today&rsquo;s workout, macro targets, check-ins, and progress charts. It works on any phone, in Arabic or English.</p>
+
+    <div class="phones">
+      <div class="unit">
+        <div class="phone"><img src="../../public/Wazen-Screenshots/Client%20Dashboard/Mobile/en/Check_In_Tab.png" alt=""></div>
+        <div class="cap">Weekly check-in</div>
+      </div>
+      <div class="unit">
+        <div class="phone"><img src="../../public/Wazen-Screenshots/Client%20Dashboard/Mobile/en/Home_Tab.png" alt=""></div>
+        <div class="cap">Today&rsquo;s plan</div>
+      </div>
+      <div class="unit">
+        <div class="phone">
+          <div class="ph-slot">
+            <div class="cam">📷</div>
+            <div class="tag">NEW CAPTURE</div>
+            <div class="hint">Client Home with a demo coach&rsquo;s own branding applied in-app (logo · name · theme) — fictional coach, real product capability</div>
+          </div>
+        </div>
+        <div class="cap"><b>Your brand, front and center</b> — clients see your logo, name, and colors in their app.</div>
+      </div>
+    </div>
+
+    <div class="pwa"><span class="dot"></span>Installs like an app — no App Store needed</div>
+  </div>
+</section>
+
+<div class="mocknote">STAGE 2 MOCKUP — CLIENT APP · teal-mist section becomes the page&rsquo;s mid-point cinematic dark beat · D-2 photo backdrop (brief already in PHASE2-PHOTO-SOURCING) shown as a branded placeholder at backdrop opacity · outer phones angle ±4° and idle on phoneFloat · third phone = the white-label story: NEW CAPTURE placeholder (in-app branding is live today — claim wording on the owner checklist) · PWA chip unchanged (D8) · static render</div>
+
+</body>
+</html>

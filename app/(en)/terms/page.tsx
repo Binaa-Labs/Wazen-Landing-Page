@@ -108,7 +108,7 @@ export default function TermsPage() {
           </li>
           <li>
             <span className="font-medium text-ink">Premium:</span> $99/month or
-            $990/year, up to 50 active clients (scalable to 100+ with add-on
+            $990/year, up to 50 active clients (up to 100 with add-on
             bundles).
           </li>
         </ul>

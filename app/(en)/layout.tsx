@@ -1,12 +1,30 @@
 import type { Metadata, Viewport } from "next";
+import { Fraunces } from "next/font/google";
 
 import RootShell from "@/components/RootShell";
 
+/* Hero serif accent (D18) — italic style only, EN route only. The /ar route
+   never loads Fraunces: the Arabic accent is Tajawal 800 (no italic), and
+   globals.css gives --font-serif a Georgia fallback for the runtime
+   EN-toggle-on-/ar edge case. */
+const fraunces = Fraunces({
+  variable: "--font-fraunces",
+  subsets: ["latin"],
+  style: "italic",
+  display: "swap",
+  /* Decorative accent, not body text: keep it OFF the preload critical path
+     so it queues behind the LCP text's fonts instead of ahead of them —
+     display:swap shows the Georgia fallback until it arrives. */
+  preload: false,
+});
+
 export const metadata: Metadata = {
   metadataBase: new URL("https://wazen.fit"),
-  title: "Wazen — Run your coaching practice from one calm, organized place",
+  /* Tab title owner-set to the bare brand (Pass 2.4, D52 scope extension);
+     og/twitter share titles keep the promise-led wording (D16). */
+  title: "Wazen",
   description:
-    "Wazen brings your clients, plans, check-ins, progress, and messages into a single system — built for coaches in UAE, GCC & MENA. Free for your first 5 clients.",
+    "Coaching platform & personal trainer software for the UAE, GCC & MENA. Clients, plans, check-ins, progress and messaging in one place. Free for 5 clients.",
   keywords: [
     "coaching platform",
     "coach app",
@@ -64,5 +82,9 @@ export const viewport: Viewport = {
 export default function EnLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
-  return <RootShell lang="en">{children}</RootShell>;
+  return (
+    <RootShell lang="en" fontVariables={fraunces.variable}>
+      {children}
+    </RootShell>
+  );
 }

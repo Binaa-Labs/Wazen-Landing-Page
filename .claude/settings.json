@@ -46,7 +46,8 @@
       "Bash(cd \"c:/Users/naser/Desktop/Binaa-labs-landing\" && pkill -f \"next start\" 2>/dev/null; mv /tmp/og-backup2 assets/og && echo \"restored assets/og\" && ls assets/og && echo \"--- OG PNG generated at build? ---\" && ls -la .next/server/app/opengraph-image* 2>/dev/null | head; rm -f /tmp/binaa*.log /tmp/probe.mjs 2>/dev/null; echo done)",
       "PowerShell(npm run build 2>&1)",
       "PowerShell(npm run lint 2>&1)",
-      "Bash(echo \"exit: $?\")"
+      "Bash(echo \"exit: $?\")",
+      "Bash(npm run *)"
     ],
     "additionalDirectories": [
       "c:\\Users\\naser\\Desktop\\wazen-landing\\public\\screenshots",

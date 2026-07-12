@@ -1,99 +1,286 @@
 "use client";
 
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
-import { AnimatePresence, motion } from "framer-motion";
+import {
+  AnimatePresence,
+  motion,
+  useInView,
+  useReducedMotion,
+} from "framer-motion";
 
 import { useLanguage } from "@/components/LanguageProvider";
 import { fadeUp, viewport } from "@/components/motion";
 import BrowserFrame from "@/components/ui/BrowserFrame";
+import CaptureFragment, {
+  type FragmentRegion,
+} from "@/components/ui/CaptureFragment";
 import Lightbox from "@/components/ui/Lightbox";
+import PhoneShot from "@/components/ui/PhoneShot";
 import SectionHeader from "@/components/ui/SectionHeader";
+import { getShot, type ShotName } from "@/lib/screenshots";
 
-/* Structural tab data — icons, chrome URL, screenshot sources/dimensions.
-   Index-coupled to t.features.tabs for the translatable label/headline/body/
-   caption/alt text. */
-const TAB_META = [
+/* Tab dwell for the rail-timer auto-advance (D21/D29). 6s matches the hero
+   persona rail so the page runs one rhythm. D29 note: owner flagged this for
+   a possible revisit at review — this constant is the one-line edit. */
+const DWELL_MS = 6000;
+
+/* Fragment chip library — REAL capture regions (Stage-2 "fragment"
+   presentation; §5 ledger families). Regions are physical percentages per
+   locale, calibrated against each locale's own capture (AR captures are
+   native-RTL re-captures, not mirrors); AR values verified in the 2.2a
+   screenshot pass. The roster family uses the Clients page's title+count
+   region — full compliance rows are ~11.5:1 and render illegibly small at
+   chip scale. */
+type Fragment = {
+  shotName: ShotName;
+  region: { en: FragmentRegion; ar: FragmentRegion };
+  aspect: string;
+};
+
+const FRAGMENTS = {
+  /* AR y = 12.3 on the analytics family (2.2a.1 calibration): the AR tiles
+     stack the numeral ABOVE the labels, and the 2.2a value (17, mirrored
+     from EN) started below it — chips rendered label-only in AR. 12.3
+     starts at the tile card's own top padding. */
+  avgAdherence: {
+    shotName: "coachAnalytics",
+    region: {
+      en: { x: 26.4, y: 17, w: 21.5 },
+      ar: { x: 52.1, y: 12.3, w: 21.5 },
+    },
+    aspect: "aspect-[13/5]",
+  },
+  planAdherence: {
+    shotName: "coachAnalytics",
+    region: {
+      en: { x: 49.3, y: 17, w: 21.4 },
+      ar: { x: 29.3, y: 12.3, w: 21.4 },
+    },
+    aspect: "aspect-[13/5]",
+  },
+  atRisk: {
+    shotName: "coachAnalytics",
+    region: {
+      en: { x: 72.2, y: 17, w: 21.5 },
+      ar: { x: 6.3, y: 12.3, w: 21.5 },
+    },
+    aspect: "aspect-[13/5]",
+  },
+  weight: {
+    shotName: "clientProgress",
+    region: {
+      en: { x: 23.5, y: 8.5, w: 34.7 },
+      /* AR is NOT a mirror of EN here (2.2a.1 verification): the AR client
+         capture lays tiles 4-across vs EN's 2×2 (different capture
+         viewport), so the AR crop is an interior slice of the weight tile
+         (label + numeral; the chip frame supplies the card look) — the EN
+         box proportions can't hold the full AR tile. */
+      ar: { x: 58.5, y: 22.2, w: 17.5 },
+    },
+    aspect: "aspect-[11/4]",
+  },
+  roster: {
+    shotName: "coachClients",
+    region: {
+      en: { x: 26.3, y: 11.2, w: 12.3 },
+      ar: { x: 61.4, y: 11.2, w: 12.3 },
+    },
+    aspect: "aspect-[8/3]",
+  },
+} satisfies Record<string, Fragment>;
+
+/* Structural tab data — chrome URL, locale-aware captures, and 0–2 fragment
+   chips. Chips are per-tab and OPTIONAL (owner review, 2.2a amendments): a
+   chip exists only where a real crop tells that tab's story — a stat that
+   merely repeats the adjacent capture's visible content, or a stat from the
+   wrong story (roster counts on a templates tab), is worse than no chip.
+   Index-coupled to t.features.tabs for the translatable strings. (The pill
+   icons died with the pills in the D28 progress-underline restyle.) */
+const TAB_META: {
+  id: string;
+  url: string;
+  shotName: ShotName;
+  phonePip: ShotName;
+  fragments: Fragment[];
+  /** Anchor the panel's 21/10 crop to the capture's bottom instead of the
+      default top (the HowItWorks `center` flag pattern). */
+  cropBottom?: boolean;
+}[] = [
   {
     id: "clients",
-    icon: (
-      <>
-        <circle cx="9" cy="7.5" r="3.5" />
-        <path d="M3 19.5c0-3 2.7-5 6-5s6 2 6 5" />
-        <path d="M16 4.6a3.5 3.5 0 0 1 0 5.8M17.5 14.7c2.1.6 3.5 2.2 3.5 4.8" />
-      </>
-    ),
-    url: "wazen.fit/clients",
-    primarySrc: "/screenshots/Coach-Client_Tab.png",
-    secondary: { src: "/screenshots/Coach-Client-VIEW.png", width: 1907, height: 910 },
+    url: "app.wazen.fit/clients",
+    shotName: "coachClients",
+    phonePip: "clientMobileHome",
+    fragments: [FRAGMENTS.roster, FRAGMENTS.atRisk],
   },
   {
     id: "check-ins",
-    icon: (
-      <>
-        <path d="M9 5H7a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2h-2" />
-        <rect x="9" y="3" width="6" height="4" rx="1" />
-        <path d="m9 13.5 2 2 4-4.5" />
-      </>
-    ),
-    url: "wazen.fit/dashboard",
-    primarySrc: "/screenshots/Coach-Dashboard.png",
-    secondary: { src: "/screenshots/Coach-Client-VIEW-Check-ins.png", width: 1897, height: 907 },
+    url: "app.wazen.fit/dashboard",
+    /* D40: coach view of a client's check-ins — the copy tells a coach
+       story ("you review everything from one organized queue"); the old
+       client-view capture contradicted it. URL mismatch resolves at the
+       2.3 re-capture (ledger note). */
+    shotName: "coachViewCheckin",
+    phonePip: "clientMobileCheckin",
+    /* the approved Stage-2 mock pairing */
+    fragments: [FRAGMENTS.avgAdherence, FRAGMENTS.weight],
   },
   {
     id: "progress",
-    icon: (
-      <>
-        <path d="m3 16.5 5.5-5.5 4 4L21 7" />
-        <path d="M15.5 7H21v5.5" />
-      </>
-    ),
-    url: "wazen.fit/progress",
-    primarySrc: "/screenshots/Client-Progress-Tab.png",
-    secondary: { src: "/screenshots/Coach-Analytics-Tab1.png", width: 1906, height: 909 },
+    url: "app.wazen.fit/progress",
+    /* D40 + addendum (2.2a.2): coach view of a client's progress,
+       View_Client_Progress_2, BOTTOM-anchored so the visible panel region
+       is the "Adherence & Wellness Averages" card (owner reference crop);
+       the Lightbox still opens the full capture. Holds for EN and AR —
+       both captures keep the card in their bottom region. URL mismatch
+       resolves at the 2.3 re-capture (ledger note). */
+    shotName: "coachViewProgress",
+    phonePip: "clientMobileProgress",
+    cropBottom: true,
+    /* Plan Adherence stays the ONLY chip on this tab. Durable rule, checked
+       against every capture this slot has pointed at: the chip may not
+       repeat a stat visible in the panel crop, and the roster-wide plan-
+       adherence stat (from coachAnalytics) appears in none of them — the
+       adherence bars visible here are per-client averages, a different
+       stat that shares only the theme. If this slot's capture changes
+       again, re-run that test before touching the chip. */
+    fragments: [FRAGMENTS.planAdherence],
   },
   {
     id: "plans",
-    icon: (
-      <>
-        <rect x="3.5" y="3.5" width="7" height="7" rx="1.5" />
-        <rect x="13.5" y="3.5" width="7" height="7" rx="1.5" />
-        <rect x="3.5" y="13.5" width="7" height="7" rx="1.5" />
-        <rect x="13.5" y="13.5" width="7" height="7" rx="1.5" />
-      </>
-    ),
-    url: "wazen.fit/templates",
-    primarySrc: "/screenshots/Coach-Template-Tab.png",
-    secondary: { src: "/screenshots/Coach-Client-VIEW-Workout.png", width: 1902, height: 908 },
+    url: "app.wazen.fit/templates",
+    shotName: "coachTemplates",
+    phonePip: "clientMobilePlans",
+    /* roster-count chip removed — a roster stat on a templates story */
+    fragments: [FRAGMENTS.planAdherence],
+  },
+  {
+    id: "messaging",
+    url: "app.wazen.fit/messages",
+    /* C.2a addition beyond the approved 8-entry mapping: the new capture
+       set includes Coach Messages_Tab, so the desktop chat skeleton is
+       retired (flagged in the pass report). */
+    shotName: "coachMessages",
+    phonePip: "clientMobileMessages",
+    /* no chips — no analytics stat is honestly part of the messaging story;
+       the scene composes with the wash/ghost/browser/phone alone */
+    fragments: [],
   },
 ];
 
-function TwoWayArrow() {
+/* Ghost chapter numbers are Latin digits in both locales (D12 app digit
+   convention) and purely decorative. */
+const GHOST_NUMBERS = ["01", "02", "03", "04", "05"];
+
+/* Animated connector between the coach dashboard and the client app:
+   arrowheads at both ends and dots flowing along the line — “data syncing”
+   in both directions. Static dashed line under prefers-reduced-motion.
+   Vertical (rotated) when the grid stacks on mobile. */
+function SyncConnector() {
+  const reduceMotion = useReducedMotion();
   return (
-    <svg
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="1.8"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-      className="mx-auto size-6 rotate-90 text-primary/40 sm:rotate-0"
-      aria-hidden
-    >
-      <path d="m7 8-4 4 4 4M17 8l4 4-4 4M3 12h18" />
-    </svg>
+    <div className="flex h-28 items-center justify-center sm:h-auto" aria-hidden>
+      <svg
+        viewBox="0 0 120 24"
+        fill="none"
+        className="w-24 rotate-90 text-primary sm:w-28 sm:rotate-0"
+      >
+        {/* End arrowheads */}
+        <path
+          d="m12 6-8 6 8 6M108 6l8 6-8 6"
+          stroke="currentColor"
+          strokeWidth="2.5"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          opacity="0.7"
+        />
+        {/* Rail */}
+        <path
+          d="M8 12h104"
+          stroke="currentColor"
+          strokeWidth="2"
+          strokeLinecap="round"
+          strokeDasharray={reduceMotion ? "4 5" : undefined}
+          opacity="0.3"
+        />
+        {/* Flowing dots (skipped under reduced motion) */}
+        {!reduceMotion &&
+          [0, 0.7, 1.4].map((delay) => (
+            <motion.circle
+              key={delay}
+              r="3.2"
+              cy="12"
+              fill="currentColor"
+              initial={{ cx: 14, opacity: 0 }}
+              animate={{ cx: [14, 106], opacity: [0, 1, 1, 0] }}
+              transition={{
+                repeat: Infinity,
+                duration: 2.1,
+                delay,
+                ease: "linear",
+              }}
+            />
+          ))}
+      </svg>
+    </div>
   );
 }
 
 export default function Features() {
   const { t, lang } = useLanguage();
   const [activeId, setActiveId] = useState(TAB_META[0].id);
+  /* Monotonic activation counter — keys the active rail's fill span so every
+     activation remounts a fresh span filling from 0 (the hero rail mechanic,
+     Pass 2.1). Structural number, never a translated string (learning #1). */
+  const [cycle, setCycle] = useState(0);
+  /* First user interaction permanently stops the auto-advance (D21). */
+  const [interacted, setInteracted] = useState(false);
   const tabRefs = useRef<(HTMLButtonElement | null)[]>([]);
+  /* In-view gate anchored to the TABLIST, not the tall section: at 390px the
+     composed scene can exceed several viewports, making a section-level
+     `amount` threshold unreachable — the short tablist is visible exactly
+     when the tabs are, so the dwell runs while the user can see the rails
+     and pauses once they scroll into/past the panel (deliberate: never swap
+     a panel under a reader). */
+  const tablistRef = useRef<HTMLDivElement | null>(null);
+  const inView = useInView(tablistRef);
+  const reducedMotion = useReducedMotion();
+
+  const running = inView && !interacted && !reducedMotion;
 
   const found = TAB_META.findIndex((tab) => tab.id === activeId);
   const activeIndex = found === -1 ? 0 : found;
   const meta = TAB_META[activeIndex];
   const text = t.features.tabs[activeIndex];
+  const primary = getShot(meta.shotName, lang);
+  const coachDash = getShot("coachDashboard", lang);
+
+  const selectTab = (i: number, byUser: boolean) => {
+    setActiveId(TAB_META[i].id);
+    if (byUser) setInteracted(true);
+    setCycle((c) => c + 1);
+  };
+
+  /* Auto-advance: the rail fill IS the timer — the tab advances exactly as
+     the active rail completes (dwell = fill duration). Re-runs on every
+     `cycle` bump; only scheduled while running. Reduced motion: never runs
+     (D21 — manual tabs only). */
+  useEffect(() => {
+    if (!running) return;
+    const id = setTimeout(() => {
+      setActiveId(TAB_META[(activeIndex + 1) % TAB_META.length].id);
+      setCycle((c) => c + 1);
+    }, DWELL_MS);
+    return () => clearTimeout(id);
+  }, [cycle, running, activeIndex]);
+
+  /* Scrolling back to the tabs restarts the dwell from 0 with no extra
+     effect: `running` flipping true re-runs the timer effect (fresh full
+     DWELL_MS timeout) AND remounts the animated fill span (it only renders
+     while running, so it mounts back at scaleX 0) — rail and timer restart
+     in sync, and the paused static-full rail is never seen mid-swap because
+     the swap happens off-screen. */
 
   /* Slide follows reading direction: LTR enters from the right, RTL from
      the left. */
@@ -104,7 +291,7 @@ export default function Features() {
     e.preventDefault();
     const delta = e.key === "ArrowRight" ? 1 : -1;
     const next = (activeIndex + delta + TAB_META.length) % TAB_META.length;
-    setActiveId(TAB_META[next].id);
+    selectTab(next, true);
     tabRefs.current[next]?.focus();
   };
 
@@ -126,11 +313,16 @@ export default function Features() {
           whileInView="visible"
           viewport={viewport}
         >
+          {/* D28: pills → progress-underline tabs. Text-only labels; the
+              3px rail under the active tab fills sage over the dwell and
+              doubles as the auto-advance timer. Keyboard/ARIA semantics
+              unchanged from the pill era. */}
           <div
+            ref={tablistRef}
             role="tablist"
             aria-label="Wazen features"
             onKeyDown={onTablistKeyDown}
-            className="mt-12 flex gap-2 overflow-x-auto pb-1 md:justify-center"
+            className="mt-12 flex gap-6 overflow-x-auto pb-1 md:justify-center md:gap-9"
           >
             {TAB_META.map((tab, i) => {
               const selected = tab.id === activeId;
@@ -145,26 +337,39 @@ export default function Features() {
                   aria-selected={selected}
                   aria-controls={`panel-${tab.id}`}
                   tabIndex={selected ? 0 : -1}
-                  onClick={() => setActiveId(tab.id)}
-                  className={`flex shrink-0 cursor-pointer items-center gap-2 rounded-pill px-5 py-2.5 text-sm font-medium transition-colors ${
-                    selected
-                      ? "bg-primary text-white"
-                      : "text-ink/60 hover:bg-primary/5 hover:text-primary"
+                  onClick={() => selectTab(i, true)}
+                  className={`relative shrink-0 cursor-pointer px-1 pb-3 pt-1 font-display text-sm font-semibold transition-colors ${
+                    selected ? "text-ink" : "text-ink/40 hover:text-ink/70"
                   }`}
                 >
-                  <svg
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    strokeWidth="1.8"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    className="size-4"
-                    aria-hidden
-                  >
-                    {tab.icon}
-                  </svg>
                   {t.features.tabs[i].label}
+                  {/* Exactly ONE rail is ever non-empty (hero mechanic): the
+                      fill span exists only on the selected tab. While the
+                      timer runs it remounts per activation (key={cycle}) and
+                      fills 0→1 over the dwell; when stopped (interaction /
+                      reduced motion / out of view) it's a static full rail.
+                      Outgoing rails empty instantly on unmount; a mid-fill
+                      click restarts from 0. */}
+                  <span
+                    aria-hidden
+                    className="absolute inset-x-0 bottom-0 h-[3px] rounded-pill bg-ink/8"
+                  >
+                    {selected &&
+                      (running ? (
+                        <motion.span
+                          key={cycle}
+                          initial={{ scaleX: 0 }}
+                          animate={{ scaleX: 1 }}
+                          transition={{
+                            duration: DWELL_MS / 1000,
+                            ease: "linear",
+                          }}
+                          className="absolute inset-0 origin-left rounded-pill bg-secondary-dark rtl:origin-right"
+                        />
+                      ) : (
+                        <span className="absolute inset-0 rounded-pill bg-secondary-dark" />
+                      ))}
+                  </span>
                 </button>
               );
             })}
@@ -187,55 +392,94 @@ export default function Features() {
                   <p className="mt-3 text-body text-ink/60">{text.body}</p>
                 </div>
 
-                <div className="relative mt-8">
+                {/* Composed scene (D28): teal-mist wash offset to the end
+                    side · ghost chapter number · browser capture overlapping
+                    the wash's START edge · phone breaking the wash's BOTTOM
+                    edge (wash edge only — off-viewport bleed is CTA-
+                    exclusive, §6) · two real-capture fragment chips. */}
+                <div className="relative mt-10 pb-16 sm:pb-24">
+                  <div
+                    aria-hidden
+                    className="absolute bottom-6 end-0 top-0 start-8 rounded-[28px] border border-primary/8 bg-linear-135 from-primary-light to-secondary-light sm:start-[16%]"
+                  />
+                  <div
+                    aria-hidden
+                    className="absolute -top-10 end-2 z-[1] hidden select-none font-display text-[10rem] font-extrabold leading-none text-primary/5 sm:block"
+                  >
+                    {GHOST_NUMBERS[activeIndex]}
+                  </div>
+
                   <motion.div
                     whileHover={{ scale: 1.03, y: -4 }}
                     transition={{ duration: 0.25, ease: "easeOut" }}
-                    className="w-full"
+                    className="relative z-[2] w-full sm:w-[72%]"
                   >
                     <BrowserFrame url={meta.url}>
                       <Lightbox
-                        src={meta.primarySrc}
+                        src={primary.src}
                         alt={text.primaryAlt}
-                        width={1905}
-                        height={910}
+                        width={primary.width}
+                        height={primary.height}
                         className="relative aspect-[21/10] w-full"
                       >
                         <Image
-                          src={meta.primarySrc}
+                          src={primary.src}
                           alt={text.primaryAlt}
                           fill
-                          sizes="(min-width: 1024px) 896px, calc(100vw - 48px)"
-                          className="object-cover object-top"
+                          sizes="(min-width: 1024px) 645px, calc(100vw - 48px)"
+                          className={`object-cover dark:opacity-90 ${
+                            meta.cropBottom ? "object-bottom" : "object-top"
+                          }`}
                         />
                       </Lightbox>
                     </BrowserFrame>
                   </motion.div>
 
-                  {/* PiP secondary overhangs the frame by 40px; the caption
-                      below clears it via sm:mt-16. */}
-                  <Lightbox
-                    src={meta.secondary.src}
-                    alt={text.secondaryAlt}
-                    width={meta.secondary.width}
-                    height={meta.secondary.height}
-                    className="group absolute -bottom-10 end-4 hidden w-[38%] max-w-xs cursor-pointer overflow-hidden rounded-xl border border-primary/10 bg-surface p-1.5 shadow-lg sm:block"
-                  >
-                    <Image
-                      src={meta.secondary.src}
+                  {/* Breakout phone — crosses the wash's bottom edge. Same
+                      lightbox behavior as everywhere (PhoneShot), and the
+                      standard PhoneFrame 9/19 window on every tab (D37).
+                      Note: the Plans capture's own mid-screen footer is a
+                      capture defect, not a crop defect — see the 2.2a
+                      amendment report / re-capture ledger. */}
+                  <div className="absolute bottom-0 end-[5%] z-[3] hidden w-[20%] min-w-[110px] max-w-[180px] sm:block">
+                    <PhoneShot
+                      name={meta.phonePip}
                       alt={text.secondaryAlt}
-                      width={meta.secondary.width}
-                      height={meta.secondary.height}
-                      className="h-auto w-full rounded-lg"
+                      sizes="180px"
                     />
-                    <span
-                      aria-hidden
-                      className="pointer-events-none absolute inset-0 rounded-xl ring-2 ring-inset ring-primary/0 transition group-hover:ring-primary/40"
-                    />
-                  </Lightbox>
+                  </div>
+
+                  {/* Fragment chips — product register, staggered after the
+                      frame; hidden on mobile (no mock exists — the 390px
+                      screenshots are the decision surface, D28 review). */}
+                  {meta.fragments.map((frag, i) => (
+                    <motion.div
+                      key={i}
+                      initial={{ opacity: 0, y: 24 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{
+                        duration: 0.65,
+                        delay: 0.25 + i * 0.12,
+                        ease: [0.16, 1, 0.3, 1],
+                      }}
+                      className={`absolute z-[4] hidden lg:block ${
+                        i === 0
+                          ? "-top-7 end-[22%] w-[230px]"
+                          : "bottom-24 -start-4 w-[220px]"
+                      }`}
+                    >
+                      <CaptureFragment
+                        name={frag.shotName}
+                        region={frag.region}
+                        aspect={frag.aspect}
+                        sizes="1100px"
+                        className="rounded-2xl border border-primary/8 bg-surface shadow-lg"
+                      />
+                    </motion.div>
+                  ))}
                 </div>
 
-                <p className="mt-6 text-center text-caption text-ink/55 sm:mt-16">
+                <p className="mt-6 text-center text-caption text-ink/55">
                   {text.caption}
                 </p>
               </motion.div>
@@ -250,7 +494,7 @@ export default function Features() {
           viewport={viewport}
           className="mx-auto mt-20 max-w-4xl"
         >
-          <div className="grid items-center gap-3 sm:grid-cols-[1fr_auto_1fr] sm:gap-4">
+          <div className="grid items-center gap-4 sm:grid-cols-[1fr_auto_auto] sm:gap-6">
             <div className="rounded-card border border-primary/10 bg-surface p-3 shadow-sm">
               <p className="mb-2 text-caption font-medium text-ink/70">
                 {t.features.coachLabel}
@@ -260,47 +504,35 @@ export default function Features() {
                 transition={{ duration: 0.25, ease: "easeOut" }}
               >
               <Lightbox
-                src="/screenshots/Coach-Dashboard.png"
+                src={coachDash.src}
                 alt={t.features.coachLabel}
-                width={1905}
-                height={910}
+                width={coachDash.width}
+                height={coachDash.height}
                 className="w-full rounded-lg"
               >
                 <Image
-                  src="/screenshots/Coach-Dashboard.png"
+                  src={coachDash.src}
                   alt={t.features.coachLabel}
-                  width={1905}
-                  height={910}
-                  className="h-auto w-full rounded-lg"
+                  width={coachDash.width}
+                  height={coachDash.height}
+                  sizes="(min-width: 1000px) 600px, (min-width: 640px) calc(100vw - 320px), calc(100vw - 48px)"
+                  className="h-auto w-full rounded-lg dark:opacity-90"
                 />
               </Lightbox>
               </motion.div>
             </div>
-            <TwoWayArrow />
-            <div className="rounded-card border border-primary/10 bg-surface p-3 shadow-sm">
-              <p className="mb-2 text-caption font-medium text-ink/70">
+            <SyncConnector />
+            <div className="flex flex-col items-center gap-2 justify-self-center">
+              <div className="w-36 md:w-40">
+                <PhoneShot
+                  name="clientMobileHome"
+                  alt={t.features.clientLabel}
+                  sizes="160px"
+                />
+              </div>
+              <p className="text-caption font-medium text-ink/70">
                 {t.features.clientLabel}
               </p>
-              <motion.div
-                whileHover={{ scale: 1.03 }}
-                transition={{ duration: 0.25, ease: "easeOut" }}
-              >
-              <Lightbox
-                src="/screenshots/Client-Dashboard-Tab.png"
-                alt={t.features.clientLabel}
-                width={1905}
-                height={910}
-                className="w-full rounded-lg"
-              >
-                <Image
-                  src="/screenshots/Client-Dashboard-Tab.png"
-                  alt={t.features.clientLabel}
-                  width={1905}
-                  height={910}
-                  className="h-auto w-full rounded-lg"
-                />
-              </Lightbox>
-              </motion.div>
             </div>
           </div>
           <p className="mt-5 text-center text-caption text-ink/55">

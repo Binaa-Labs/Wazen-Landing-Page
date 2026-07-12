@@ -39,3 +39,12 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# review screenshots (session artifacts, never shipped)
+/_preview/
+
+# photo source originals (optimized WebPs in public/photos/ are what ships)
+/_photo-originals/
+
+# Windows folder artifacts
+desktop.ini

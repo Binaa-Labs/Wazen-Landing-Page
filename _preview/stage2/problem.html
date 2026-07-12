@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Stage 2 Mockup — Problem (chaos → calm split)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@500;600;700&family=Inter:wght@400;500&family=Tajawal:wght@800&display=swap" rel="stylesheet">
+<style>
+  /* Wazen tokens (mirror of globals.css) */
+  :root {
+    --primary: hsl(186, 21%, 26%);
+    --primary-dark: hsl(186, 21%, 14%);
+    --primary-darker: hsl(186, 21%, 10%);
+    --sage: hsl(99, 22%, 72%);
+    --sage-pale: hsl(99, 28%, 84%);
+    --sage-dark: hsl(99, 20%, 42%);
+    --error: hsl(0, 75%, 45%);
+    --ink: hsl(0, 0%, 5%);
+    --bg: hsl(0, 0%, 95%);
+    --surface: hsl(0, 0%, 100%);
+    --font-display: "Outfit", sans-serif;
+    --font-body: "Inter", sans-serif;
+    --font-arabic: "Tajawal", sans-serif;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: var(--font-body); background: var(--bg); color: var(--ink); -webkit-font-smoothing: antialiased; }
+
+  /* ── Problem: dark band · F-2 duotone anchors the chaos half · sage
+        glow behind the calm half · ghost wordmark stays ─────────────── */
+  .problem { position: relative; overflow: hidden; background: var(--primary-dark); padding: 96px 0 110px; color: #fff; }
+  .photo-half { position: absolute; inset: 0 45% 0 0; }
+  .photo-half img { width: 100%; height: 100%; object-fit: cover; opacity: .16; }
+  .photo-half .tint { position: absolute; inset: 0; background: hsla(186,40%,20%,.30); mix-blend-mode: color; }
+  .photo-fade { position: absolute; inset: 0; background: linear-gradient(to right, hsla(186,21%,14%,.30) 0%, hsla(186,21%,14%,.85) 38%, var(--primary-dark) 55%); }
+  .glow { position: absolute; right: -8%; top: 46%; width: 720px; height: 620px; border-radius: 50%; background: radial-gradient(closest-side, hsla(99,22%,60%,.13), transparent 70%); }
+  .ghost {
+    position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%);
+    font-family: var(--font-arabic); font-weight: 800;
+    font-size: clamp(10rem, 22vw, 18rem); line-height: 1;
+    color: rgba(255,255,255,.04); white-space: nowrap; pointer-events: none;
+  }
+
+  .inner { position: relative; z-index: 1; max-width: 1200px; margin: 0 auto; padding: 0 48px; }
+  .head { text-align: center; max-width: 760px; margin: 0 auto; }
+  .eyebrow { font-size: .75rem; font-weight: 600; letter-spacing: .1em; text-transform: uppercase; color: hsl(0,70%,72%); }
+  h2 { font-family: var(--font-display); font-size: 2.5rem; font-weight: 700; letter-spacing: -0.02em; margin-top: 14px; }
+  .lead { margin: 14px auto 0; color: rgba(255,255,255,.72); font-size: 1.02rem; line-height: 1.7; }
+
+  .canvas { display: grid; grid-template-columns: minmax(0, 1fr) 88px minmax(0, 1.05fr); align-items: center; margin-top: 72px; }
+
+  .col-label { font-family: var(--font-display); font-size: .72rem; font-weight: 600; letter-spacing: .1em; text-transform: uppercase; margin-bottom: 22px; }
+  .chaos .col-label { color: hsl(0,70%,72%); }
+  .calm .col-label { color: var(--sage-pale); }
+
+  /* Chaos field: the oldWay copy as scattered notes — graphic treatment
+     of existing copy, NOT invented UI */
+  .notes { position: relative; }
+  .note {
+    background: rgba(255,255,255,.94); color: var(--ink);
+    border-radius: 12px; padding: 16px 18px; width: 78%;
+    box-shadow: 0 20px 48px hsla(186,21%,6%,.45);
+  }
+  .note .t { display: flex; align-items: center; gap: 8px; font-family: var(--font-display); font-weight: 600; font-size: .9rem; }
+  .note .t::before { content: ""; width: 8px; height: 8px; border-radius: 50%; background: var(--error); flex: none; }
+  .note .b { margin-top: 5px; font-size: .8rem; line-height: 1.5; color: hsla(0,0%,5%,.6); }
+  .note:nth-child(1) { transform: rotate(-4deg); }
+  .note:nth-child(2) { transform: rotate(2.5deg); margin: -6px 0 0 auto; }
+  .note:nth-child(3) { transform: rotate(-2deg); margin-top: -6px; }
+  .note:nth-child(4) { transform: rotate(3.5deg); margin: -6px 0 0 auto; }
+
+  /* Connector: chaos converges into one system (drawLine motion in build) */
+  .flow { position: relative; height: 100%; min-height: 300px; }
+  .flow svg { position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%); overflow: visible; }
+
+  /* Calm zone: ONE real capture fragment — the attention queue — plus the
+     wazenWay rows */
+  .queue-frame {
+    position: relative; border-radius: 18px; overflow: hidden;
+    border: 1px solid hsla(99,22%,72%,.4);
+    box-shadow: 0 0 0 6px hsla(99,22%,72%,.08), 0 32px 64px hsla(186,21%,6%,.5);
+    background-color: #fff; background-repeat: no-repeat;
+    background-image: url("../../public/Wazen-Screenshots/Coach%20Dashboard/Desktop/en/Dashboard_Tab.png");
+    background-size: 250% auto; background-position: 37.5% 60%;
+    height: 280px;
+  }
+  .rows { margin-top: 26px; display: grid; gap: 12px; }
+  .row { display: flex; align-items: baseline; gap: 12px; font-size: .88rem; }
+  .row .tick { align-self: center; width: 22px; height: 22px; flex: none; border-radius: 50%; background: hsla(99,22%,72%,.16); color: var(--sage); display: grid; place-items: center; font-size: .7rem; }
+  .row b { font-family: var(--font-display); font-weight: 600; white-space: nowrap; }
+  .row span { color: rgba(255,255,255,.6); font-size: .82rem; }
+
+  .mocknote { background: var(--primary-darker); color: rgba(255,255,255,.55); font-size: .72rem; padding: 12px 48px; text-align: center; letter-spacing: .04em; }
+
+  /* ── Mobile: chaos stack → down-connector → calm ─────────────────── */
+  @media (max-width: 640px) {
+    html, body { max-width: 100%; overflow-x: hidden; }
+    .problem { padding: 64px 0 80px; }
+    .inner { padding: 0 20px; }
+    h2 { font-size: 1.8rem; }
+    .photo-half { inset: 0 0 62% 0; }
+    .photo-fade { background: linear-gradient(to bottom, hsla(186,21%,14%,.30) 0%, hsla(186,21%,14%,.85) 24%, var(--primary-dark) 38%); }
+    .canvas { grid-template-columns: 1fr; margin-top: 48px; }
+    .note { width: 88%; }
+    .flow { min-height: 84px; margin: 18px 0; }
+    .flow svg { transform: translate(-50%, -50%) rotate(90deg); }
+    .queue-frame { height: 220px; background-size: 255% auto; background-position: 38.5% 60%; }
+    .mocknote { padding: 12px 20px; }
+  }
+</style>
+</head>
+<body>
+
+<section class="problem">
+  <div class="photo-half"><img src="../../public/photos/f-2.webp" alt=""><div class="tint"></div></div>
+  <div class="photo-fade"></div>
+  <div class="glow"></div>
+  <div class="ghost">وازن</div>
+
+  <div class="inner">
+    <div class="head">
+      <div class="eyebrow">The scattered-tools problem</div>
+      <h2>The problem isn&rsquo;t your coaching — it&rsquo;s your tools</h2>
+      <p class="lead">When clients, plans, and check-ins live across WhatsApp, spreadsheets, and PDFs, you become a full-time admin. Wazen replaces the scattered setup with one organized system.</p>
+    </div>
+
+    <div class="canvas">
+      <div class="chaos">
+        <div class="col-label">The Old Way (Scattered Tools)</div>
+        <div class="notes">
+          <div class="note"><div class="t">Living in your DMs</div><div class="b">Client check-ins buried in endless WhatsApp chats</div></div>
+          <div class="note"><div class="t">Plans in spreadsheets &amp; PDFs</div><div class="b">Files clients lose, forget, or can&rsquo;t open</div></div>
+          <div class="note"><div class="t">Chasing check-ins manually</div><div class="b">Texting every client individually</div></div>
+          <div class="note"><div class="t">No clear view of progress</div><div class="b">Results scattered across notes and sheets</div></div>
+        </div>
+      </div>
+
+      <div class="flow">
+        <svg width="88" height="120" viewBox="0 0 88 120" fill="none">
+          <path d="M4 12 C 40 12, 44 60, 84 60" stroke="hsla(99,22%,72%,.5)" stroke-width="2" stroke-dasharray="3 6" />
+          <path d="M4 108 C 40 108, 44 60, 84 60" stroke="hsla(99,22%,72%,.5)" stroke-width="2" stroke-dasharray="3 6" />
+          <path d="M4 60 L 84 60" stroke="hsl(99,22%,72%)" stroke-width="2.5" />
+          <path d="M76 53 L 85 60 L 76 67" stroke="hsl(99,22%,72%)" stroke-width="2.5" fill="none" stroke-linecap="round" stroke-linejoin="round" />
+        </svg>
+      </div>
+
+      <div class="calm">
+        <div class="col-label">The Wazen Way (One System)</div>
+        <div class="queue-frame"></div>
+        <div class="rows">
+          <div class="row"><span class="tick">✓</span><b>Everything in one place</b><span>Clients, plans, check-ins, progress, messages</span></div>
+          <div class="row"><span class="tick">✓</span><b>Plans in the client app</b><span>Clients follow them clearly in their own app</span></div>
+          <div class="row"><span class="tick">✓</span><b>Structured check-ins</b><span>Review them all from one dashboard</span></div>
+          <div class="row"><span class="tick">✓</span><b>Progress you can actually see</b><span>Clear charts and summaries</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="mocknote">STAGE 2 MOCKUP — PROBLEM · chaos→calm split replaces the twin comparison cards · oldWay copy as scattered notes (graphic treatment, not invented UI) converging via drawLine into ONE real fragment: the attention-queue crop of the current dashboard capture (“keeps current — fragment”) · F-2 duotone anchors the chaos half · sage glow behind the calm half · ghost wordmark stays · static render</div>
+
+</body>
+</html>

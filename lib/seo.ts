@@ -26,7 +26,9 @@ export function buildJsonLd(locale: Locale) {
     "@id": `${SITE_URL}/#organization`,
     name: "Binaa Labs",
     url: SITE_URL,
-    logo: `${SITE_URL}/icon`,
+    /* Stable PNG export of the mark (public/brand/, D23) — generated routes
+       like /icon can change content-type/shape; crawlers want a fixed file. */
+    logo: `${SITE_URL}/brand/wazen-logo-512.png`,
     email: "admin@binaalabs.com",
     foundingLocation: { "@type": "Country", name: "United Arab Emirates" },
     areaServed: AREA_SERVED,
@@ -46,7 +48,8 @@ export function buildJsonLd(locale: Locale) {
     "@id": `${SITE_URL}/#software`,
     name: "Wazen",
     applicationCategory: "BusinessApplication",
-    operatingSystem: "Web, iOS, Android",
+    /* The client app is a PWA — no native iOS/Android builds yet (D8). */
+    operatingSystem: "Web (PWA) — works on iOS & Android",
     url: pageUrl,
     inLanguage,
     description: DESCRIPTION[locale],

@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Stage 2 Mockup — Photo divider ① (Features → HowItWorks)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@500;600;700&family=Inter:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  /* Wazen tokens (mirror of globals.css) */
+  :root {
+    --primary: hsl(186, 21%, 26%);
+    --primary-dark: hsl(186, 21%, 14%);
+    --primary-darker: hsl(186, 21%, 10%);
+    --sage: hsl(99, 22%, 72%);
+    --ink: hsl(0, 0%, 5%);
+    --bg: hsl(0, 0%, 95%);
+    --font-display: "Outfit", sans-serif;
+    --font-body: "Inter", sans-serif;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: var(--font-body); background: var(--bg); color: var(--ink); -webkit-font-smoothing: antialiased; }
+
+  .context { padding: 28px 48px; text-align: center; color: hsla(0,0%,5%,.45); font-size: .8rem; }
+
+  /* ── Divider ①: pure <figure>, ~33vh, D-1 slot (placeholder until the
+        photo is sourced) under the shared duotone + scrim, one overlay
+        line reused from existing copy ─────────────────────────────────── */
+  .divider { position: relative; height: 340px; overflow: hidden; background: var(--primary-dark); }
+  .ph {
+    position: absolute; inset: 0; opacity: .85;
+    background:
+      repeating-linear-gradient(45deg, rgba(255,255,255,.05) 0 1px, transparent 1px 14px),
+      linear-gradient(120deg, hsla(186,21%,30%,.9) 0%, hsla(99,22%,45%,.35) 55%, hsla(186,21%,22%,.9) 100%);
+  }
+  .scrim { position: absolute; inset: 0; background: linear-gradient(to top, hsla(186,21%,10%,.75) 0%, hsla(186,21%,14%,.35) 45%, hsla(186,21%,14%,.55) 100%); }
+  .slot-chip {
+    position: absolute; top: 22px; inset-inline-end: 24px;
+    display: inline-flex; align-items: center; gap: 8px;
+    background: rgba(255,255,255,.15); color: rgba(255,255,255,.9);
+    border-radius: 100px; padding: 6px 14px; font-size: .72rem; font-weight: 600;
+  }
+  .line {
+    position: absolute; inset: auto 0 0 0; padding: 0 48px 44px;
+    max-width: 1200px; margin: 0 auto; color: #fff;
+  }
+  .line .rail { width: 44px; height: 3px; border-radius: 3px; background: var(--sage); margin-bottom: 16px; }
+  .line p { font-family: var(--font-display); font-size: 1.6rem; font-weight: 600; letter-spacing: -0.01em; max-width: 560px; }
+
+  .mocknote { background: var(--primary-darker); color: rgba(255,255,255,.55); font-size: .72rem; padding: 12px 48px; text-align: center; letter-spacing: .04em; }
+
+  @media (max-width: 640px) {
+    .divider { height: 260px; }
+    .line { padding: 0 20px 32px; }
+    .line p { font-size: 1.15rem; }
+    .mocknote { padding: 12px 20px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="context">… Features section (composed scene) ends here …</div>
+
+<figure class="divider">
+  <div class="ph"></div>
+  <div class="scrim"></div>
+  <div class="slot-chip">📷 D-1 · divider — man resting between sets, phone in hand (wide band crop, duotone)</div>
+  <div class="line">
+    <div class="rail"></div>
+    <p>The check-in queue — clients submit from their phone</p>
+  </div>
+</figure>
+
+<div class="context">… HowItWorks section (zigzag timeline) starts here …</div>
+
+<div class="mocknote">STAGE 2 MOCKUP — PHOTO DIVIDER ① · pure &lt;figure&gt; between Features and HowItWorks, restores people after ~3 UI viewports · D-1 brief (already in PHASE2-PHOTO-SOURCING) shown as a branded placeholder at true band aspect · overlay line reuses existing copy (features tab-2 caption) — no new strings · motion: photoReveal on the band, nothing else · static render</div>
+
+</body>
+</html>

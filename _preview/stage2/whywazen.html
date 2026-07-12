@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Stage 2 Mockup — Why Wazen (editorial collage)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@500;600;700&family=Inter:wght@400;500&family=Fraunces:ital,opsz,wght@1,9..144,400;1,9..144,500&display=swap" rel="stylesheet">
+<style>
+  /* Wazen tokens (mirror of globals.css) */
+  :root {
+    --primary: hsl(186, 21%, 26%);
+    --primary-dark: hsl(186, 21%, 14%);
+    --primary-darker: hsl(186, 21%, 10%);
+    --sage: hsl(99, 22%, 72%);
+    --sage-dark: hsl(99, 20%, 42%);
+    --ink: hsl(0, 0%, 5%);
+    --bg: hsl(0, 0%, 95%);
+    --surface: hsl(0, 0%, 100%);
+    --font-display: "Outfit", sans-serif;
+    --font-body: "Inter", sans-serif;
+    --font-serif: "Fraunces", Georgia, serif;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: var(--font-body); background: var(--bg); color: var(--ink); -webkit-font-smoothing: antialiased; }
+
+  .why { padding: 96px 48px 120px; max-width: 1200px; margin: 0 auto; }
+  .grid { display: grid; grid-template-columns: minmax(0, 44fr) minmax(0, 56fr); gap: 72px; align-items: start; }
+
+  /* ── Start column: editorial narrative — numbered pillars with the
+        hero's serif accent (AR: Tajawal 800 in sage per D18, no italic) ── */
+  .eyebrow { font-size: .75rem; font-weight: 600; letter-spacing: .1em; text-transform: uppercase; color: var(--sage-dark); }
+  h2 { font-family: var(--font-display); font-size: 2.4rem; font-weight: 700; letter-spacing: -0.02em; margin-top: 14px; }
+  .lead { margin-top: 14px; color: hsla(0,0%,5%,.6); font-size: .98rem; line-height: 1.7; }
+
+  .pillars { margin-top: 44px; display: grid; gap: 30px; }
+  .pillar { display: grid; grid-template-columns: 64px 1fr; gap: 18px; align-items: start; }
+  .pillar .n { font-family: var(--font-serif); font-style: italic; font-weight: 500; font-size: 2.4rem; line-height: 1; color: var(--sage-dark); padding-top: 2px; }
+  .pillar h3 { font-family: var(--font-display); font-size: 1.15rem; font-weight: 600; color: var(--primary); }
+  .pillar p { margin-top: 6px; font-size: .9rem; line-height: 1.65; color: hsla(0,0%,5%,.6); }
+
+  .bilingual { display: inline-flex; align-items: center; gap: 8px; margin-top: 38px; background: hsla(99,22%,72%,.22); color: var(--sage-dark); border-radius: 100px; padding: 8px 18px; font-size: .8rem; font-weight: 600; }
+  .bilingual .dot { width: 7px; height: 7px; border-radius: 50%; background: var(--sage-dark); }
+
+  /* ── End column: layered collage — F-7 duotone panel behind, coach
+        profile browser frame overlapping, founder pull-quote overlapping
+        the bottom edge ─────────────────────────────────────────────── */
+  .collage { position: relative; height: 742px; }
+  .photo { position: absolute; top: 0; inset-inline-end: 0; width: 62%; aspect-ratio: 4 / 5; border-radius: 24px; overflow: hidden; box-shadow: 0 24px 56px hsla(186,21%,10%,.16); }
+  .photo img { width: 100%; height: 100%; object-fit: cover; }
+  .photo .tint { position: absolute; inset: 0; background: hsla(186,40%,20%,.30); mix-blend-mode: color; }
+
+  .browser { position: absolute; top: 172px; inset-inline-start: 0; width: 72%; border-radius: 14px; overflow: hidden; background: #fff; box-shadow: 0 32px 64px hsla(186,21%,10%,.20); }
+  .browser-bar { display: flex; align-items: center; gap: 10px; padding: 10px 14px; background: #fff; border-bottom: 1px solid hsla(186,21%,26%,.12); }
+  .traffic { display: flex; gap: 6px; }
+  .traffic i { width: 10px; height: 10px; border-radius: 50%; }
+  .traffic i:nth-child(1) { background: hsl(2,68%,63%); }
+  .traffic i:nth-child(2) { background: hsl(41,79%,58%); }
+  .traffic i:nth-child(3) { background: hsl(122,29%,55%); }
+  .urlpill { background: hsl(180,7%,95%); border-radius: 100px; font-size: .7rem; color: hsla(0,0%,5%,.55); padding: 4px 26px; margin-inline-start: 6px; }
+  .browser img { width: 100%; display: block; aspect-ratio: 16 / 10; object-fit: cover; object-position: top; }
+  .collage-cap { position: absolute; bottom: 12px; inset-inline-start: 0; width: 27%; font-size: .74rem; color: hsla(0,0%,5%,.5); line-height: 1.55; }
+
+  .quote {
+    position: absolute; bottom: 0; inset-inline-end: 6%; width: 66%;
+    background: var(--surface); border-inline-start: 4px solid var(--sage);
+    border-radius: 18px; padding: 26px 28px;
+    box-shadow: 0 24px 56px hsla(186,21%,10%,.18);
+  }
+  .quote .eb { font-size: .68rem; font-weight: 600; letter-spacing: .1em; text-transform: uppercase; color: var(--sage-dark); }
+  .quote blockquote { margin-top: 10px; font-family: var(--font-serif); font-style: italic; font-size: 1.02rem; line-height: 1.65; color: hsla(0,0%,5%,.8); }
+  .quote .who { display: flex; align-items: center; gap: 10px; margin-top: 16px; }
+  .quote .av { width: 38px; height: 38px; border-radius: 50%; background: var(--primary); color: #fff; display: grid; place-items: center; font-family: var(--font-display); font-weight: 600; font-size: .8rem; }
+  .quote .who span { font-size: .8rem; color: hsla(0,0%,5%,.65); }
+
+  .mocknote { background: var(--primary-darker); color: rgba(255,255,255,.55); font-size: .72rem; padding: 12px 48px; text-align: center; letter-spacing: .04em; }
+
+  /* Mobile: narrative column then collage pieces stacked (photo → frame →
+     quote) — desktop is the decision surface for this mock */
+  @media (max-width: 640px) {
+    html, body { max-width: 100%; overflow-x: hidden; }
+    .why { padding: 56px 20px 72px; }
+    .grid { grid-template-columns: 1fr; gap: 44px; }
+    h2 { font-size: 1.8rem; }
+    .collage { height: auto; }
+    .photo, .browser, .quote { position: static; width: 100%; }
+    .browser { margin-top: 16px; }
+    .quote { margin-top: 16px; }
+    .collage-cap { position: static; width: 100%; margin-top: 10px; }
+    .mocknote { padding: 12px 20px; }
+  }
+</style>
+</head>
+<body>
+
+<section class="why">
+  <div class="grid">
+    <div>
+      <div class="eyebrow">Why Wazen</div>
+      <h2>Built around how coaches actually work</h2>
+      <p class="lead">Designed around real coaching workflows — clients, plans, check-ins, progress, and communication — for coaches across the UAE, GCC, and MENA, in both Arabic and English.</p>
+
+      <div class="pillars">
+        <div class="pillar">
+          <div class="n">01</div>
+          <div><h3>Free to run, forever</h3><p>Your first 5 active clients are free with the full core platform — no trial timer, no credit card.</p></div>
+        </div>
+        <div class="pillar">
+          <div class="n">02</div>
+          <div><h3>One system, not six tools</h3><p>Clients, plans, check-ins, progress, and messages replace WhatsApp threads, spreadsheets, PDFs, and reminders.</p></div>
+        </div>
+        <div class="pillar">
+          <div class="n">03</div>
+          <div><h3>Two sides, one platform</h3><p>A coach dashboard and a client app working as one connected system — in Arabic and English.</p></div>
+        </div>
+      </div>
+
+      <div class="bilingual"><span class="dot"></span>Arabic &amp; English — full right-to-left support</div>
+    </div>
+
+    <div class="collage">
+      <div class="photo"><img src="../../public/photos/f-7.webp" alt=""><div class="tint"></div></div>
+      <div class="browser">
+        <div class="browser-bar">
+          <div class="traffic"><i></i><i></i><i></i></div>
+          <div class="urlpill">app.wazen.fit/coach/karim</div>
+        </div>
+        <img src="../../public/Wazen-Screenshots/Coach%20Dashboard/Desktop/en/Public_Profile_Tab.png" alt="">
+      </div>
+      <div class="collage-cap">Coaches build a public profile clients can see — active clients, programs delivered, compliance rate, and experience.</div>
+      <div class="quote">
+        <div class="eb">Why we built this</div>
+        <blockquote>&ldquo;We built Wazen because coaching shouldn&rsquo;t mean living in WhatsApp threads and spreadsheets. Every coach deserves one calm, organized place to manage clients, deliver plans, and actually see progress — so the focus stays on coaching, not admin.&rdquo;</blockquote>
+        <div class="who"><span class="av">NS</span><span>Naser Shadid · Founder, Wazen</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="mocknote">STAGE 2 MOCKUP — WHY WAZEN · four stacked blocks become one editorial spread: numbered pillars with the hero&rsquo;s Fraunces-italic accent (AR = Tajawal 800 sage, D18) · collage: F-7 duotone panel (keeps current; hero stand-in duplication resolves in 2.3) + coach-profile frame (keeps current) + founder pull-quote overlapping (&ldquo;NS&rdquo; avatar until F-11) · static render</div>
+
+</body>
+</html>

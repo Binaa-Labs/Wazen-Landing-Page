@@ -1,7 +1,7 @@
 import type { MetadataRoute } from "next";
 
 const SITE_URL = "https://wazen.fit";
-const lastModified = new Date("2026-06-23");
+const lastModified = new Date("2026-07-07");
 
 export default function sitemap(): MetadataRoute.Sitemap {
   return [

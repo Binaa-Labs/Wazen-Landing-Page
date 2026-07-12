@@ -5,9 +5,20 @@ import LandingPage from "@/components/LandingPage";
 import { buildJsonLd } from "@/lib/seo";
 
 export const metadata: Metadata = {
-  title: "وازن — أدِر عملك التدريبي من مكان واحد منظّم",
+  /* Tab title owner-set to the bare brand (Pass 2.4, D52 scope extension);
+     og/twitter share titles keep the promise-led wording (D16). */
+  title: "وازن",
   description:
-    "وازن يجمع عملاءك وخططك ومتابعاتك وتقدّمهم ورسائلك في نظام واحد، مصمّم للمدربين في الإمارات والخليج والشرق الأوسط. مجاني لأول 5 عملاء.",
+    "منصة تدريب وبرنامج للمدربين يجمع عملاءك وخططك ومتابعاتك وتقدّم عملائك ورسائلك في نظام واحد — لمدربي اللياقة والتغذية في الإمارات والخليج والشرق الأوسط. مجاني لأول 5 عملاء.",
+  keywords: [
+    "منصة تدريب",
+    "تطبيق مدرب",
+    "إدارة العملاء",
+    "مدرب لياقة",
+    "مدرب الإمارات",
+    "coaching platform",
+    "coach app UAE",
+  ],
   alternates: {
     canonical: "https://wazen.fit/ar",
     languages: {
@@ -22,14 +33,8 @@ export const metadata: Metadata = {
       "مجاني لأول 5 عملاء. منصة واحدة للخطط والمتابعات والتقدّم والمراسلة.",
     url: "https://wazen.fit/ar",
     siteName: "Wazen",
-    images: [
-      {
-        url: "/opengraph-image",
-        width: 1200,
-        height: 630,
-        alt: "Wazen coaching platform preview",
-      },
-    ],
+    /* og:image is injected by app/(ar)/ar/opengraph-image.tsx (file
+       convention) — segment OG routes get hashed URLs, so never hardcode. */
     locale: "ar_AE",
     alternateLocale: "en_US",
     type: "website",
@@ -39,7 +44,7 @@ export const metadata: Metadata = {
     title: "وازن — منصة تدريب للمدربين في الإمارات والخليج",
     description:
       "مجاني لأول 5 عملاء. الخطط والمتابعات والتقدّم والمراسلة في مكان واحد.",
-    images: ["/twitter-image"],
+    /* twitter:image injected by app/(ar)/ar/twitter-image.tsx */
   },
 };
 
