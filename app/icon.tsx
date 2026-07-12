@@ -5,10 +5,10 @@ import { LOGO_LIGHT, LOGO_TEAL, MARK_PATH, MARK_RATIO, MARK_VIEWBOX } from "@/li
 export const size = { width: 512, height: 512 };
 export const contentType = "image/png";
 
-/* App icon: the real Wazen mark (teal colorway) on the light surface —
-   owner-set light-mode tile (Pass 2.4, D52 scope extension; supersedes the
-   teal tile + app/favicon.ico, deleted — this generated icon is the single
-   source). Drawn from the public/brand/ master set (D23). */
+/* App icon: the real Wazen mark (light colorway) on the logo teal — the
+   original teal tile, restored per owner ruling (supersedes the Pass 2.4
+   light-surface variant; app/favicon.ico stays deleted — this generated icon
+   is the single source). Drawn from the public/brand/ master set (D23). */
 export default function Icon() {
   const markWidth = 380;
   return new ImageResponse(
@@ -20,7 +20,7 @@ export default function Icon() {
           display: "flex",
           alignItems: "center",
           justifyContent: "center",
-          background: LOGO_LIGHT,
+          background: LOGO_TEAL,
         }}
       >
         <svg
@@ -28,7 +28,7 @@ export default function Icon() {
           width={markWidth}
           height={markWidth * MARK_RATIO}
         >
-          <path fill={LOGO_TEAL} d={MARK_PATH} />
+          <path fill={LOGO_LIGHT} d={MARK_PATH} />
         </svg>
       </div>
     ),

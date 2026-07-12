@@ -5,8 +5,8 @@ import { LOGO_LIGHT, LOGO_TEAL, MARK_PATH, MARK_RATIO, MARK_VIEWBOX } from "@/li
 export const size = { width: 180, height: 180 };
 export const contentType = "image/png";
 
-/* Apple touch icon — same light-mode tile as icon.tsx (Pass 2.4), with
-   safe-area padding so it reads well once iOS rounds the corners. */
+/* Apple touch icon — same teal tile as icon.tsx, with safe-area padding so
+   it reads well once iOS rounds the corners. */
 export default function AppleIcon() {
   const markWidth = 118;
   return new ImageResponse(
@@ -18,7 +18,7 @@ export default function AppleIcon() {
           display: "flex",
           alignItems: "center",
           justifyContent: "center",
-          background: LOGO_LIGHT,
+          background: LOGO_TEAL,
         }}
       >
         <svg
@@ -26,7 +26,7 @@ export default function AppleIcon() {
           width={markWidth}
           height={markWidth * MARK_RATIO}
         >
-          <path fill={LOGO_TEAL} d={MARK_PATH} />
+          <path fill={LOGO_LIGHT} d={MARK_PATH} />
         </svg>
       </div>
     ),
