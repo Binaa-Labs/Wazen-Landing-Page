@@ -20,7 +20,9 @@ const fraunces = Fraunces({
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://wazen.fit"),
-  title: "Wazen — Coaching Platform for Personal Trainers & Coaches",
+  /* Tab title owner-set to the bare brand (Pass 2.4, D52 scope extension);
+     og/twitter share titles keep the promise-led wording (D16). */
+  title: "Wazen",
   description:
     "Coaching platform & personal trainer software for the UAE, GCC & MENA. Clients, plans, check-ins, progress and messaging in one place. Free for 5 clients.",
   keywords: [

@@ -91,8 +91,6 @@ const en = {
       { title: "Structured check-ins", body: "Review them all from one dashboard" },
       { title: "Progress you can actually see", body: "Clear charts and summaries" },
     ],
-    photoAlt:
-      "A coach working late, buried in admin — head in hand over a desk with a phone, laptop, and paper notes",
   },
   features: {
     eyebrow: "Everything you need",
@@ -172,7 +170,7 @@ const en = {
     h2: "Your clients get a real app — included",
     description:
       "Every plan you assign lands in a clean app your clients open on their own phone: today's workout, macro targets, check-ins, and progress charts. It works on any phone, in Arabic or English.",
-    phones: ["Today's plan", "Weekly check-in", "Progress"],
+    phones: ["Today's plan", "Weekly check-in"],
     /* White-label claim (D34, Option A — verbatim; truth boundary: in-app
        branding only, never custom domains/emails/standalone apps) */
     whiteLabelCaption:
@@ -242,7 +240,7 @@ const en = {
           "20 active clients (up to 30)",
           "Priority support",
           "Standard progress report export",
-          "Scheduled messages",
+          "Basic branding customization",
           "Extra client bundles available",
         ],
         addOn: {
@@ -254,19 +252,18 @@ const en = {
       },
       {
         name: "Premium",
-        highlight: "50 active clients included · scale to 100+",
+        highlight: "50 active clients included · up to 100",
         features: [
           "Everything in Professional",
-          "50 active clients (scale to 100+)",
+          "50 active clients (up to 100)",
           "Highest priority support",
           "Advanced progress report export",
-          "Advanced automation",
-          "Suggested follow-up list",
-          "Basic branding customization",
+          "Larger client bundles (+25 and +50)",
+          "Longest data export window",
         ],
         addOn: {
-          USD: "+10 clients from $18/mo · up to +50 clients",
-          AED: "+10 clients from AED 65/mo · up to +50 clients",
+          USD: "+5 clients from $9/mo · bundles up to +50",
+          AED: "+5 clients from AED 33/mo · bundles up to +50",
         },
         cta: "Get started",
         note: "Full white-label branding — coming soon",
@@ -348,7 +345,7 @@ const en = {
       },
       {
         q: "What's the difference between the paid plans?",
-        a: "The main difference is active client capacity and a few advanced features. Starter is free for up to 5 clients. Professional ($49/mo) includes 20 active clients (up to 30 with add-ons), priority support, standard report export, and scheduled messages. Premium ($99/mo) includes 50 clients (scalable to 100+), advanced automation, suggested follow-up lists, and basic branding customization. Full plan comparison is in the pricing section above.",
+        a: "The main difference is active client capacity and a few advanced features. Starter is free for up to 5 clients. Professional ($49/mo) includes 20 active clients (up to 30 with add-ons), priority support, standard report export, and basic branding customization. Premium ($99/mo) includes 50 clients (up to 100), highest priority support, advanced report export, and larger client bundles. Full plan comparison is in the pricing section above.",
       },
     ],
   },
@@ -451,8 +448,6 @@ const ar: Dictionary = {
       { title: "متابعات منظّمة", body: "راجعها كلها من لوحة تحكم واحدة" },
       { title: "تقدّم تراه فعلًا", body: "رسوم بيانية وملخصات واضحة" },
     ],
-    photoAlt:
-      "مدرب يعمل حتى وقت متأخر غارقًا في المهام الإدارية — رأسه بين يديه وأمامه هاتف وحاسوب وأوراق",
   },
   features: {
     eyebrow: "كل ما تحتاجه",
@@ -530,7 +525,7 @@ const ar: Dictionary = {
     h2: "عملاؤك يحصلون على تطبيق حقيقي — مشمول في باقتك",
     description:
       "كل خطة تعيّنها تصل إلى تطبيق أنيق يفتحه عميلك على هاتفه: تمرين اليوم، وأهداف السعرات، والمتابعات، ورسوم التقدّم. يعمل على أي هاتف، بالعربية أو الإنجليزية.",
-    phones: ["خطة اليوم", "المتابعة الأسبوعية", "التقدّم"],
+    phones: ["خطة اليوم", "المتابعة الأسبوعية"],
     /* White-label claim (D34, Option A — verbatim) */
     whiteLabelCaption:
       "علامتك في الواجهة — يرى عملاؤك شعارك واسمك وألوانك داخل تطبيقهم.",
@@ -598,7 +593,7 @@ const ar: Dictionary = {
           "20 عميلًا نشطًا (حتى 30)",
           "دعم ذو أولوية",
           "تصدير تقارير التقدّم القياسية",
-          "رسائل مجدولة",
+          "تخصيص أساسي للعلامة",
           "حِزم عملاء إضافية متاحة",
         ],
         addOn: {
@@ -610,19 +605,18 @@ const ar: Dictionary = {
       },
       {
         name: "المتقدّمة",
-        highlight: "50 عميلًا نشطًا · توسّع إلى 100+",
+        highlight: "50 عميلًا نشطًا · حتى 100",
         features: [
           "كل ما في الاحترافية",
-          "50 عميلًا نشطًا (توسّع إلى 100+)",
+          "50 عميلًا نشطًا (حتى 100)",
           "دعم بأعلى أولوية",
           "تصدير تقارير تقدّم متقدّمة",
-          "أتمتة متقدّمة",
-          "قائمة متابعات مقترحة",
-          "تخصيص أساسي للعلامة",
+          "حِزم عملاء أكبر (+25 و+50)",
+          "أطول مهلة لتصدير البيانات",
         ],
         addOn: {
-          USD: "+10 عملاء من 18$/شهر · حتى +50 عميلًا",
-          AED: "+10 عملاء من AED 65/شهر · حتى +50 عميلًا",
+          USD: "+5 عملاء من 9$/شهر · حِزم حتى +50 عميلًا",
+          AED: "+5 عملاء من AED 33/شهر · حِزم حتى +50 عميلًا",
         },
         cta: "ابدأ الآن",
         note: "علامة بيضاء كاملة — قريبًا",
@@ -703,7 +697,7 @@ const ar: Dictionary = {
       },
       {
         q: "ما الفرق بين الباقات المدفوعة؟",
-        a: "الفرق الأساسي هو سعة العملاء النشطين وبعض المزايا المتقدّمة. المبتدئة مجانية حتى 5 عملاء. الاحترافية (49$/شهر) تشمل 20 عميلًا نشطًا (حتى 30 مع الإضافات)، ودعمًا ذا أولوية، وتصدير تقارير قياسي، ورسائل مجدولة. المتقدّمة (99$/شهر) تشمل 50 عميلًا (قابلة للتوسّع إلى 100+)، وأتمتة متقدّمة، وقوائم متابعات مقترحة، وتخصيصًا أساسيًا للعلامة. المقارنة الكاملة للباقات في قسم الأسعار أعلاه.",
+        a: "الفرق الأساسي هو سعة العملاء النشطين وبعض المزايا المتقدّمة. المبتدئة مجانية حتى 5 عملاء. الاحترافية (49$/شهر) تشمل 20 عميلًا نشطًا (حتى 30 مع الإضافات)، ودعمًا ذا أولوية، وتصدير تقارير قياسي، وتخصيصًا أساسيًا للعلامة. المتقدّمة (99$/شهر) تشمل 50 عميلًا (حتى 100)، ودعمًا بأعلى أولوية، وتصدير تقارير متقدّم، وحِزم عملاء أكبر. المقارنة الكاملة للباقات في قسم الأسعار أعلاه.",
       },
     ],
   },

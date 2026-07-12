@@ -5,7 +5,9 @@ import LandingPage from "@/components/LandingPage";
 import { buildJsonLd } from "@/lib/seo";
 
 export const metadata: Metadata = {
-  title: "وازن — منصة تدريب للمدربين في الإمارات والخليج",
+  /* Tab title owner-set to the bare brand (Pass 2.4, D52 scope extension);
+     og/twitter share titles keep the promise-led wording (D16). */
+  title: "وازن",
   description:
     "منصة تدريب وبرنامج للمدربين يجمع عملاءك وخططك ومتابعاتك وتقدّم عملائك ورسائلك في نظام واحد — لمدربي اللياقة والتغذية في الإمارات والخليج والشرق الأوسط. مجاني لأول 5 عملاء.",
   keywords: [

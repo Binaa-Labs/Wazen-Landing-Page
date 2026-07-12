@@ -15,7 +15,8 @@ type Currency = "USD" | "AED";
 
 /* AED prices are the fixed launch prices (not a live conversion of the
    3.6725 peg): 49→180, 99→365, 490→1,800, 990→3,635; add-on bundles
-   $12/$20/$18 → AED 45/75/65. Savings = 12× monthly − yearly per currency.
+   $12/$20 → AED 45/75 (Professional, D10) · $9 → AED 33 (Premium, 2.4 per
+   Billing_Final). Savings = 12× monthly − yearly per currency.
    Structural data, index-coupled to t.pricing.plans (addOn strings are
    per-currency in the dictionary). */
 const PLAN_META = [
