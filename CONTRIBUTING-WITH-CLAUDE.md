@@ -36,7 +36,7 @@ Rules baked into every prompt:
 
 ## 3 · Git & deployment discipline
 
-- All revamp/feature work happens on a feature branch (currently `feat/landing-revamp`). **Never commit to `main` directly** — main is production wazen.fit via Vercel auto-deploy.
+- All feature work happens on a feature branch. Phase 1 (`feat/landing-revamp`) and Phase 2 (`feat/phase-2-design`) both shipped — Phase 2 merged to `main` directly (`--no-ff`, merge `09dfaee`, July 2026, owner-approved); both branches are retained for history and receive no new work. New work starts a fresh branch off `main`. **Never commit to `main` directly** (docs-only follow-ups by explicit owner instruction are the sanctioned exception) — main is production wazen.fit via Vercel auto-deploy.
 - Every branch push produces a Vercel preview URL; use it for review.
 - Claude Code proposes commits; the developer approves. Use "Yes, and manually approve edits" in plan mode — never auto-accept (history: auto-accepted runs have made unintended changes).
 - Merge to main only when the full milestone is reviewed and approved.
@@ -64,7 +64,16 @@ Rules baked into every prompt:
 - **Design iterations resolve in one comprehensive prompt**, not incremental back-and-forth. Claude acts as design decision-maker rather than seeking approval per detail — but product/business decisions always go to the owner.
 - Motion elements must never be keyed by translated strings (i18n remount bug — see PROJECT.md learnings). Satori OG images need pre-broken Arabic lines. OG file paths are never hardcoded.
 
-## 7 · How to start a session
+## 7 · Process rules (Phase 2 learnings — binding)
+
+- **Two-gate approvals.** Screenshot/preview review is gate one; it is NOT a commit-go. A pass is not closed until the owner gives an explicit commit instruction — amendments can and do arrive between the shot review and the commit ruling. Never bundle "shots look right" into "commit now."
+- **Pre-build render gates.** Any composition that diverges by breakpoint, and any photo placement (new asset, crop change, scrim over photography), gets a minimal-wiring render set + owner verdict BEFORE the full build (the 2.3a hero precedent: the gate caught an unusable master before a full pass was built on it).
+- **Edit-tool only for source edits.** All programmatic repo-file edits go through the harness Edit tool. Shell-regex patches (sed/awk/python -c and equivalents) on repo files are banned — they have corrupted files here before. (`globals.css` is the one file edited by full rewrite instead of targeted replacement.)
+- **Diagnose before patching visual defects.** When something "looks wrong," first establish the actual mechanism (measure, bisect, compare computed styles), then propose fixes — the 2.2c.1 CTA-bleed diagnosis showed the obvious culprit (the bleed value) wasn't the cause, and patching it blind would have shipped the wrong fix.
+- **Plan approvals open with an unambiguous go.** An approval message leads with the go/no-go; conditions are framed as in-flight requirements ("do X as part of the pass"), never as post-hoc corrections discovered after implementation starts.
+- **Harness hygiene.** Screenshot/behavioral harnesses close browsers and servers in try/finally; check for and reuse an existing :3000 server instead of spawning new ones; every completion report ends with a leftover-process line (what's still running and why). History: a runaway harness once accumulated ~900 processes and crashed the machine.
+
+## 8 · How to start a session
 
 1. Paste this briefing.
 2. Get PROJECT.md content into context (paste it, or have Claude Code read it first thing).
