@@ -74,7 +74,6 @@ export default function Segments() {
     >
       <div className="mx-auto max-w-content">
         <SectionHeader
-          eyebrow={t.segments.eyebrow}
           title={t.segments.h2}
           description={t.segments.description}
         />

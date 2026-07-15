@@ -82,7 +82,6 @@ export default function HowItWorks() {
     >
       <div className="mx-auto max-w-content">
         <SectionHeader
-          eyebrow={t.how.eyebrow}
           title={t.how.h2}
           description={t.how.description}
         />

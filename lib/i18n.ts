@@ -44,7 +44,6 @@ const en = {
     close: "Close",
   },
   video: {
-    eyebrow: "See it in action",
     h2: "Two minutes inside Wazen",
     lead: "One tour: the coach dashboard, a client's day in the app, and what a check-in looks like from both sides.",
     /* Index-coupled to CHAPTERS in lib/video.ts — keep the order aligned. */
@@ -60,7 +59,6 @@ const en = {
       "A calm desk with a laptop and phone — poster frame for the Wazen product tour",
   },
   productProof: {
-    eyebrow: "The coach dashboard",
     h2: "Your whole practice, one screen",
     sub: "The dashboard your clients never see — and the app they live in. Everything below syncs in real time.",
   },
@@ -73,7 +71,6 @@ const en = {
     ],
   },
   problem: {
-    eyebrow: "The scattered-tools problem",
     h2: "The problem isn't your coaching — it's your tools",
     description:
       "When clients, plans, and check-ins live across WhatsApp, spreadsheets, and PDFs, you become a full-time admin. Wazen replaces the scattered setup with one organized system.",
@@ -93,7 +90,6 @@ const en = {
     ],
   },
   features: {
-    eyebrow: "Everything you need",
     h2: "One platform. Every tool your coaching practice needs.",
     description:
       "Stop stitching together apps. Wazen brings client management, plans, check-ins, progress tracking, and messaging into one organized system.",
@@ -146,7 +142,6 @@ const en = {
       "A coach dashboard and a client app — working as one connected system",
   },
   segments: {
-    eyebrow: "Who it's for",
     h2: "For every kind of coach",
     description:
       "Fitness, nutrition, or clinical practice — if you manage clients, plans, and check-ins, Wazen fits how you work.",
@@ -166,7 +161,6 @@ const en = {
     ],
   },
   clientApp: {
-    eyebrow: "The client app",
     h2: "Your clients get a real app — included",
     description:
       "Every plan you assign lands in a clean app your clients open on their own phone: today's workout, macro targets, check-ins, and progress charts. It works on any phone, in Arabic or English.",
@@ -178,7 +172,6 @@ const en = {
     pwaChip: "Installs like an app — no App Store needed",
   },
   how: {
-    eyebrow: "How it works",
     h2: "From scattered to organized in three steps",
     description:
       "No migration headaches, no technical setup. Bring your clients in, assign their plans, and follow their progress — all from one place.",
@@ -201,7 +194,6 @@ const en = {
     ],
   },
   pricing: {
-    eyebrow: "Simple pricing",
     h2: "Start free. Grow on your terms.",
     description:
       "Your first 5 clients are always free. Upgrade when you're ready to grow your practice.",
@@ -281,7 +273,6 @@ const en = {
     stripNew: "Wazen starts free",
   },
   why: {
-    eyebrow: "Why Wazen",
     h2: "Built around how coaches actually work",
     description:
       "Designed around real coaching workflows — clients, plans, check-ins, progress, and communication — for coaches across the UAE, GCC, and MENA, in both Arabic and English.",
@@ -312,7 +303,6 @@ const en = {
     founderName: "Naser Shadid · Founder, Wazen",
   },
   faq: {
-    eyebrow: "FAQ",
     h2: "Questions coaches ask before switching",
     items: [
       {
@@ -403,7 +393,6 @@ const ar: Dictionary = {
     close: "إغلاق",
   },
   video: {
-    eyebrow: "شاهده عمليًا",
     h2: "دقيقتان داخل وازن",
     lead: "جولة واحدة: لوحة تحكم المدرب، ويوم العميل في التطبيق، وكيف تبدو المتابعة من الجهتين.",
     chapters: [
@@ -417,7 +406,6 @@ const ar: Dictionary = {
     posterAlt: "مكتب هادئ مع حاسوب محمول وهاتف — صورة غلاف لجولة وازن التعريفية",
   },
   productProof: {
-    eyebrow: "لوحة تحكم المدرب",
     h2: "عملك التدريبي كاملًا، في شاشة واحدة",
     sub: "اللوحة التي لا يراها عملاؤك — والتطبيق الذي يعيشون فيه. كل ما تراه هنا يتزامن لحظيًا.",
   },
@@ -430,7 +418,6 @@ const ar: Dictionary = {
     ],
   },
   problem: {
-    eyebrow: "مشكلة الأدوات المبعثرة",
     h2: "المشكلة ليست في تدريبك — بل في أدواتك",
     description:
       "عندما يتوزّع عملاؤك وخططك ومتابعاتك بين واتساب وجداول البيانات وملفات PDF، تتحوّل إلى موظف إداري بدوام كامل. يستبدل وازن هذا التشتّت بنظام واحد منظّم.",
@@ -450,7 +437,6 @@ const ar: Dictionary = {
     ],
   },
   features: {
-    eyebrow: "كل ما تحتاجه",
     h2: "منصة واحدة. كل أداة يحتاجها عملك التدريبي.",
     description:
       "توقّف عن الجمع بين عدة تطبيقات. يجمع وازن إدارة العملاء والخطط والمتابعات وتتبّع التقدّم والمراسلة في نظام واحد منظّم.",
@@ -501,7 +487,6 @@ const ar: Dictionary = {
     connectedCaption: "لوحة تحكم للمدرب وتطبيق للعميل — يعملان كنظام واحد متّصل",
   },
   segments: {
-    eyebrow: "لمن صُمّم وازن",
     h2: "لكل أنواع المدربين",
     description:
       "لياقة أو تغذية أو ممارسة صحية — إذا كنت تدير عملاء وخططًا ومتابعات، فوازن مصمّم لطريقة عملك.",
@@ -521,7 +506,6 @@ const ar: Dictionary = {
     ],
   },
   clientApp: {
-    eyebrow: "تطبيق العميل",
     h2: "عملاؤك يحصلون على تطبيق حقيقي — مشمول في باقتك",
     description:
       "كل خطة تعيّنها تصل إلى تطبيق أنيق يفتحه عميلك على هاتفه: تمرين اليوم، وأهداف السعرات، والمتابعات، ورسوم التقدّم. يعمل على أي هاتف، بالعربية أو الإنجليزية.",
@@ -532,7 +516,6 @@ const ar: Dictionary = {
     pwaChip: "يعمل كتطبيق على الهاتف — دون الحاجة لمتجر التطبيقات",
   },
   how: {
-    eyebrow: "كيف يعمل",
     h2: "من التشتّت إلى التنظيم في ثلاث خطوات",
     description:
       "بلا متاعب نقل بيانات، وبلا إعداد تقني. أضِف عملاءك، وعيّن خططهم، وتابِع تقدّمهم — كل ذلك من مكان واحد.",
@@ -555,7 +538,6 @@ const ar: Dictionary = {
     ],
   },
   pricing: {
-    eyebrow: "أسعار بسيطة",
     h2: "ابدأ مجانًا. وانمُ على راحتك.",
     description: "أول 5 عملاء مجانيون دائمًا. ارتقِ بخطتك عندما تكون جاهزًا لتنمية عملك.",
     monthly: "شهري",
@@ -634,7 +616,6 @@ const ar: Dictionary = {
     stripNew: "وازن يبدأ مجانًا",
   },
   why: {
-    eyebrow: "لماذا وازن",
     h2: "مبنيّ على طريقة عمل المدربين الحقيقية",
     description:
       "مصمّم حول مسارات العمل التدريبية الحقيقية — العملاء والخطط والمتابعات والتقدّم والتواصل — للمدربين في الإمارات والخليج والشرق الأوسط، بالعربية والإنجليزية معًا.",
@@ -664,7 +645,6 @@ const ar: Dictionary = {
     founderName: "ناصر شديد · المؤسس، وازن",
   },
   faq: {
-    eyebrow: "الأسئلة الشائعة",
     h2: "أسئلة يطرحها المدربون قبل التحويل",
     items: [
       {

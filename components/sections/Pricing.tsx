@@ -230,7 +230,6 @@ export default function Pricing() {
     >
       <div className="mx-auto max-w-content">
         <SectionHeader
-          eyebrow={t.pricing.eyebrow}
           title={t.pricing.h2}
           description={t.pricing.description}
         />

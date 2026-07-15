@@ -133,8 +133,6 @@ export default function Problem() {
       <div className="relative z-[1] mx-auto max-w-content">
         <SectionHeader
           onDark
-          eyebrow={t.problem.eyebrow}
-          eyebrowTone="error"
           title={t.problem.h2}
           description={t.problem.description}
         />

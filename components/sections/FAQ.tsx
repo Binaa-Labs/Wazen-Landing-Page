@@ -83,7 +83,7 @@ export default function FAQ() {
       className="bg-bg px-6 py-section-compact-mobile md:py-section-compact"
     >
       <div className="mx-auto max-w-content">
-        <SectionHeader eyebrow={t.faq.eyebrow} title={t.faq.h2} />
+        <SectionHeader title={t.faq.h2} />
         <FaqAccordion key={lang} items={t.faq.items} />
       </div>
     </section>

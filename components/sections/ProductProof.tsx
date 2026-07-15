@@ -37,7 +37,6 @@ export default function ProductProof() {
        frame's -bottom-8 overhang). */
     <section className="bg-bg px-6 pb-16 pt-section-mobile md:pb-20 md:pt-section">
       <div className="mx-auto max-w-[1120px]">
-        {/* Header — plain sage eyebrow per the Phase 2 mock (no chip) */}
         <motion.div
           variants={fadeUp}
           initial="hidden"
@@ -45,9 +44,6 @@ export default function ProductProof() {
           viewport={viewport}
           className="flex flex-col items-center gap-4 text-center"
         >
-          <p className="text-eyebrow font-medium uppercase tracking-[0.14em] text-secondary-dark">
-            {t.productProof.eyebrow}
-          </p>
           <h2 className="text-h2 text-ink">{t.productProof.h2}</h2>
           <p className="max-w-2xl text-body-lg text-ink/60">
             {t.productProof.sub}

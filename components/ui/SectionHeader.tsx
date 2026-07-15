@@ -3,11 +3,8 @@
 import { motion } from "framer-motion";
 
 import { fadeUp, viewport } from "@/components/motion";
-import Badge, { type BadgeTone } from "@/components/ui/Badge";
 
 type SectionHeaderProps = {
-  eyebrow?: string;
-  eyebrowTone?: BadgeTone;
   title: React.ReactNode;
   description?: React.ReactNode;
   align?: "center" | "left";
@@ -17,8 +14,6 @@ type SectionHeaderProps = {
 };
 
 export default function SectionHeader({
-  eyebrow,
-  eyebrowTone = "primary",
   title,
   description,
   align = "center",
@@ -39,11 +34,6 @@ export default function SectionHeader({
         .filter(Boolean)
         .join(" ")}
     >
-      {eyebrow && (
-        <Badge variant="eyebrow" tone={eyebrowTone}>
-          {eyebrow}
-        </Badge>
-      )}
       <h2 className={`text-h2 ${onDark ? "text-white" : "text-ink"}`}>
         {title}
       </h2>

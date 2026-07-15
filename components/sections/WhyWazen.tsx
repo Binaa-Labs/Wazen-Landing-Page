@@ -69,10 +69,7 @@ export default function WhyWazen() {
               align="left" is physical and out of this pass's touch list —
               logical alignment comes free from normal flow here. */}
           <motion.div variants={fadeUp}>
-            <Badge variant="eyebrow" tone="primary">
-              {t.why.eyebrow}
-            </Badge>
-            <h2 className="mt-4 text-h2 text-ink">{t.why.h2}</h2>
+            <h2 className="text-h2 text-ink">{t.why.h2}</h2>
             <p className="mt-4 text-body-lg text-ink/60">
               {t.why.description}
             </p>

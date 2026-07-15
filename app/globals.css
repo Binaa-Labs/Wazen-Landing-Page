@@ -169,6 +169,15 @@ html.dark {
   }
 }
 
+/* Eyebrow labels are letter-spaced as a Latin small-caps device. Arabic is
+   cursive and must never be tracked — it breaks the joins. Unlayered so it
+   beats the `text-eyebrow` utility; uppercase stays (a harmless no-op on AR).
+   Reaches only the surviving eyebrow treatments: the two Problem column
+   labels and the WhyWazen founder-quote intro (D53). */
+[dir="rtl"] .text-eyebrow {
+  letter-spacing: normal;
+}
+
 /* Hero copy entrance — CSS instead of Framer for THIS block only: Chrome
    excludes the full-viewport hero photo from LCP as a background, so the
    hero COPY is the page's LCP element. Two rules matter:

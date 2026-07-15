@@ -68,7 +68,6 @@ export default function VideoTour() {
   return (
     <section className="bg-primary-dark px-6 py-section-compact-mobile md:py-section-compact">
       <div className="mx-auto max-w-content">
-        {/* Header — plain sage eyebrow per the Phase 2 mock (no chip) */}
         <motion.div
           variants={fadeUp}
           initial="hidden"
@@ -76,9 +75,6 @@ export default function VideoTour() {
           viewport={viewport}
           className="flex flex-col items-center gap-4 text-center"
         >
-          <p className="text-eyebrow font-medium uppercase tracking-[0.14em] text-secondary">
-            {t.video.eyebrow}
-          </p>
           <h2 className="text-h2 text-white">{t.video.h2}</h2>
           <p className="max-w-2xl text-body-lg text-white/70">{t.video.lead}</p>
         </motion.div>

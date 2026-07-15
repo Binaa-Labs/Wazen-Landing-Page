@@ -105,8 +105,6 @@ export default function ClientApp() {
 
       <div className="relative z-[1] mx-auto max-w-content">
         <SectionHeader
-          eyebrow={t.clientApp.eyebrow}
-          eyebrowTone="sage"
           onDark
           title={t.clientApp.h2}
           description={t.clientApp.description}

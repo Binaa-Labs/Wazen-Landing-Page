@@ -302,7 +302,6 @@ export default function Features() {
     >
       <div className="mx-auto max-w-content">
         <SectionHeader
-          eyebrow={t.features.eyebrow}
           title={t.features.h2}
           description={t.features.description}
         />
