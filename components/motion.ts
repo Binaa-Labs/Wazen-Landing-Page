@@ -38,10 +38,9 @@ export const scaleIn: Variants = {
 
 /* ── Phase 2 hero vocabulary (Pass 2.1) ──────────────────────────────────
    Transform/opacity only. MotionConfig reducedMotion="user" strips the
-   transform animations automatically: kenBurns renders static, railFill
-   snaps to its full/empty state with no tween — exactly the specced
-   reduced-motion fallbacks. Elements using these are keyed BY INDEX, never
-   by translated strings (learning #1). */
+   transform animations automatically: kenBurns renders static — exactly the
+   specced reduced-motion fallback. Elements using these are keyed BY INDEX,
+   never by translated strings (learning #1). */
 
 /* Hero photo drift over the 6s persona dwell. */
 export const kenBurns: Variants = {
@@ -53,14 +52,6 @@ export const kenBurns: Variants = {
 export const crossfade: Variants = {
   hidden: { opacity: 0, transition: { duration: 0.6, ease: "linear" } },
   visible: { opacity: 1, transition: { duration: 0.6, ease: "linear" } },
-};
-
-/* Persona/tab rails: scaleX fill from inline-start — pair with the
-   `origin-left rtl:origin-right` utilities on the element. Duration matches
-   the hero dwell so the advance fires exactly as the rail completes. */
-export const railFill: Variants = {
-  empty: { scaleX: 0, transition: { duration: 0 } },
-  fill: { scaleX: 1, transition: { duration: 6, ease: "linear" } },
 };
 
 /* ── Stage-2 vocabulary (Pass 2.2a, D26–D39) ─────────────────────────────

@@ -21,7 +21,6 @@ const en = {
     menu: "Toggle menu",
   },
   hero: {
-    badge: "Free for your first 5 clients — full platform, no limits",
     /* Persona slider labels reuse segments.cards[i].title verbatim (D17) —
        only the group's accessible name lives here. */
     personasLabel: "Who Wazen is for",
@@ -29,7 +28,7 @@ const en = {
     h1Underlined: "one calm, organized place",
     subheadline:
       "Wazen brings your clients, plans, check-ins, progress, and messages into a single system — so you spend less time chasing and more time coaching.",
-    ctaPrimary: "Start free — up to 5 clients",
+    ctaPrimary: "Start free",
     ctaSecondary: "See how it works ↓",
     trust: [
       "No credit card required",
@@ -376,13 +375,12 @@ const ar: Dictionary = {
     menu: "فتح القائمة",
   },
   hero: {
-    badge: "مجاني لأول 5 عملاء — المنصة كاملة وبدون قيود",
     personasLabel: "لمن صُمّم وازن",
     h1Line1: "أدِر عملك مع عملائك",
     h1Underlined: "من مكان واحد، منظّم وسلس",
     subheadline:
       "يجمع وازن عملاءك وخططك ومتابعاتك وتقدّمهم ورسائلك في نظام واحد — لتقضي وقتًا أقل في الملاحقة ووقتًا أكثر في التدريب.",
-    ctaPrimary: "ابدأ مجانًا — حتى 5 عملاء",
+    ctaPrimary: "ابدأ مجانًا",
     ctaSecondary: "شاهد كيف يعمل ↓",
     trust: ["بدون بطاقة ائتمان", "مجاني دائمًا لـ 5 عملاء", "العربية والإنجليزية"],
     dashboardAlt:
