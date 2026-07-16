@@ -35,7 +35,7 @@ export const metadata: Metadata = {
     "تطبيق مدرب",
   ],
   openGraph: {
-    title: "Wazen — One calm, organized place for your coaching practice",
+    title: "Wazen: One calm, organized place for your coaching practice",
     description:
       "Free for your first 5 clients. Built for coaches in UAE, GCC & MENA. Arabic & English.",
     url: "https://wazen.fit",
@@ -54,9 +54,9 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Wazen — Coaching platform for UAE & GCC",
+    title: "Wazen: Coaching platform for UAE & GCC",
     description:
-      "Free for your first 5 clients. Plans, check-ins, progress, messaging — all in one place.",
+      "Free for your first 5 clients. Plans, check-ins, progress, messaging, all in one place.",
     images: ["/twitter-image"],
   },
   alternates: {

@@ -3,7 +3,7 @@ import type { Metadata } from "next";
 import LegalPageLayout, { LegalSection } from "@/components/LegalPageLayout";
 
 export const metadata: Metadata = {
-  title: "Privacy Policy — Wazen",
+  title: "Privacy Policy | Wazen",
   description:
     "How Wazen collects, uses, stores, and protects coach and client data.",
   alternates: {
@@ -41,7 +41,7 @@ export default function PrivacyPage() {
         <ul className="list-disc space-y-1.5 ps-5">
           <li>Email address</li>
           <li>First and last name</li>
-          <li>Password (stored as a secure hash — never in plain text)</li>
+          <li>Password (stored as a secure hash, never in plain text)</li>
           <li>Date of birth (used to verify minimum age requirement)</li>
           <li>Profile picture (optional)</li>
         </ul>
@@ -135,7 +135,7 @@ export default function PrivacyPage() {
           relationship. After a client is deactivated, their data remains
           available for export for a limited window: 15 days on Starter, 45 days
           on Professional, and 90 days on Premium. After this window closes, data
-          is permanently and irreversibly deleted — it cannot be recovered by
+          is permanently and irreversibly deleted; it cannot be recovered by
           anyone, including our support team. Account data is permanently deleted
           within 30 days of an account deletion request.
         </p>

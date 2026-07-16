@@ -7,8 +7,8 @@ const SITE_URL = "https://wazen.fit";
 const AREA_SERVED = ["AE", "SA", "KW", "QA", "BH", "OM", "EG", "JO"];
 
 const DESCRIPTION: Record<Locale, string> = {
-  en: "Wazen brings your clients, plans, check-ins, progress, and messages into one organized system — built for coaches in the UAE, GCC & MENA, in Arabic and English. Free for your first 5 clients.",
-  ar: "يجمع وازن عملاءك وخططك ومتابعاتك وتقدّمهم ورسائلك في نظام واحد منظّم — مصمّم للمدربين في الإمارات والخليج والشرق الأوسط، بالعربية والإنجليزية. مجاني لأول 5 عملاء.",
+  en: "Wazen brings your clients, plans, check-ins, progress, and messages into one organized system, built for coaches in the UAE, GCC & MENA, in Arabic and English. Free for your first 5 clients.",
+  ar: "يجمع وازن عملاءك وخططك ومتابعاتك وتقدّمهم ورسائلك في نظام واحد منظّم، مصمّم للمدربين في الإمارات والخليج والشرق الأوسط، بالعربية والإنجليزية. مجاني لأول 5 عملاء.",
 };
 
 /* Single JSON-LD @graph per page so the entities (Organization, WebSite,
@@ -49,7 +49,7 @@ export function buildJsonLd(locale: Locale) {
     name: "Wazen",
     applicationCategory: "BusinessApplication",
     /* The client app is a PWA — no native iOS/Android builds yet (D8). */
-    operatingSystem: "Web (PWA) — works on iOS & Android",
+    operatingSystem: "Web (PWA), works on iOS & Android",
     url: pageUrl,
     inLanguage,
     description: DESCRIPTION[locale],

@@ -2,7 +2,7 @@ import type { MetadataRoute } from "next";
 
 export default function manifest(): MetadataRoute.Manifest {
   return {
-    name: "Wazen — coaching platform",
+    name: "Wazen: coaching platform",
     short_name: "Wazen",
     description:
       "Run your coaching practice from one calm, organized place. Built for coaches in the UAE, GCC & MENA.",

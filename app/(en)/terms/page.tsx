@@ -3,7 +3,7 @@ import type { Metadata } from "next";
 import LegalPageLayout, { LegalSection } from "@/components/LegalPageLayout";
 
 export const metadata: Metadata = {
-  title: "Terms of Service — Wazen",
+  title: "Terms of Service | Wazen",
   description:
     "Terms governing access to and use of the Wazen coaching platform.",
   alternates: {
@@ -37,11 +37,11 @@ export default function TermsPage() {
           Wazen is a business-to-business platform designed for coaches,
           nutritionists, and wellness practitioners (“Coaches”) to manage their
           clients, deliver workout and nutrition plans, run structured
-          check-ins, track progress, and communicate — all from one organized
+          check-ins, track progress, and communicate, all from one organized
           system. Coaches may invite their clients (“Clients”) to access a
           companion client application at no cost to Clients. Coaches may
           register directly through the Platform. Clients may only join Wazen by
-          invitation from a registered Coach — there is no public signup for
+          invitation from a registered Coach; there is no public signup for
           Clients.
         </p>
       </LegalSection>
@@ -113,7 +113,7 @@ export default function TermsPage() {
           </li>
         </ul>
         <p>
-          Yearly billing is equivalent to ten months for twelve — two months
+          Yearly billing is equivalent to ten months for twelve, two months
           free. No refunds are issued for unused time on monthly plans or for
           unused months on yearly plans.
         </p>

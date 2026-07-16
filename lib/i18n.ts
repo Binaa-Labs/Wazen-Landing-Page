@@ -27,7 +27,7 @@ const en = {
     h1Line1: "Run your coaching practice from",
     h1Underlined: "one calm, organized place",
     subheadline:
-      "Wazen brings your clients, plans, check-ins, progress, and messages into a single system — so you spend less time chasing and more time coaching.",
+      "Wazen brings your clients, plans, check-ins, progress, and messages into a single system, so you spend less time chasing and more time coaching.",
     ctaPrimary: "Start free",
     ctaSecondary: "See how it works ↓",
     trust: [
@@ -55,18 +55,18 @@ const en = {
     playLabel: "Play the product tour",
     chaptersLabel: "Video chapters",
     posterAlt:
-      "A calm desk with a laptop and phone — poster frame for the Wazen product tour",
+      "A calm desk with a laptop and phone, poster frame for the Wazen product tour",
   },
   productProof: {
     h2: "Your whole practice, one screen",
-    sub: "The dashboard your clients never see — and the app they live in. Everything below syncs in real time.",
+    sub: "The dashboard your clients never see, and the app they live in. Everything below syncs in real time.",
   },
   trustBar: {
     items: [
       "Built with founding coaches across the UAE & GCC",
-      "Arabic & English — full RTL support",
-      "Free for your first 5 clients — forever",
-      "Set up in a day — no onboarding calls",
+      "Arabic & English, full RTL support",
+      "Free for your first 5 clients, forever",
+      "Set up in a day, no onboarding calls",
     ],
   },
   problem: {
@@ -97,15 +97,15 @@ const en = {
         label: "Client Management",
         headline: "Every client, fully organized",
         body: "Manage all your clients from one dashboard. See their compliance, upcoming check-ins, active plans, and recent activity at a glance.",
-        caption: "Your client roster — each client sees their own side in the app",
+        caption: "Your client roster: each client sees their own side in the app",
         primaryAlt: "Wazen client roster showing compliance scores for each client",
         secondaryAlt: "Individual client overview in the coach dashboard",
       },
       {
         label: "Check-ins",
         headline: "Structured check-ins, zero chasing",
-        body: "Create check-in schedules for each client. They submit from their app, you review everything from one organized queue — no more hunting through messages.",
-        caption: "The check-in queue — clients submit from their phone",
+        body: "Create check-in schedules for each client. They submit from their app, you review everything from one organized queue. No more hunting through messages.",
+        caption: "The check-in queue: clients submit from their phone",
         primaryAlt:
           "A client's submitted check-ins as the coach reviews them in Wazen",
         secondaryAlt: "Check-in management tab for a single client",
@@ -114,15 +114,15 @@ const en = {
         label: "Progress & Analytics",
         headline: "See exactly how your clients are doing",
         body: "Track weight, body metrics, and adherence over time. The analytics dashboard shows plan performance, top performers, and at-risk clients across your entire roster.",
-        caption: "Progress charts — synced from client check-ins",
+        caption: "Progress charts, synced from client check-ins",
         primaryAlt: "Client progress charts showing a steady weight trend over time",
         secondaryAlt: "Coach analytics overview across the client roster",
       },
       {
         label: "Plans & Templates",
         headline: "Build plans once, assign to anyone",
-        body: "Create workout and nutrition plans from scratch or from your template library. Assign to any client in seconds — they appear instantly in the client app.",
-        caption: "Template library — plans land in the client app",
+        body: "Create workout and nutrition plans from scratch or from your template library. Assign to any client in seconds, and they appear instantly in the client app.",
+        caption: "Template library: plans land in the client app",
         primaryAlt: "Template library with workout and nutrition plan templates",
         secondaryAlt: "Workout plans assigned to a client",
       },
@@ -130,7 +130,7 @@ const en = {
         label: "Messaging",
         headline: "Every conversation, in context",
         body: "Message any client right where their plans, check-ins, and progress live. No more scrolling through WhatsApp to find what you agreed last month.",
-        caption: "One inbox — clients reply from their phone",
+        caption: "One inbox: clients reply from their phone",
         primaryAlt: "Wazen coach messaging inbox with client conversations",
         secondaryAlt: "Client-side chat in the Wazen client app",
       },
@@ -138,12 +138,12 @@ const en = {
     coachLabel: "Coach Dashboard",
     clientLabel: "Client App",
     connectedCaption:
-      "A coach dashboard and a client app — working as one connected system",
+      "A coach dashboard and a client app, working as one connected system",
   },
   segments: {
     h2: "For every kind of coach",
     description:
-      "Fitness, nutrition, or clinical practice — if you manage clients, plans, and check-ins, Wazen fits how you work.",
+      "Fitness, nutrition, or clinical practice. If you manage clients, plans, and check-ins, Wazen fits how you work.",
     cards: [
       {
         title: "Fitness coaches",
@@ -151,7 +151,7 @@ const en = {
       },
       {
         title: "Nutrition coaches",
-        body: "Set macro targets and meal plans — and see exactly how clients follow them.",
+        body: "Set macro targets and meal plans, and see exactly how clients follow them.",
       },
       {
         title: "Health practitioners",
@@ -168,16 +168,16 @@ const en = {
        branding only, never custom domains/emails/standalone apps) */
     whiteLabelCaption:
       "Your brand, front and center — clients see your logo, name, and colors in their app.",
-    pwaChip: "Installs like an app — no App Store needed",
+    pwaChip: "Installs like an app, no App Store needed",
   },
   how: {
     h2: "From scattered to organized in three steps",
     description:
-      "No migration headaches, no technical setup. Bring your clients in, assign their plans, and follow their progress — all from one place.",
+      "No migration headaches, no technical setup. Bring your clients in, assign their plans, and follow their progress, all from one place.",
     steps: [
       {
         title: "Add your clients",
-        body: "Invite your clients by email. They join and set up their profile in the Wazen client app in minutes — no technical setup required on their end.",
+        body: "Invite your clients by email. They join and set up their profile in the Wazen client app in minutes, with no technical setup required on their end.",
         alt: "Inviting a client by email from the Wazen coach dashboard",
       },
       {
@@ -187,7 +187,7 @@ const en = {
       },
       {
         title: "Track progress & stay in touch",
-        body: "Review check-ins from your dashboard, follow each client's progress charts, and message them directly — all from one organized place.",
+        body: "Review check-ins from your dashboard, follow each client's progress charts, and message them directly, all from one organized place.",
         alt: "Progress analytics in the Wazen coach dashboard",
       },
     ],
@@ -257,7 +257,7 @@ const en = {
           AED: "+5 clients from AED 33/mo · bundles up to +50",
         },
         cta: "Get started",
-        note: "Full white-label branding — coming soon",
+        note: "Full white-label branding, coming soon",
       },
     ],
     stripHeadline:
@@ -274,11 +274,11 @@ const en = {
   why: {
     h2: "Built around how coaches actually work",
     description:
-      "Designed around real coaching workflows — clients, plans, check-ins, progress, and communication — for coaches across the UAE, GCC, and MENA, in both Arabic and English.",
+      "Designed around real coaching workflows (clients, plans, check-ins, progress, and communication) for coaches across the UAE, GCC, and MENA, in both Arabic and English.",
     pillars: [
       {
         title: "Free to run, forever",
-        body: "Your first 5 active clients are free with the full core platform — no trial timer, no credit card.",
+        body: "Your first 5 active clients are free with the full core platform. No trial timer, no credit card.",
       },
       {
         title: "One system, not six tools",
@@ -286,19 +286,19 @@ const en = {
       },
       {
         title: "Two sides, one platform",
-        body: "A coach dashboard and a client app working as one connected system — in Arabic and English.",
+        body: "A coach dashboard and a client app working as one connected system, in Arabic and English.",
       },
     ],
-    bilingualBadge: "Arabic & English — full right-to-left support",
+    bilingualBadge: "Arabic & English, full right-to-left support",
     profileCaption:
-      "Coaches build a public profile clients can see — active clients, programs delivered, compliance rate, and experience.",
+      "Coaches build a public profile clients can see: active clients, programs delivered, compliance rate, and experience.",
     profileAlt:
       "A coach's public profile in Wazen showing active clients, programs delivered, compliance rate, and years of experience",
     regionalPhotoAlt:
       "An athlete training with a dumbbell in a dark, modern gym",
     founderEyebrow: "Why we built this",
     founderQuote:
-      "“We built Wazen because coaching shouldn’t mean living in WhatsApp threads and spreadsheets. Every coach deserves one calm, organized place to manage clients, deliver plans, and actually see progress — so the focus stays on coaching, not admin.”",
+      "“We built Wazen because coaching shouldn’t mean living in WhatsApp threads and spreadsheets. Every coach deserves one calm, organized place to manage clients, deliver plans, and actually see progress, so the focus stays on coaching, not admin.”",
     founderName: "Naser Shadid · Founder, Wazen",
   },
   faq: {
@@ -306,27 +306,27 @@ const en = {
     items: [
       {
         q: "Is Wazen really free? What's the catch?",
-        a: "No catch. Your first 5 active clients are free forever — full platform access, no credit card required, no trial timer. The free tier exists so you can run your practice on Wazen before deciding to grow. When you're ready to take on more clients, paid plans start at $49/month. Until then, nothing changes and nothing expires.",
+        a: "No catch. Your first 5 active clients are free forever: full platform access, no credit card required, no trial timer. The free tier exists so you can run your practice on Wazen before deciding to grow. When you're ready to take on more clients, paid plans start at $49/month. Until then, nothing changes and nothing expires.",
       },
       {
         q: "Do my clients need to pay or create an account to use Wazen?",
-        a: "Your clients pay nothing. Ever. You invite them to the Wazen client app and they join for free — no subscription, no hidden fees on their end. The client app is included in your plan and works right on their phone, in the browser or saved to their home screen — nothing to download from an app store. They access their plans, check-ins, and progress through their own app, completely separate from your coach dashboard.",
+        a: "Your clients pay nothing. Ever. You invite them to the Wazen client app and they join for free, with no subscription and no hidden fees on their end. The client app is included in your plan and works right on their phone, in the browser or saved to their home screen, with nothing to download from an app store. They access their plans, check-ins, and progress through their own app, completely separate from your coach dashboard.",
       },
       {
         q: "How long does it take to get set up?",
-        a: "Most coaches are fully set up within a day. Create your account, invite your first client, assign their plan and check-in schedule — that's the full flow. There's no data migration required, no technical configuration, and no onboarding call needed.",
+        a: "Most coaches are fully set up within a day. Create your account, invite your first client, assign their plan and check-in schedule. That's the full flow. There's no data migration required, no technical configuration, and no onboarding call needed.",
       },
       {
         q: "What happens to my clients and their data if I reach my limit and don't upgrade?",
-        a: "Nothing is deleted. If you reach your active client limit, you can deactivate a current client to free up a slot — their full history and data is preserved and accessible for 15 days (Starter), 45 days (Professional), or 90 days (Premium) after deactivation. You only upgrade when you want to manage more active clients simultaneously. Your data is always yours.",
+        a: "Nothing is deleted. If you reach your active client limit, you can deactivate a current client to free up a slot; their full history and data is preserved and accessible for 15 days (Starter), 45 days (Professional), or 90 days (Premium) after deactivation. You only upgrade when you want to manage more active clients simultaneously. Your data is always yours.",
       },
       {
         q: "Does Wazen work in Arabic? Is it built for coaches in the region?",
-        a: "Yes — fully. Wazen is built in both Arabic and English, with complete right-to-left support. The coach dashboard and the client app both switch languages. It's designed specifically for coaches operating in the UAE, GCC, and broader MENA region — built into the product from the ground up, not added as an afterthought.",
+        a: "Yes, fully. Wazen is built in both Arabic and English, with complete right-to-left support. The coach dashboard and the client app both switch languages. It's designed specifically for coaches operating in the UAE, GCC, and broader MENA region, built into the product from the ground up, not added as an afterthought.",
       },
       {
         q: "Is my clients' data safe and private?",
-        a: "Yes. All data is encrypted in transit and at rest. Your clients' health, progress, and personal information is never shared with third parties. As the coach, you own and control your client data. Wazen is built by Binaa Labs — a UAE-based product company.",
+        a: "Yes. All data is encrypted in transit and at rest. Your clients' health, progress, and personal information is never shared with third parties. As the coach, you own and control your client data. Wazen is built by Binaa Labs, a UAE-based product company.",
       },
       {
         q: "Can I cancel anytime? Is there a contract?",
@@ -339,16 +339,16 @@ const en = {
     ],
   },
   cta: {
-    badge: "Free to start — no credit card",
+    badge: "Free to start, no credit card",
     h2: "Bring your coaching into one organized place",
-    body: "Create your free account and start managing up to 5 active clients with the full platform — plans, check-ins, progress, and messaging.",
+    body: "Create your free account and start managing up to 5 active clients with the full platform: plans, check-ins, progress, and messaging.",
     trust: [
       "Free for your first 5 clients",
       "No credit card required",
       "Full core platform",
       "Arabic & English",
     ],
-    ctaLabel: "Start free — up to 5 clients",
+    ctaLabel: "Start free",
     loginPrompt: "Already using Wazen?",
     loginLink: "Log in",
   },
@@ -379,7 +379,7 @@ const ar: Dictionary = {
     h1Line1: "أدِر عملك مع عملائك",
     h1Underlined: "من مكان واحد، منظّم وسلس",
     subheadline:
-      "يجمع وازن عملاءك وخططك ومتابعاتك وتقدّمهم ورسائلك في نظام واحد — لتقضي وقتًا أقل في الملاحقة ووقتًا أكثر في التدريب.",
+      "يجمع وازن عملاءك وخططك ومتابعاتك وتقدّمهم ورسائلك في نظام واحد، لتقضي وقتًا أقل في الملاحقة ووقتًا أكثر في التدريب.",
     ctaPrimary: "ابدأ مجانًا",
     ctaSecondary: "شاهد كيف يعمل ↓",
     trust: ["بدون بطاقة ائتمان", "مجاني دائمًا لـ 5 عملاء", "العربية والإنجليزية"],
@@ -401,18 +401,18 @@ const ar: Dictionary = {
     ],
     playLabel: "تشغيل جولة المنتج",
     chaptersLabel: "فصول الفيديو",
-    posterAlt: "مكتب هادئ مع حاسوب محمول وهاتف — صورة غلاف لجولة وازن التعريفية",
+    posterAlt: "مكتب هادئ مع حاسوب محمول وهاتف، صورة غلاف لجولة وازن التعريفية",
   },
   productProof: {
     h2: "عملك التدريبي كاملًا، في شاشة واحدة",
-    sub: "اللوحة التي لا يراها عملاؤك — والتطبيق الذي يعيشون فيه. كل ما تراه هنا يتزامن لحظيًا.",
+    sub: "اللوحة التي لا يراها عملاؤك، والتطبيق الذي يعيشون فيه. كل ما تراه هنا يتزامن لحظيًا.",
   },
   trustBar: {
     items: [
       "نبنيه مع مدربين مؤسسين في الإمارات والخليج",
-      "العربية والإنجليزية — دعم كامل للكتابة من اليمين لليسار",
-      "مجاني لأول 5 عملاء — للأبد",
-      "جاهز خلال يوم — دون مكالمات تهيئة",
+      "العربية والإنجليزية، دعم كامل للكتابة من اليمين لليسار",
+      "مجاني لأول 5 عملاء، للأبد",
+      "جاهز خلال يوم، دون مكالمات تهيئة",
     ],
   },
   problem: {
@@ -443,15 +443,15 @@ const ar: Dictionary = {
         label: "إدارة العملاء",
         headline: "كل عميل، منظّم بالكامل",
         body: "أدِر جميع عملائك من لوحة تحكم واحدة. اطّلع على التزامهم ومتابعاتهم القادمة وخططهم النشطة ونشاطهم الأخير بنظرة واحدة.",
-        caption: "قائمة عملائك — وكل عميل يرى جانبه في تطبيقه",
+        caption: "قائمة عملائك، وكل عميل يرى جانبه في تطبيقه",
         primaryAlt: "قائمة عملاء وازن تعرض درجات الالتزام لكل عميل",
         secondaryAlt: "نظرة عامة على عميل في لوحة تحكم المدرب",
       },
       {
         label: "المتابعات",
         headline: "متابعات منظّمة، بلا ملاحقة",
-        body: "أنشئ جداول متابعة لكل عميل. يرسلونها من تطبيقهم، وتراجعها كلها من قائمة واحدة منظّمة — دون البحث في الرسائل.",
-        caption: "قائمة المتابعات — يرسلها العملاء من هواتفهم",
+        body: "أنشئ جداول متابعة لكل عميل. يرسلونها من تطبيقهم، وتراجعها كلها من قائمة واحدة منظّمة، دون البحث في الرسائل.",
+        caption: "قائمة المتابعات: يرسلها العملاء من هواتفهم",
         primaryAlt: "متابعات العميل المُرسلة كما يراجعها المدرب في وازن",
         secondaryAlt: "تبويب إدارة المتابعات لعميل واحد",
       },
@@ -459,15 +459,15 @@ const ar: Dictionary = {
         label: "التقدّم والتحليلات",
         headline: "اعرف بالضبط كيف يتقدّم عملاؤك",
         body: "تابِع الوزن وقياسات الجسم والالتزام عبر الوقت. تعرض لوحة التحليلات أداء الخطط، والأكثر تقدّمًا، والعملاء المعرّضين للتعثّر عبر قائمتك كاملة.",
-        caption: "رسوم التقدّم — تُحدَّث من متابعات العملاء",
+        caption: "رسوم التقدّم، تُحدَّث من متابعات العملاء",
         primaryAlt: "رسوم تقدّم العميل تعرض اتجاه وزن ثابتًا عبر الوقت",
         secondaryAlt: "نظرة عامة على تحليلات المدرب عبر قائمة العملاء",
       },
       {
         label: "الخطط والقوالب",
         headline: "أنشئ الخطة مرة، وعيّنها لأي عميل",
-        body: "أنشئ خطط تمارين وتغذية من الصفر أو من مكتبة القوالب. عيّنها لأي عميل في ثوانٍ — تظهر فورًا في تطبيق العميل.",
-        caption: "مكتبة القوالب — تصل الخطط إلى تطبيق العميل",
+        body: "أنشئ خطط تمارين وتغذية من الصفر أو من مكتبة القوالب. عيّنها لأي عميل في ثوانٍ، وتظهر فورًا في تطبيق العميل.",
+        caption: "مكتبة القوالب: تصل الخطط إلى تطبيق العميل",
         primaryAlt: "مكتبة القوالب مع قوالب خطط التمارين والتغذية",
         secondaryAlt: "خطط تمارين مُعيّنة لعميل",
       },
@@ -475,19 +475,19 @@ const ar: Dictionary = {
         label: "المراسلة",
         headline: "كل محادثة، في سياقها",
         body: "راسِل أي عميل حيث توجد خططه ومتابعاته وتقدّمه. لا مزيد من البحث في واتساب عمّا اتفقتما عليه الشهر الماضي.",
-        caption: "صندوق واحد للرسائل — يرد العملاء من هواتفهم",
+        caption: "صندوق واحد للرسائل: يرد العملاء من هواتفهم",
         primaryAlt: "صندوق رسائل المدرب في وازن مع محادثات العملاء",
         secondaryAlt: "محادثة العميل في تطبيق وازن",
       },
     ],
     coachLabel: "لوحة المدرب",
     clientLabel: "تطبيق العميل",
-    connectedCaption: "لوحة تحكم للمدرب وتطبيق للعميل — يعملان كنظام واحد متّصل",
+    connectedCaption: "لوحة تحكم للمدرب وتطبيق للعميل، يعملان كنظام واحد متّصل",
   },
   segments: {
     h2: "لكل أنواع المدربين",
     description:
-      "لياقة أو تغذية أو ممارسة صحية — إذا كنت تدير عملاء وخططًا ومتابعات، فوازن مصمّم لطريقة عملك.",
+      "لياقة أو تغذية أو ممارسة صحية. إذا كنت تدير عملاء وخططًا ومتابعات، فوازن مصمّم لطريقة عملك.",
     cards: [
       {
         title: "مدربو اللياقة",
@@ -495,7 +495,7 @@ const ar: Dictionary = {
       },
       {
         title: "مدربو التغذية",
-        body: "حدّد أهداف السعرات والخطط الغذائية — واعرف بدقة كيف يلتزم بها عملاؤك.",
+        body: "حدّد أهداف السعرات والخطط الغذائية، واعرف بدقة كيف يلتزم بها عملاؤك.",
       },
       {
         title: "الممارسون الصحيون",
@@ -511,16 +511,16 @@ const ar: Dictionary = {
     /* White-label claim (D34, Option A — verbatim) */
     whiteLabelCaption:
       "علامتك في الواجهة — يرى عملاؤك شعارك واسمك وألوانك داخل تطبيقهم.",
-    pwaChip: "يعمل كتطبيق على الهاتف — دون الحاجة لمتجر التطبيقات",
+    pwaChip: "يعمل كتطبيق على الهاتف، دون الحاجة لمتجر التطبيقات",
   },
   how: {
     h2: "من التشتّت إلى التنظيم في ثلاث خطوات",
     description:
-      "بلا متاعب نقل بيانات، وبلا إعداد تقني. أضِف عملاءك، وعيّن خططهم، وتابِع تقدّمهم — كل ذلك من مكان واحد.",
+      "بلا متاعب نقل بيانات، وبلا إعداد تقني. أضِف عملاءك، وعيّن خططهم، وتابِع تقدّمهم، كل ذلك من مكان واحد.",
     steps: [
       {
         title: "أضِف عملاءك",
-        body: "ادعُ عملاءك عبر البريد الإلكتروني. ينضمّون ويجهّزون ملفّهم في تطبيق وازن خلال دقائق — دون أي إعداد تقني من جهتهم.",
+        body: "ادعُ عملاءك عبر البريد الإلكتروني. ينضمّون ويجهّزون ملفّهم في تطبيق وازن خلال دقائق، دون أي إعداد تقني من جهتهم.",
         alt: "دعوة عميل عبر البريد الإلكتروني من لوحة تحكم المدرب في وازن",
       },
       {
@@ -530,7 +530,7 @@ const ar: Dictionary = {
       },
       {
         title: "تابِع التقدّم وابقَ على تواصل",
-        body: "راجِع المتابعات من لوحتك، وتابِع رسوم تقدّم كل عميل، وراسِلهم مباشرة — كل ذلك من مكان واحد منظّم.",
+        body: "راجِع المتابعات من لوحتك، وتابِع رسوم تقدّم كل عميل، وراسِلهم مباشرة، كل ذلك من مكان واحد منظّم.",
         alt: "تحليلات التقدّم في لوحة تحكم المدرب في وازن",
       },
     ],
@@ -599,7 +599,7 @@ const ar: Dictionary = {
           AED: "+5 عملاء من AED 33/شهر · حِزم حتى +50 عميلًا",
         },
         cta: "ابدأ الآن",
-        note: "علامة بيضاء كاملة — قريبًا",
+        note: "علامة بيضاء كاملة، قريبًا",
       },
     ],
     stripHeadline:
@@ -616,11 +616,11 @@ const ar: Dictionary = {
   why: {
     h2: "مبنيّ على طريقة عمل المدربين الحقيقية",
     description:
-      "مصمّم حول مسارات العمل التدريبية الحقيقية — العملاء والخطط والمتابعات والتقدّم والتواصل — للمدربين في الإمارات والخليج والشرق الأوسط، بالعربية والإنجليزية معًا.",
+      "مصمّم حول مسارات العمل التدريبية الحقيقية (العملاء والخطط والمتابعات والتقدّم والتواصل) للمدربين في الإمارات والخليج والشرق الأوسط، بالعربية والإنجليزية معًا.",
     pillars: [
       {
         title: "مجاني للتشغيل، للأبد",
-        body: "أول 5 عملاء نشطين مجانًا مع المنصة الأساسية كاملة — بلا عدّاد تجربة وبلا بطاقة ائتمان.",
+        body: "أول 5 عملاء نشطين مجانًا مع المنصة الأساسية كاملة. بلا عدّاد تجربة وبلا بطاقة ائتمان.",
       },
       {
         title: "نظام واحد بدل ستة أدوات",
@@ -628,18 +628,18 @@ const ar: Dictionary = {
       },
       {
         title: "جهتان، منصة واحدة",
-        body: "لوحة للمدرب وتطبيق للعميل يعملان كنظام واحد متّصل — بالعربية والإنجليزية.",
+        body: "لوحة للمدرب وتطبيق للعميل يعملان كنظام واحد متّصل، بالعربية والإنجليزية.",
       },
     ],
-    bilingualBadge: "العربية والإنجليزية — دعم كامل للكتابة من اليمين لليسار",
+    bilingualBadge: "العربية والإنجليزية، دعم كامل للكتابة من اليمين لليسار",
     profileCaption:
-      "يبني المدربون ملفًا عامًا يراه العملاء — العملاء النشطون، والبرامج المقدَّمة، ونسبة الالتزام، وسنوات الخبرة.",
+      "يبني المدربون ملفًا عامًا يراه العملاء: العملاء النشطون، والبرامج المقدَّمة، ونسبة الالتزام، وسنوات الخبرة.",
     profileAlt:
       "الملف العام للمدرب في وازن يعرض العملاء النشطين والبرامج المقدَّمة ونسبة الالتزام وسنوات الخبرة",
     regionalPhotoAlt: "رياضي يتدرّب برفع الدمبل في نادٍ حديث هادئ الإضاءة",
     founderEyebrow: "لماذا بنينا هذا",
     founderQuote:
-      "«بنينا وازن لأن التدريب لا يجب أن يعني العيش وسط محادثات واتساب وجداول البيانات. كل مدرب يستحق مكانًا واحدًا هادئًا ومنظّمًا لإدارة العملاء وتقديم الخطط ورؤية التقدّم فعلًا — ليبقى التركيز على التدريب، لا على الأعمال الإدارية.»",
+      "«بنينا وازن لأن التدريب لا يجب أن يعني العيش وسط محادثات واتساب وجداول البيانات. كل مدرب يستحق مكانًا واحدًا هادئًا ومنظّمًا لإدارة العملاء وتقديم الخطط ورؤية التقدّم فعلًا، ليبقى التركيز على التدريب، لا على الأعمال الإدارية.»",
     founderName: "ناصر شديد · المؤسس، وازن",
   },
   faq: {
@@ -647,27 +647,27 @@ const ar: Dictionary = {
     items: [
       {
         q: "هل وازن مجاني فعلًا؟ ما الحيلة؟",
-        a: "لا حيلة. أول 5 عملاء نشطين مجانيون للأبد — وصول كامل للمنصة، بدون بطاقة ائتمان، وبدون عدّاد تجربة. الباقة المجانية موجودة لتدير عملك على وازن قبل أن تقرّر التوسّع. وعندما تكون جاهزًا لاستقبال عملاء أكثر، تبدأ الباقات المدفوعة من 49$ شهريًا. وحتى ذلك الحين، لا شيء يتغيّر ولا شيء ينتهي.",
+        a: "لا حيلة. أول 5 عملاء نشطين مجانيون للأبد: وصول كامل للمنصة، بدون بطاقة ائتمان، وبدون عدّاد تجربة. الباقة المجانية موجودة لتدير عملك على وازن قبل أن تقرّر التوسّع. وعندما تكون جاهزًا لاستقبال عملاء أكثر، تبدأ الباقات المدفوعة من 49$ شهريًا. وحتى ذلك الحين، لا شيء يتغيّر ولا شيء ينتهي.",
       },
       {
         q: "هل يحتاج عملائي إلى الدفع أو إنشاء حساب لاستخدام وازن؟",
-        a: "عملاؤك لا يدفعون شيئًا. أبدًا. تدعوهم إلى تطبيق وازن للعميل وينضمّون مجانًا — بلا اشتراك وبلا رسوم خفية من جهتهم. تطبيق العميل مشمول في باقتك ويعمل مباشرة على هاتف العميل، من المتصفح أو بحفظه على الشاشة الرئيسية — دون تنزيل من متجر التطبيقات. يصلون إلى خططهم ومتابعاتهم وتقدّمهم عبر تطبيقهم الخاص، المنفصل تمامًا عن لوحة تحكم المدرب لديك.",
+        a: "عملاؤك لا يدفعون شيئًا. أبدًا. تدعوهم إلى تطبيق وازن للعميل وينضمّون مجانًا، بلا اشتراك وبلا رسوم خفية من جهتهم. تطبيق العميل مشمول في باقتك ويعمل مباشرة على هاتف العميل، من المتصفح أو بحفظه على الشاشة الرئيسية، دون تنزيل من متجر التطبيقات. يصلون إلى خططهم ومتابعاتهم وتقدّمهم عبر تطبيقهم الخاص، المنفصل تمامًا عن لوحة تحكم المدرب لديك.",
       },
       {
         q: "كم يستغرق الإعداد؟",
-        a: "معظم المدربين يكملون الإعداد خلال يوم. أنشئ حسابك، وادعُ أول عميل، وعيّن خطته وجدول متابعته — هذا هو المسار كاملًا. لا حاجة لنقل بيانات، ولا إعداد تقني، ولا مكالمة تهيئة.",
+        a: "معظم المدربين يكملون الإعداد خلال يوم. أنشئ حسابك، وادعُ أول عميل، وعيّن خطته وجدول متابعته. هذا هو المسار كاملًا. لا حاجة لنقل بيانات، ولا إعداد تقني، ولا مكالمة تهيئة.",
       },
       {
         q: "ماذا يحدث لعملائي وبياناتهم إذا بلغت الحد ولم أُرقِّ الباقة؟",
-        a: "لا شيء يُحذف. إذا بلغت حد العملاء النشطين، يمكنك إلغاء تنشيط عميل حالي لتفريغ مكان — يُحفظ سجلّه وبياناته بالكامل ويبقى متاحًا لمدة 15 يومًا (المبتدئة)، أو 45 يومًا (الاحترافية)، أو 90 يومًا (المتقدّمة) بعد إلغاء التنشيط. ولا تُرقّي الباقة إلا عندما تريد إدارة عملاء نشطين أكثر في الوقت نفسه. بياناتك ملكك دائمًا.",
+        a: "لا شيء يُحذف. إذا بلغت حد العملاء النشطين، يمكنك إلغاء تنشيط عميل حالي لتفريغ مكان؛ يُحفظ سجلّه وبياناته بالكامل ويبقى متاحًا لمدة 15 يومًا (المبتدئة)، أو 45 يومًا (الاحترافية)، أو 90 يومًا (المتقدّمة) بعد إلغاء التنشيط. ولا تُرقّي الباقة إلا عندما تريد إدارة عملاء نشطين أكثر في الوقت نفسه. بياناتك ملكك دائمًا.",
       },
       {
         q: "هل يعمل وازن بالعربية؟ وهل صُمّم لمدربي المنطقة؟",
-        a: "نعم — بالكامل. وازن مبنيّ بالعربية والإنجليزية معًا، مع دعم كامل للكتابة من اليمين لليسار. ولوحة المدرب وتطبيق العميل كلاهما يبدّل اللغة. وهو مصمّم خصيصًا للمدربين العاملين في الإمارات والخليج والشرق الأوسط — مدمج في المنتج من أساسه، لا مُضافًا لاحقًا.",
+        a: "نعم، بالكامل. وازن مبنيّ بالعربية والإنجليزية معًا، مع دعم كامل للكتابة من اليمين لليسار. ولوحة المدرب وتطبيق العميل كلاهما يبدّل اللغة. وهو مصمّم خصيصًا للمدربين العاملين في الإمارات والخليج والشرق الأوسط، مدمج في المنتج من أساسه، لا مُضافًا لاحقًا.",
       },
       {
         q: "هل بيانات عملائي آمنة وخاصة؟",
-        a: "نعم. كل البيانات مشفّرة أثناء النقل والتخزين. ولا تُشارَك معلومات عملائك الصحية وتقدّمهم وبياناتهم الشخصية مع أي طرف ثالث. وبصفتك المدرب، فأنت تملك بيانات عملائك وتتحكّم بها. وازن من تطوير Binaa Labs — شركة منتجات تقنية مقرّها الإمارات.",
+        a: "نعم. كل البيانات مشفّرة أثناء النقل والتخزين. ولا تُشارَك معلومات عملائك الصحية وتقدّمهم وبياناتهم الشخصية مع أي طرف ثالث. وبصفتك المدرب، فأنت تملك بيانات عملائك وتتحكّم بها. وازن من تطوير Binaa Labs، شركة منتجات تقنية مقرّها الإمارات.",
       },
       {
         q: "هل يمكنني الإلغاء في أي وقت؟ وهل هناك عقد؟",
@@ -680,16 +680,16 @@ const ar: Dictionary = {
     ],
   },
   cta: {
-    badge: "مجاني للبدء — بدون بطاقة ائتمان",
+    badge: "مجاني للبدء، بدون بطاقة ائتمان",
     h2: "اجمع عملك التدريبي في مكان واحد منظّم",
-    body: "أنشئ حسابك المجاني وابدأ بإدارة حتى 5 عملاء نشطين بالمنصة كاملة — الخطط والمتابعات والتقدّم والمراسلة.",
+    body: "أنشئ حسابك المجاني وابدأ بإدارة حتى 5 عملاء نشطين بالمنصة كاملة: الخطط والمتابعات والتقدّم والمراسلة.",
     trust: [
       "مجاني لأول 5 عملاء",
       "بدون بطاقة ائتمان",
       "المنصة الأساسية كاملة",
       "العربية والإنجليزية",
     ],
-    ctaLabel: "ابدأ مجانًا — حتى 5 عملاء",
+    ctaLabel: "ابدأ مجانًا",
     loginPrompt: "تستخدم وازن بالفعل؟",
     loginLink: "تسجيل الدخول",
   },

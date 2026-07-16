@@ -15,8 +15,8 @@ import { SHOTS } from "@/lib/screenshots";
 export const OG_SIZE = { width: 1200, height: 630 };
 
 export const OG_ALT: Record<Locale, string> = {
-  en: "Wazen — coach dashboard and client app preview",
-  ar: "معاينة منصة وازن — لوحة المدرب وتطبيق العميل",
+  en: "Wazen: coach dashboard and client app preview",
+  ar: "معاينة منصة وازن: لوحة المدرب وتطبيق العميل",
 };
 
 /* headline/sub are arrays of PRE-BROKEN lines: Satori's RTL line-wrapping
@@ -39,13 +39,13 @@ const COPY: Record<
       "Run your coaching practice",
       "from one calm, organized place",
     ],
-    sub: ["Clients, plans, check-ins, progress", "& messages — one system."],
+    sub: ["Clients, plans, check-ins, progress", "& messages, one system."],
     chip: "Free for your first 5 clients",
     region: "UAE · GCC · MENA · Arabic & English",
   },
   ar: {
     headline: ["أدِر عملك التدريبي", "من مكان واحد منظّم"],
-    sub: ["العملاء والخطط والمتابعات والتقدّم", "والرسائل — في نظام واحد."],
+    sub: ["العملاء والخطط والمتابعات والتقدّم", "والرسائل، في نظام واحد."],
     chip: "مجاني لأول 5 عملاء",
     region: "الإمارات · الخليج · الشرق الأوسط",
   },
