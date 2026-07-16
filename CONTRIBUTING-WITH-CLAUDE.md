@@ -40,6 +40,7 @@ Rules baked into every prompt:
 - Every branch push produces a Vercel preview URL; use it for review.
 - Claude Code proposes commits; the developer approves. Use "Yes, and manually approve edits" in plan mode — never auto-accept (history: auto-accepted runs have made unintended changes).
 - Merge to main only when the full milestone is reviewed and approved.
+- **Before any commit, run `git diff --cached | Select-String '^<{7}|^={7}$|^>{7}'` — any output blocks the commit.**
 
 ## 4 · Documentation protocol
 
