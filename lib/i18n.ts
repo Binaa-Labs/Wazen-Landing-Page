@@ -257,7 +257,7 @@ const en = {
           AED: "+5 clients from AED 33/mo · bundles up to +50",
         },
         cta: "Get started",
-        note: "Full white-label branding, coming soon",
+        note: "Exercise library & AI workout builder, coming soon",
       },
     ],
     stripHeadline:
@@ -599,7 +599,7 @@ const ar: Dictionary = {
           AED: "+5 عملاء من AED 33/شهر · حِزم حتى +50 عميلًا",
         },
         cta: "ابدأ الآن",
-        note: "علامة بيضاء كاملة، قريبًا",
+        note: "مكتبة التمارين ومنشئ التمارين بالذكاء الاصطناعي، قريبًا",
       },
     ],
     stripHeadline:
