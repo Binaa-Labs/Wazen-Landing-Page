@@ -4,9 +4,12 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
+    "prebuild": "npm run legal:validate",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint"
+    "lint": "eslint",
+    "legal:sha": "node scripts/generate-sha.mjs",
+    "legal:validate": "node scripts/validate-legal.mjs"
   },
   "dependencies": {
     "framer-motion": "^12.40.0",

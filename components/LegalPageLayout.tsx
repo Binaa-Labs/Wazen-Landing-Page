@@ -23,47 +23,63 @@ const footerLinks = [
   { label: "Contact Support", href: "mailto:admin@binaalabs.com" },
 ];
 
+export function LegalHeader() {
+  return (
+    <header className="sticky top-0 z-40 border-b border-ink/8 bg-bg/80 backdrop-blur-md">
+      <div className="mx-auto flex max-w-3xl items-center justify-between px-6 py-4">
+        <Link href="/" className="flex flex-col gap-0.5">
+          <span className="font-display text-lg font-bold leading-none text-ink">
+            Wazen
+          </span>
+          <span className="flex items-baseline gap-1.5">
+            <span className="font-arabic text-[0.7rem] font-bold leading-none text-primary">
+              وازن
+            </span>
+            <span className="text-[10px] leading-none text-ink/50">
+              Powered by Binaa Lab
+            </span>
+          </span>
+        </Link>
+        <Link
+          href="/"
+          className="text-sm text-ink/60 transition-colors hover:text-ink"
+        >
+          ← Back to home
+        </Link>
+      </div>
+    </header>
+  );
+}
+
 export default function LegalPageLayout({
   title,
   lastUpdated,
+  version,
   children,
 }: {
   title: string;
   lastUpdated: string;
+  version: string;
   children: React.ReactNode;
 }) {
   return (
     <div dir="ltr" className="flex min-h-screen flex-col bg-bg text-ink">
-      <header className="sticky top-0 z-40 border-b border-ink/8 bg-bg/80 backdrop-blur-md">
-        <div className="mx-auto flex max-w-3xl items-center justify-between px-6 py-4">
-          <Link href="/" className="flex flex-col gap-0.5">
-            <span className="font-display text-lg font-bold leading-none text-ink">
-              Wazen
-            </span>
-            <span className="flex items-baseline gap-1.5">
-              <span className="font-arabic text-[0.7rem] font-bold leading-none text-primary">
-                وازن
-              </span>
-              <span className="text-[10px] leading-none text-ink/50">
-                Powered by Binaa Lab
-              </span>
-            </span>
-          </Link>
-          <Link
-            href="/"
-            className="text-sm text-ink/60 transition-colors hover:text-ink"
-          >
-            ← Back to home
-          </Link>
-        </div>
-      </header>
+      <LegalHeader />
 
       <main className="flex-1 px-6 py-14">
         <article className="mx-auto max-w-3xl">
           <h1 className="font-display text-h2 text-ink">{title}</h1>
-          <p className="mt-2 text-caption text-ink/55">
-            Last updated: {lastUpdated}
-          </p>
+          <div className="mt-2 flex flex-wrap items-center gap-3">
+            <p className="text-caption text-ink/55">
+              Effective: {lastUpdated} · Version {version}
+            </p>
+            <Link
+              href="/legal/archive"
+              className="inline-flex items-center rounded-pill border border-ink/15 px-3 py-1 text-caption font-medium text-ink/65 transition-colors hover:border-primary/40 hover:bg-primary/5 hover:text-primary"
+            >
+              Previous versions
+            </Link>
+          </div>
           {children}
         </article>
       </main>

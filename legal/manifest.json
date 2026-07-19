@@ -1,0 +1,27 @@
+{
+  "schemaVersion": 1,
+  "documents": [
+    {
+      "type": "terms",
+      "version": "2026-06-01.1",
+      "changeLevel": "material",
+      "publishedAt": "2026-06-01T00:00:00.000Z",
+      "effectiveAt": "2026-06-01T00:00:00.000Z",
+      "changeSummary": "Initial Wazen Terms of Service.",
+      "source": "legal/versions/2026-06-01.1/terms.en.tsx",
+      "url": "https://wazen.fit/legal/terms/2026-06-01.1",
+      "sha256": "ab2aa62448f4378629fc58f8f7cf823833e2c2f74caefd479c0c1f26f9ee9936"
+    },
+    {
+      "type": "privacy",
+      "version": "2026-06-01.1",
+      "changeLevel": "material",
+      "publishedAt": "2026-06-01T00:00:00.000Z",
+      "effectiveAt": "2026-06-01T00:00:00.000Z",
+      "changeSummary": "Initial Wazen Privacy Notice.",
+      "source": "legal/versions/2026-06-01.1/privacy.en.tsx",
+      "url": "https://wazen.fit/legal/privacy/2026-06-01.1",
+      "sha256": "13c1866fc1f563c0cf04d319156822bfdbe55ce466ad2f11dd9cf3c0c9ff96db"
+    }
+  ]
+}
