@@ -1,19 +1,45 @@
 # Legal publication runbook
 
-Use a new calendar version (`YYYY-MM-DD.N`) for every published edit. `N` is the immutable release sequence for that date: start at `.1` and use `.2`, `.3`, and so on only when another version is published on the same day. Never modify a published version's source, metadata, URL, or hash.
+Every published edit receives a new immutable `YYYY-MM-DD.N` version. Start at `.1`; increment only for another release on the same UTC date. Never edit a published version.
 
-1. Copy the previous English document into `legal/versions/<version>/`, edit it, and register its component in `legal/registry.ts`.
-2. Add the new flat manifest entry with `type`, `version`, `changeLevel`, `publishedAt`, a future `effectiveAt`, `changeSummary`, `source`, immutable `url`, and source `sha256`.
-3. Run `npm run legal:validate`, lint, and build the landing page.
-4. Deploy the landing page. Verify `/terms` or `/privacy`, `/legal/<type>/<version>`, `/legal/archive`, and `/legal/manifest` in production.
-5. In the backend production environment, run `npm run legal:publish`. It fetches the deployed manifest and rendered HTML, creates or verifies `legal/<type>/<version>.html` in private object storage, and inserts or validates the database version.
-6. Verify the database row and archive hashes. The future `effectiveAt` then activates the version automatically.
+## Initial production launch
 
-Behavior is derived from `changeLevel`: material Terms require acceptance and block product mutations; material Privacy requires acknowledgement without blocking; minor changes do not prompt existing users. New signups and invitees always submit the exact current Terms and Privacy IDs.
+1. Deploy the landing page and verify:
+   - `/legal/terms/2026-06-01.1`
+   - `/legal/privacy/2026-06-01.1`
+   - `/legal/archive`
+   - `/legal/manifest`
+2. Deploy the empty backend database and apply migrations.
+3. In the DigitalOcean App Platform console, run `npm run legal:publish`.
+4. Run it a second time; both documents must report `Validated`.
+5. Verify two database rows and these private objects:
+   - `legal/terms/2026-06-01.1.html`
+   - `legal/privacy/2026-06-01.1.html`
+6. Verify `/api/v1/legal/metadata` returns both current documents.
+7. Only then enable signup and invitation acceptance.
+
+## Publishing an update
+
+1. Copy the previous English source into `legal/versions/<version>/` and edit it.
+2. Register the component in `legal/registry.ts`.
+3. Generate its hash:
+   `npm run legal:sha -- legal/versions/<version>/<type>.en.tsx`
+4. Append the manifest entry in ascending effective-time order. Use:
+   - the new version and matching UTC `publishedAt` date;
+   - a future `effectiveAt`;
+   - `minor` or `material`;
+   - an English change summary;
+   - the exact source, immutable Wazen URL, and generated hash.
+5. Run `npm run legal:validate`, `npm run lint`, and `npm run build`.
+6. Deploy to Vercel and verify the immutable URL and production manifest.
+7. In the DigitalOcean App Platform console, run `npm run legal:publish` twice.
+8. Verify the new database row and private archive object.
+
+Material Terms require acceptance and block mutations. Material Privacy requires non-blocking acknowledgement. Minor changes do not prompt existing users. Signup and invitation acceptance always use exact current IDs.
 
 ## Local publisher test
 
-Keep production `https://wazen.fit/legal/...` URLs in the manifest. Start the landing page on a host/port reachable from Docker, then provide `LEGAL_RENDER_BASE_URL` so the publisher fetches rendered HTML locally without changing the public URL saved in the database:
+Keep production URLs in the manifest. Start the landing page where Docker can reach it, then run:
 
 ```powershell
 docker compose exec `
@@ -22,4 +48,4 @@ docker compose exec `
   api npm run legal:publish
 ```
 
-The local publisher writes archives to the configured private MinIO bucket. Never set `LEGAL_RENDER_BASE_URL` in production.
+The publisher writes to the configured private MinIO bucket. `LEGAL_RENDER_BASE_URL` is rejected in production.

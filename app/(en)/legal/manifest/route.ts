@@ -1,7 +1,9 @@
 import manifest from "@/legal/manifest.json";
 
+export const dynamic = "force-dynamic";
+
 export function GET() {
   return Response.json(manifest, {
-    headers: { "Cache-Control": "public, max-age=300, s-maxage=300" },
+    headers: { "Cache-Control": "no-store, max-age=0" },
   });
 }
