@@ -10,7 +10,7 @@ Every published edit receives a new immutable `YYYY-MM-DD.N` version. Start at `
    - `/legal/archive`
    - `/legal/manifest`
 2. Deploy the empty backend database and apply migrations.
-3. In the DigitalOcean App Platform console, run `npm run legal:publish`.
+3. In the Render service shell, run `npm run legal:publish`.
 4. Run it a second time; both documents must report `Validated`.
 5. Verify two database rows and these private objects:
    - `legal/terms/2026-06-01.1.html`
@@ -32,7 +32,7 @@ Every published edit receives a new immutable `YYYY-MM-DD.N` version. Start at `
    - the exact source, immutable Wazen URL, and generated hash.
 5. Run `npm run legal:validate`, `npm run lint`, and `npm run build`.
 6. Deploy to Vercel and verify the immutable URL and production manifest.
-7. In the DigitalOcean App Platform console, run `npm run legal:publish` twice.
+7. In the Render service shell, run `npm run legal:publish` twice.
 8. Verify the new database row and private archive object.
 
 Material Terms require acceptance and block mutations. Material Privacy requires non-blocking acknowledgement. Minor changes do not prompt existing users. Signup and invitation acceptance always use exact current IDs.
@@ -48,4 +48,6 @@ docker compose exec `
   api npm run legal:publish
 ```
 
-The publisher writes to the configured private MinIO bucket. `LEGAL_RENDER_BASE_URL` is rejected in production.
+The local publisher writes to the configured private MinIO bucket. Production
+writes to the private Cloudflare R2 bucket. `LEGAL_RENDER_BASE_URL` is rejected
+in production.
