@@ -40,14 +40,7 @@ export const metadata: Metadata = {
       "Free for your first 5 clients. Built for coaches in UAE, GCC & MENA. Arabic & English.",
     url: "https://wazen.fit",
     siteName: "Wazen",
-    images: [
-      {
-        url: "/opengraph-image",
-        width: 1200,
-        height: 630,
-        alt: "Wazen coaching platform preview",
-      },
-    ],
+    /* og:image is injected by the colocated file-convention route. */
     locale: "en_US",
     alternateLocale: "ar_AE",
     type: "website",
@@ -57,7 +50,7 @@ export const metadata: Metadata = {
     title: "Wazen: Coaching platform for UAE & GCC",
     description:
       "Free for your first 5 clients. Plans, check-ins, progress, messaging, all in one place.",
-    images: ["/twitter-image"],
+    /* twitter:image is injected by the colocated file-convention route. */
   },
   alternates: {
     canonical: "https://wazen.fit",
