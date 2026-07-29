@@ -10,7 +10,7 @@
       "changeSummary": "Initial Wazen Terms of Service.",
       "source": "legal/versions/2026-06-01.1/terms.en.tsx",
       "url": "https://wazen.fit/legal/terms/2026-06-01.1",
-      "sha256": "ab2aa62448f4378629fc58f8f7cf823833e2c2f74caefd479c0c1f26f9ee9936"
+      "sha256": "b4724e2d03eb45a7acc69b1325b6fbb5cc8b8d0f69795a7d9e1d2e6057c2edc5"
     },
     {
       "type": "privacy",
@@ -21,7 +21,7 @@
       "changeSummary": "Initial Wazen Privacy Notice.",
       "source": "legal/versions/2026-06-01.1/privacy.en.tsx",
       "url": "https://wazen.fit/legal/privacy/2026-06-01.1",
-      "sha256": "13c1866fc1f563c0cf04d319156822bfdbe55ce466ad2f11dd9cf3c0c9ff96db"
+      "sha256": "fff99f2a526d0a23ecb00f07b94fbc124e347ee9057265a7c15169f6fd4654f3"
     }
   ]
 }

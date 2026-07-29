@@ -1,7 +1,7 @@
-import { createHash } from "node:crypto";
 import { readFile } from "node:fs/promises";
 import path from "node:path";
 import process from "node:process";
+import { hashLegalSource } from "./legal-hash.mjs";
 
 const VERSION_PATTERN = /^\d{4}-\d{2}-\d{2}\.\d+$/;
 const SHA256_PATTERN = /^[a-f0-9]{64}$/;
@@ -81,7 +81,7 @@ for (const document of manifest.documents) {
   lastEffectiveByType.set(document.type, effectiveAt);
 
   const bytes = await readFile(path.join(root, document.source));
-  const digest = createHash("sha256").update(bytes).digest("hex");
+  const digest = hashLegalSource(bytes);
   if (digest !== document.sha256) {
     throw new Error(
       `Legal hash mismatch for ${key}. Create a new version instead of editing a published document.`,
